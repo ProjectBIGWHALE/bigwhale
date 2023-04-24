@@ -32,14 +32,14 @@ public class CoresController {
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String paginaInicial() {
 	
-		return "/colors/index";
+		return "indexcolors";
 	}
 	
 	@RequestMapping(value="/imagemtransparente", method=RequestMethod.GET)
 	public String geradorDeCertificados(Model model) {
 		
 		model.addAttribute("formulario", formulario);
-		return "/colors/cores";
+		return "cores";
 		
 	}
 	

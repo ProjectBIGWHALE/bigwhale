@@ -11,7 +11,7 @@ public class HomeController {
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String paginaInicial() {
 	
-		return "/home/index";
+		return "indexhome";
 	}
 	
 }

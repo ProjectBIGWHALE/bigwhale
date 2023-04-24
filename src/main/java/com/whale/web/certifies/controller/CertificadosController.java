@@ -30,15 +30,14 @@ public class CertificadosController {
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String paginaInicial() {
 	
-		return "/certifies/index";
+		return "indexcertifies";
 	}
 	
 	@RequestMapping(value="/geradorDeCertificados", method=RequestMethod.GET)
 	public String geradorDeCertificados(Model model) {
 		
 		model.addAttribute("planilhaEFormulario",planilhaEFormulario);
-		System.out.println("");
-		return "/certifies/certificados";
+		return "certificados";
 		
 	}
 	
