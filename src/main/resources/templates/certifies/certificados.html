@@ -1,0 +1,101 @@
+<html>
+
+	<head>
+	
+		<title>WHALE - Certificados</title>
+		<meta charset="UTF-8"/>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+		<style>
+			.montserrat{
+				font-family: 'Montserrat', cursive;
+				font-size: 3.0rem;
+			}
+			.nanum{
+				font-family: 'Nanum Gothic', sans-serif;
+				font-size: 0.7rem;
+			}
+			.btn-custom {
+			  background-color: transparent;
+			  border-color: #FFFFFF;
+			  color: #ff0000;
+			}
+
+			.btn-custom:hover {
+			  background-color: #FF0022;
+			  color: #fff;
+			}
+			.btn-custom2 {
+			  background-color: transparent;
+			  border-color: transparent;
+			  color: #ff0000;
+			}
+
+			.btn-custom2:hover {
+			  background-color: #011627;
+			  border-color:#FFFFFF;
+			  color: #fff;
+			}
+		</style>
+	</head>
+
+	<body style="background-color:#011627;">
+		<div style="background-image: linear-gradient( #41EAD4, #011627);">
+			<br><br><br>
+			<form th:action="@{/certificados/baixarimagens}"
+		      class="card-body d-flex justify-content-center p-5" method="POST"
+		      enctype="multipart/form-data" th:object="${planilhaEFormulario}">
+			    <div class="form-row">
+			        <div class="form-group mb-3 col-md-12">
+			        	<br>
+			        	<p class="nanum" style="color:#FDFFFC; font-size:0.9rem; letter-spacing: 2px;">LISTA DE NOMES</p>
+			            <input type="file" th:field="*{planilha.planilha}"
+			                   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
+			                   class="form-control"/>
+			            <span th:errors="*{planilha.planilha}" class="text-danger"></span>
+			        </div>
+			        <div class="form-group mb-3 col-md-12">
+			        	<p class="nanum" style="color:#FDFFFC; font-size:0.9rem; letter-spacing: 2px;">COORDENADA X</p>
+			            <input th:field="*{formulario.x}" type="number"
+			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
+			                   class="form-control"/>
+			            <span th:errors="*{formulario.x}" class="text-danger"></span>
+			        </div>
+			        <div class="form-group mb-3 col-md-12">
+			        	<p class="nanum" style="color:#FDFFFC; font-size:0.9rem; letter-spacing: 2px;">COORDENADA Y</p>
+			            <input th:field="*{formulario.y}" type="number"
+			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
+			                   class="form-control"/>
+			            <span th:errors="*{formulario.y}" class="text-danger"></span>
+			        </div>
+			        <div class="form-group mb-3 col-md-12">
+			        	<p class="nanum" style="color:#FDFFFC; font-size:0.9rem; letter-spacing: 2px;">TAMANHO DA FONTE</p>
+			            <input th:field="*{formulario.tamanhoDaFonte}" type="number"
+			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
+			                   class="form-control"/>
+			            <span th:errors="*{formulario.tamanhoDaFonte}" class="text-danger"></span>
+			        </div>
+			        <div class="form-group mb-3 col-md-12">
+			        	<p class="nanum" style="color:#FDFFFC; font-size:0.9rem; letter-spacing: 2px;">LAYOUT DO CERTIFICADO</p>
+			            <input type="file" th:field="*{formulario.imagemLayoult}"
+			                   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
+			                   class="form-control"/>
+			            <span th:errors="*{formulario.imagemLayoult}" class="text-danger"></span>
+			        </div>
+					<div align="center">
+						<br>
+						<button class="btn btn-custom rounded-4" type="submit" style="height: 55px; display: flex; align-items: center; justify-content: center;">
+   							<img th:src="@{/certifies/images/doc.png}" style="height: 40px;"></img>
+						</button>
+					</div>
+				</div>
+		    </form>
+		    <div align="center">
+		    	<a href="/certificados/"><button class="btn btn-custom2 nanum" type="submit" style="font-size:2.3rem; height:50px;"><span style="font-size:1.2rem; height:55px; color:#FDFFFC;">V O L T A R</span></button></a>
+			</div>
+			<br><br><br><br>
+		</div>
+	</body>
+
+</html>
