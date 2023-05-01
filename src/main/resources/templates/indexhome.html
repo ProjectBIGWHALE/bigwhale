@@ -7,6 +7,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@900&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
     <style>
 	.montserrat{
 		font-family: 'Montserrat', cursive;
@@ -24,179 +26,355 @@
 		font-family: 'Satisfy', cursive;
 		font-size: 2.0rem;
 	}
-	.btn-custom {
-		background-color: transparent;
-		border-color: #FFFFFF;
-		color: #ff0000;
+	.robotomonorodape{
+			font-family: 'Roboto Mono', monospace;
+			font-size: 0.7rem;
+			color: #000000;
 	}
 
-	.btn-custom:hover {
-		background-color: #000000;
-		color: #fff;
+	
+	@media(max-width: 3800px){
+		.robotomono{
+			font-family: 'Roboto Mono', monospace;
+			font-size: 1.6rem;
+			max-width: 450px;
+		}
+		.titulo{
+			font-family: 'Spectral', serif;
+			font-size: 7.0rem;
+		}
+		.logoimagem{
+			width: 60rem;
+		}
+		.logodiv{
+			display: inline-block;
+			vertical-align: top; 
+			width:40%;
+			margin-right: 20%;
+			margin-top: -80;
+			
+		}
+		.botao{
+			margin-top: 5%;
+			font-size: 1.0rem;		
+		}
 	}
-	.btn-custom2 {
-		background-color: transparent;
-		border-color: transparent;
-		color: #ff0000;
+	@media(max-width: 1400px){
+		.robotomono{
+			font-family: 'Roboto Mono', monospace;
+			font-size: 1.2rem;
+			max-width: 200px;
+		}
+		.titulo{
+			font-family: 'Spectral', serif;
+			font-size: 4.0rem;
+		}
+		.logoimagem{
+			width: 35rem;
+		}
+		.logodiv{
+			display: inline-block;
+			vertical-align: top; 
+			width:20%;
+			margin-right: 10%;
+			margin-top: -30;
+		}
+		.botao{
+			margin-top: 3%;
+			font-size: 0.8rem;		
+		}
 	}
+	
+	@media(max-width: 760px){
+		.robotomono{
+			font-family: 'Roboto Mono', monospace;
+			font-size: 0.6rem;
+			max-width: 100px;
+		}
+		.titulo{
+			font-family: 'Spectral', serif;
+			font-size: 2.0rem;
+		}
+		.logoimagem{
+			width: 25rem;
+		}
+		.logodiv{
+			display: inline-block;
+			vertical-align: top; 
+			width:10%;
+			margin-right: 10%;
+			margin-top: -20;
+		}
+	}
+	
+		@media(max-width: 630px){
+			.robotomono{
+				font-family: 'Roboto Mono', monospace;
+				font-size: 0.6rem;
+				max-width: 100px;
+			}
+			.titulo{
+				font-family: 'Spectral', serif;
+				font-size: 2.0rem;
+			}
+			.logoimagem{
+				width: 30rem;
+			}
+			.logodiv{
+				display: inline-block;
+				vertical-align: top; 
+				width:40%;
+				margin-right: 5%;
+				margin-top: -10;
+			}
+			.botao{
+				margin-top: 3%;
+				font-size: 0.7rem;		
+			}
+			.titulowhale{
+				display: right;
+				margin-left: 50%;
+				margin-right:10%;
+				top: 10%;
+			}
+		}
+		
+		@media(max-width: 320px){
+			.robotomono{
+				font-family: 'Roboto Mono', monospace;
+				font-size: 0.6rem;
+				max-width: 100px;
+			}
+			.titulo{
+				font-family: 'Spectral', serif;
+				font-size: 2.0rem;
+			}
+			.logoimagem{
+				width: 10rem;
+			}
+			.logodiv{
+				display: inline-block;
+				vertical-align: top; 
+				width:10%;
+				margin-right: 10%;
+				
+			}
+			.titulowhale{
+				margin-left: 50%;
+			}
+		}
+	
 
-	.btn-custom2:hover {
-		background-color: #000000;
-		border-color:#FFFFFF;
-		color: #fff;
+	.logodiv{
+		display: inline-block;
+		vertical-align: top; 
+		width:40%;
+		margin-right: 20%;
+		margin-bottom: 15%;
 	}
-
-    body {
-        background: linear-gradient(#000000, #390099, #000000);
-        background-size: cover;
-        background-repeat: no-repeat;
-    }
-    body::before {
-        content: '';
-        position: absolute;
-        top: -600;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: -1;
-        background-image: url('/home/images/jubarte.gif');
-        background-size: 40%;
-        background-repeat: no-repeat;
-        background-position: center center;
-        opacity: 0.5;
-    }
-      
-      canvas {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;
-      }
-      
-      .container {
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .content {
-        background-color: rgba(255, 255, 255, 1);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 1);
-      }
+	.titulowhale{
+		display: inline-block;
+		vertical-align: top;
+		margin-bottom: 10%;
+	}
+	.linha{
+		border: none;
+        border-top: 0.05rem solid #000000;
+	}
+	
+	.janelacertificados {
+	  display: none; /* inicialmente, a janela está escondida */
+	  position: fixed;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  width: 80%;
+	  height: 80%;
+	  background-color: #FFFFFFE6;
+	  border: 0px solid #000;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	  z-index: 9999; /* garante que a janela esteja acima de outros elementos */
+	}
+	
+	.janelacores {
+	  display: none; /* inicialmente, a janela está escondida */
+	  position: fixed;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  width: 80%;
+	  height: 80%;
+	  background-color: #FFFFFFE6;
+	  border: 0px solid #000;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	  z-index: 9999; /* garante que a janela esteja acima de outros elementos */
+	}
+	
+	.janelaapoio {
+	  display: none; /* inicialmente, a janela está escondida */
+	  position: fixed;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  width: 80%;
+	  height: 80%;
+	  background-color: #FFFFFFE6;
+	  border: 0px solid #000;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	  z-index: 9999; /* garante que a janela esteja acima de outros elementos */
+	}
+	
+	.conteudo {
+	  padding: 20px;
+	}
+	
+	/* Estilo para fundo escuro quando a janela está aberta */
+	.janela-aberta {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background-color: rgba(0, 0, 0, 0.5);
+	  z-index: 9998;
+	}
     </style>
-  </head>
-  <body>
-    <canvas></canvas>
-    <div>
-		<div align="center">
-			<br><br><br>
-			<p class="escrita"><span style="color:#FFFFFF; font-size:2.8rem;">W h a l e</span></p>
-		</div>
-		
-		
-		<div align="center" style="margin-left: 10%; margin-right: 10%; position: relative; top:140;">
-			<div align="left" style="display: inline-block; vertical-align: middle; max-width: 600px;">
-				<h1 class="impacto" style="color: #FFFFFF; font-size:3.5rem; text-align: left; padding: 3px">A FERRAMENTA MAIS <span style="background-color: #000000;">COMPLETA</span> DE MANIPULAÇÃO AUTOMÁTICA DE <span style="background-color: #000000;">IMAGENS</span> E <span style="background-color: #000000;">DOCUMENTOS</span>!</h1>
-			</div>
-			<div align="center" style="display: inline-block">
-				<br><br><br><br><br><br>
-				<h1>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</h1>
-			</div>
-			<div align="right" style="display: inline-block; vertical-align: middle">
-				<div>
-					<span class="impacto" style="color: #FFFFFF; font-size: 1.0rem"><b>CERTIFICADOS</b>&nbsp&nbsp&nbsp</span>
-					<a href="/certificados/"><img th:src="@{/home/images/doc.png}" class="btn btn-custom rounded-4" type="submit" style="font-size:1.8rem; height:55px;"></img></a>
-				</div>
-				<br>
-				<div>
-					<span class="impacto" style="color: #FFFFFF; font-size: 1.0rem"><b>CORES</b>&nbsp&nbsp&nbsp</span>
-					<a href="/cores/"><img th:src="@{/home/images/pincel.png}" class="btn btn-custom rounded-4" type="submit" style="font-size:1.8rem; height:55px;"></img></a>	
-				</div>
-				<br>
-				<div>
-					<span class="impacto" style="color: #FFFFFF; font-size: 1.0rem"><b>APOIE</b>&nbsp&nbsp&nbsp</span>
-					<a href="https://apoia.se/whale"><img th:src="@{/home/images/apoie.png}" class="btn btn-custom rounded-4" type="submit" style="font-size:1.8rem; height:55px;"></img></a>
-				</div>
-			</div>
-
-		</div>
-		
-		<br><br><br><br><br><br>
-		<div style="background-image: linear-gradient( #000000); position: relative; bottom: 10%">
-			<br><br><br><br>
-			<div align="center">
-				<a href="https://github.com/bioramonmoratori/whale"><img th:src="@{/home/images/git.png}" class="btn btn-custom2 rounded-4 montserrat" type="submit" style="font-size:1.8rem; height:60px;"></img></a>
-			</div>
-			<br>
-			<div align="center">
-				<p class="nanum" style="color:#FDFFFC; font-size:0.7rem; letter-spacing: 2px;">W H A L E <br>2023</p>
-			</div>
-			<br><br><br><br><br>
-		</div>
-		
-		
-    </div>
-    	
+    
     <script>
-      var canvas = document.querySelector('canvas');
-      var context = canvas.getContext('2d');
-      
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      canvas.style.width = canvas.width + "px";
-      canvas.style.height = canvas.height + "px";
-      window.addEventListener('resize', function(event){
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        canvas.style.width = canvas.width + "px";
-        canvas.style.height = canvas.height + "px";
-      });
-      
-      var stars = [];
-      var starCount = 200;
-      var speed = 1;
-      
-      for (var i = 0; i < starCount; i++) {
-        stars[i] = {
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 3 + 1
-        };
-      }
-      
-      function draw() {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.fillStyle = 'rgba(255, 255, 255, 0.7)';
-        context.beginPath();
-        for (var i = 0; i < starCount; i++) {
-          var star = stars[i];
-          context.moveTo(star.x, star.y);
-          context.arc(star.x, star.y, star.size, 0, 2 * Math.PI);
-        }
-        context.fill();
-        update();
-        requestAnimationFrame(draw);
-      }
-      
-      function update() {
-        for (var i = 0; i < starCount; i++) {
-          var star = stars[i];
-          star.x -= speed;
-          if (star.x < -10) {
-            star.x = canvas.width + 10;
-          }
-        }
-      }
-      
-      draw();
+	    function abrirJanelaCertificados() {
+	    	var janela = document.querySelector('.janelacertificados');
+	    	var fundo = document.createElement('div');
+	    	fundo.classList.add('janela-aberta');
+	    	document.body.appendChild(fundo);
+	    	janela.style.display = 'block';
+	    }
+	
+	    function fecharJanelaCertificados() {
+	    	var janela = document.querySelector('.janelacertificados');
+	    	var fundo = document.querySelector('.janela-aberta');
+	    	document.body.removeChild(fundo);
+	    	janela.style.display = 'none';
+	    }
+	    
+	    function abrirJanelaCores() {
+	    	var janela = document.querySelector('.janelacores');
+	    	var fundo = document.createElement('div');
+	    	fundo.classList.add('janela-aberta');
+	    	document.body.appendChild(fundo);
+	    	janela.style.display = 'block';
+	    }
+	
+	    function fecharJanelaCores() {
+	    	var janela = document.querySelector('.janelacores');
+	    	var fundo = document.querySelector('.janela-aberta');
+	    	document.body.removeChild(fundo);
+	    	janela.style.display = 'none';
+	    }
+	    
+	    function abrirJanelaApoio() {
+	    	var janela = document.querySelector('.janelaapoio');
+	    	var fundo = document.createElement('div');
+	    	fundo.classList.add('janela-aberta');
+	    	document.body.appendChild(fundo);
+	    	janela.style.display = 'block';
+	    }
+	
+	    function fecharJanelaApoio() {
+	    	var janela = document.querySelector('.janelaapoio');
+	    	var fundo = document.querySelector('.janela-aberta');
+	    	document.body.removeChild(fundo);
+	    	janela.style.display = 'none';
+	    }
     </script>
-
+    
+  </head>
+  
+  <body>
+  	<div style="margin: 5%;">
+  		<div class="logodiv">
+  			<img class="logoimagem" th:src="@{/home/images/logo.png}"></img>
+		</div>
+		<div align="right" class="titulowhale">
+			<h1 class="titulo"> Whale</h1>
+			<h1 class="robotomono"><i>Sua aquarela de ferramentas de manipulação de imagens e documentos.</i></h1>
+			<text onclick="abrirJanelaCertificados()" class="btn btn-outline-dark rounded-0 robotomono botao" id="abrir-formulario" type="submit">Certificados</text>
+			<text onclick="abrirJanelaCores()" class="btn btn-outline-dark rounded-0 robotomono botao" type="submit">Cores</text>
+			<text onclick="abrirJanelaApoio()" class="btn btn-outline-dark rounded-0 robotomono botao" type="submit">Apoie</text>
+		</div>
+		<h1 align="center" class="robotomonorodape" style="bottom: 30"><b>W H A L E - 2023</b></h1>
+	</div>
+	
+	<div class="janelacertificados">
+	  <div class="conteudo" style="margin: 2%">
+	  	<div align="right">
+	  		<a href="/certificados/geradorDeCertificados"><text class="btn btn-outline-success rounded-circle robotomono" type="submit" style="width: 40; height: 40; margin-right:1%;"></text></a>
+	  		<text onclick="fecharJanelaCertificados()" class="btn btn-outline-danger rounded-circle robotomono" style="width: 40; height: 40;"></text>
+	    </div>
+	    <div>
+	    	<h2 class="titulo" style="font-size: 2rem;">Certificados</h2>
+	    	<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;"><b>WHALE CERTIFICADOS é um projeto opensource capaz de automatizar a geração de certificados. Basta inserir um layout com campos sem preenchimento e um arquivo csv com os nomes a serem gravados.</b></p>
+			<br>
+	   	</div>
+	   	<div align="center">
+	   		<video width="60%" height="50%" controls>
+  				<source src="/home/images/tutorialcertificados.mp4" type="video/mp4">Seu navegador não suporta a tag de vídeo.
+			</video>
+			<br><br>
+	   	</div>
+	  </div>
+	</div>
+	
+	
+	
+	<div class="janelacores">
+	  <div class="conteudo" style="margin: 2%">
+	  	<div align="right">
+	  		<a href="/cores/imagemtransparente"><text class="btn btn-outline-success rounded-circle robotomono" type="submit" style="width: 40; height: 40; margin-right:1%;"></text></a>
+	  		<text onclick="fecharJanelaCores()" class="btn btn-outline-danger rounded-circle robotomono" style="width: 40; height: 40;"></text>
+	    </div>
+	    <div>
+	    	<h2 class="titulo" style="font-size: 2rem;">Cores</h2>
+	    	<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;"><b>WHALE CORES é um projeto opensource capaz de remover o fundo com base na presença de uma determinada cor na imagem. Basta inserir uma imagem e digitar o valor hexadecimal da cor alvo; automaticamente o WHALE marcará como transparente.</b></p>
+			<br>
+	   	</div>
+	   	<div align="center">
+	   		<video width="60%" height="50%" controls>
+  				<source src="/home/images/tutorialcores.mp4" type="video/mp4">
+  				Seu navegador não suporta a tag de vídeo.
+			</video>
+			<br><br>
+	   	</div>
+	  </div>
+	</div>
+	
+	
+	
+	<div class="janelaapoio">
+	  <div class="conteudo" style="margin: 2%">
+	  	<div align="right">
+	  		<text onclick="fecharJanelaApoio()" class="btn btn-outline-danger rounded-circle robotomono" style="width: 40; height: 40;"></text>
+	    </div>
+	    <div>
+	    	<h2 class="titulo" style="font-size: 2rem;">Apoie<br></h2>
+	    	<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;"><b>Próximas atualizações:</b></p>
+	    	<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;">- Sistema de pré-visualização de anexos;</p>
+	    	<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;">- Conta gotas para o Whale Cores;</p>
+	    	<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;">- Sistema de assinatura / autenticação de uma lista de documentos (Whale Certificados);</p>
+	    	<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;">- Sistema de susbstituição de cor por outra (Whale Cores);</p>
+			<br>
+			<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;"><b>Quer ajudar? Acesse nosso <a href="https://github.com/bioramonmoratori/whale"><span style="background-color: #000000; color: #FFFFFF">repositório do GitHub</span></a> e faça um contribuição.</b></p>
+			<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;"><b>Se curtiu nossa ideia, acesse nosso <a href="https://apoia.se/whale"><span style="background-color: #b2ffb2; color: #000000">APOIA-SE</span></a> e faça uma doação.</b></p>	   	
+	   	</div>
+	   	<div align="center">
+	   		
+	   	</div>
+	  </div>
+	</div>
+	
+	
+	
+	
+	
+	
   </body>
 </html>
