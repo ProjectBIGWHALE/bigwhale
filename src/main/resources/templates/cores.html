@@ -52,12 +52,40 @@
 			  background-color: #011627;
 			  border-color:#FFFFFF;
 			  color: #fff;
-			}			
+			}	
+			
+			#preview img{
+				
+				max-width: 25%;
+				max-height: 25%;
+            	display: inline-block;
+            	justify-content: center;
+			
+			}
+	        
 		</style>
 	</head>
-
+	<script>
+		function previewImage(event) {
+			var input = event.target;
+			var preview = document.getElementById('preview');
+				
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				
+				reader.onload = function(e) {
+					preview.innerHTML = '<img src="' + e.target.result + '" alt="Pré-visualização da imagem">';
+				};
+				
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+    </script>			      	
 	<body style="background-color:#FFFFFF;">
 		<div><br><br><br><br></div>
+		
+		<div align="center" id="preview"></div>
+		
 		<form th:action="@{/cores/processarimagem}"
 		      class="card-body d-flex justify-content-center p-5" method="POST"
 		      enctype="multipart/form-data" th:object="${formulario}">
@@ -68,10 +96,11 @@
 			        <p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Imagem (JPG, PNG)</b></p>
 			        <input type="file" th:field="*{imagem}"
 			               style="border-radius: 10px; padding: 10px 72px; text-align: center;"
-			               class="form-control"/>
+			               class="form-control" id="image-input" onchange="previewImage(event)"/>
 			        <span th:errors="*{imagem}" class="text-danger"></span>
+			        
 			    </div>
-		      	
+		
 		      	<div class="form-group mb-3 col-md-12">
 			        <p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Cor da Imagem (Formato Hexadecima - #XXXXXX)</b></p>
 			          <input th:field="*{corDaImagem}" type="text"
