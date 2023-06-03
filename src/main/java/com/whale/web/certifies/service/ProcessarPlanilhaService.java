@@ -1,6 +1,5 @@
 package com.whale.web.certifies.service;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -10,13 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
 import com.whale.web.certifies.model.FormularioCertifies;
 
 @Service
 public class ProcessarPlanilhaService {
 	
-	public List<String> salvandoNomesEmUmaLista(MultipartFile planilha, FormularioCertifies formularioService) throws IOException, CsvException {
+	public List<String> salvandoNomesEmUmaLista(MultipartFile planilha, FormularioCertifies formularioService) throws Exception {
+		
+		if(planilha.isEmpty()) {
+			throw new Exception();
+		}
 		
 		List<String> nomes = new ArrayList();
 		

@@ -44,24 +44,33 @@ public class CoresController {
 	}
 	
 	@PostMapping("/processarimagem")
-	public void processarImagem(FormularioColors formulario, HttpServletResponse response) throws IOException{
+	public String processarImagem(FormularioColors formulario, HttpServletResponse response) throws IOException{
 		
-	    File imagemProcessada = alterarCorService.alterarCor(formulario.getImagem(), formulario.getCorDaImagem(), formulario.getCorParaAlteracao(), formulario.getMargem());
-
-	    // Define o tipo de conteúdo e o tamanho da resposta
-	    response.setContentType("image/png");
-	    response.setContentLength((int) imagemProcessada.length());
-
-	    // Define os cabeçalhos para permitir que a imagem seja baixada
-	    response.setHeader("Content-Disposition", "attachment; filename=\"ImagemAlterada.png\"");
-	    response.setHeader("Cache-Control", "no-cache");
-
-	    // Escreve a imagem modificada na resposta
-	    try (InputStream is = new FileInputStream(imagemProcessada)) {
-	        IOUtils.copy(is, response.getOutputStream());
-	    } catch (IOException e) {
-	        throw new RuntimeException("Erro ao escrever imagem na resposta.", e);
-	    }
+		try {
+		    File imagemProcessada = alterarCorService.alterarCor(formulario.getImagem(), formulario.getCorDaImagem(), formulario.getCorParaAlteracao(), formulario.getMargem());
+	
+		    // Define o tipo de conteúdo e o tamanho da resposta
+		    response.setContentType("image/png");
+		    response.setContentLength((int) imagemProcessada.length());
+	
+		    // Define os cabeçalhos para permitir que a imagem seja baixada
+		    response.setHeader("Content-Disposition", "attachment; filename=\"ImagemAlterada.png\"");
+		    response.setHeader("Cache-Control", "no-cache");
+	
+		    // Escreve a imagem modificada na resposta
+		    try (InputStream is = new FileInputStream(imagemProcessada)) {
+		        IOUtils.copy(is, response.getOutputStream());
+		    
+		    } catch (IOException e) {
+		        throw new RuntimeException("Erro ao escrever imagem na resposta.", e);
+		    }
+		
+		} catch(Exception e) {
+			return "redirect:/cores/imagemtransparente";
+		}
+		return null;
+		
+		
 	}
 	
 }

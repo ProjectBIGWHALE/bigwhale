@@ -68,35 +68,35 @@
 			    <div class="form-row">
 			        <div class="form-group mb-3 col-md-12">
 			        	<br>
-			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Lista de Nomes</b></p>
+			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Lista de Nomes (CSV)</b></p>
 			            <input type="file" th:field="*{planilha.planilha}"
 			                   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
 			                   class="form-control"/>
 			            <span th:errors="*{planilha.planilha}" class="text-danger"></span>
 			        </div>
 			        <div class="form-group mb-3 col-md-12">
-			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada X</b></p>
+			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada X (px)</b></p>
 			            <input th:field="*{formulario.x}" type="number"
 			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
 			                   class="form-control"/>
 			            <span th:errors="*{formulario.x}" class="text-danger"></span>
 			        </div>
 			        <div class="form-group mb-3 col-md-12">
-			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada Y</b></p>
+			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada Y (px)</b></p>
 			            <input th:field="*{formulario.y}" type="number"
 			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
 			                   class="form-control"/>
 			            <span th:errors="*{formulario.y}" class="text-danger"></span>
 			        </div>
 			        <div class="form-group mb-3 col-md-12">
-			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Tamanho da Fonte</b></p>
+			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Tamanho da Fonte (px)</b></p>
 			            <input th:field="*{formulario.tamanhoDaFonte}" type="number"
 			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
 			                   class="form-control"/>
 			            <span th:errors="*{formulario.tamanhoDaFonte}" class="text-danger"></span>
 			        </div>
 			        <div class="form-group mb-3 col-md-12">
-			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Modelo de Certificado</b></p>
+			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Modelo de Certificado (JPG, PNG)</b></p>
 			            <input type="file" th:field="*{formulario.imagemLayoult}"
 			                   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
 			                   class="form-control"/>
@@ -105,7 +105,7 @@
 					<div align="center">
 						<br>
 						<button class="btn btn-outline-success rounded-circle robotomono" type="submit" style="width: 50; height: 50;"></button>
-						<a href="/home/"><text class="btn btn-outline-danger rounded-circle robotomono" type="submit" style="width: 50; height: 50;"></text></a>
+						<a href="/"><text class="btn btn-outline-danger rounded-circle robotomono" type="submit" style="width: 50; height: 50;"></text></a>
 					</div>
 				</div>
 		    </form>

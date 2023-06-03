@@ -25,9 +25,13 @@ public class CriarCertificadosService {
 	    Integer x = formulario.getX();
 	    Integer y = formulario.getY();
 	    Integer tamanhoDaFonte = formulario.getTamanhoDaFonte();
-
+	    
 	    MultipartFile imagemLayoult = uploadImagemService.uploadImagem(formulario.getImagemLayoult());
-
+	    
+	    if(x == null || y == null || tamanhoDaFonte == null || imagemLayoult == null || imagemLayoult.isEmpty()) {
+	    	throw new Exception();
+	    }
+	    
 	    List<byte[]> imagensComTexto = editarImagemService.editarImagem(imagemLayoult, nomes, y, x, tamanhoDaFonte);
 
 	    ByteArrayOutputStream bos = new ByteArrayOutputStream();

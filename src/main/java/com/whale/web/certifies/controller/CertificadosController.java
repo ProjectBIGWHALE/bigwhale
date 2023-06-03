@@ -2,6 +2,8 @@ package com.whale.web.certifies.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 @Controller
@@ -44,15 +47,24 @@ public class CertificadosController {
 	@RequestMapping(value="/baixarimagens", method=RequestMethod.POST)
 	public ResponseEntity<byte[]> baixarimagens(com.whale.web.certifies.model.PlanilhaEFormulario planilhaEFormulario) throws Exception {
 	    
-	    List<String> nomes = processarPlanilhaService.salvandoNomesEmUmaLista(planilhaEFormulario.getPlanilha().getPlanilha(), planilhaEFormulario.getFormulario());
-	    
-        byte[] arquivoZip = criarCertificadosService.criarCertificados(planilhaEFormulario.getFormulario(), nomes);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDisposition(ContentDisposition.builder("attachment").filename("certificados.zip").build());
-
-        return new ResponseEntity<>(arquivoZip, headers, HttpStatus.OK);
+		try {
+			
+		    List<String> nomes = processarPlanilhaService.salvandoNomesEmUmaLista(planilhaEFormulario.getPlanilha().getPlanilha(), planilhaEFormulario.getFormulario());
+		    
+	        byte[] arquivoZip = criarCertificadosService.criarCertificados(planilhaEFormulario.getFormulario(), nomes);
+	
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	        headers.setContentDisposition(ContentDisposition.builder("attachment").filename("certificados.zip").build());
+	        
+	        return new ResponseEntity<>(arquivoZip, headers, HttpStatus.valueOf(200));
+		} catch(Exception e) {
+			
+			HttpHeaders headers = new HttpHeaders();
+		    headers.setLocation(UriComponentsBuilder.fromPath("/certificados/geradorDeCertificados").build().toUri());
+		    return new ResponseEntity<>(headers, HttpStatus.FOUND);
+		}
+        
 	    
 	}
 	
