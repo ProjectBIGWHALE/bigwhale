@@ -56,12 +56,39 @@
 			  border-color:#FFFFFF;
 			  color: #fff;
 			}
+			#canvas {
+			    position: relative;
+			    display: inline-block;
+			}
+			
+			#backgroundImage {
+            	display: inline-block;
+            	justify-content: center;
+            	border-color: #000000;
+            	border-width: 3px;
+            	border-style: solid;
+			}
+
+			#textElement {
+			    position: absolute;
+			    left: 0;
+			    top: 0;
+			    font-family: 'Montserrat', cursive;
+			    font-size: 3.0rem;
+			    color: #FF0000; 
+			}
 		</style>
 	</head>
 
 	<body>
 		<div>
 			<br><br><br>
+			<div  align="center">
+			<div id="canvas">
+			   <img id="backgroundImage" src="" alt="Imagem de fundo">
+			   <div id="textElement" class="text"></div>
+    		</div>
+			</div>
 			<form th:action="@{/certificados/baixarimagens}"
 		      class="card-body d-flex justify-content-center p-5" method="POST"
 		      enctype="multipart/form-data" th:object="${planilhaEFormulario}">
@@ -78,28 +105,28 @@
 			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada X (px)</b></p>
 			            <input th:field="*{formulario.x}" type="number"
 			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
-			                   class="form-control"/>
+			                   class="form-control" id="x"/>
 			            <span th:errors="*{formulario.x}" class="text-danger"></span>
 			        </div>
 			        <div class="form-group mb-3 col-md-12">
 			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada Y (px)</b></p>
 			            <input th:field="*{formulario.y}" type="number"
 			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
-			                   class="form-control"/>
+			                   class="form-control" id="y"/>
 			            <span th:errors="*{formulario.y}" class="text-danger"></span>
 			        </div>
 			        <div class="form-group mb-3 col-md-12">
 			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Tamanho da Fonte (px)</b></p>
 			            <input th:field="*{formulario.tamanhoDaFonte}" type="number"
 			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
-			                   class="form-control"/>
+			                   class="form-control" id="fontSize"/>
 			            <span th:errors="*{formulario.tamanhoDaFonte}" class="text-danger"></span>
 			        </div>
 			        <div class="form-group mb-3 col-md-12">
 			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Modelo de Certificado (JPG, PNG)</b></p>
 			            <input type="file" th:field="*{formulario.imagemLayoult}"
 			                   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
-			                   class="form-control"/>
+			                   class="form-control" id="image"/>
 			            <span th:errors="*{formulario.imagemLayoult}" class="text-danger"></span>
 			        </div>
 					<div align="center">
@@ -112,8 +139,60 @@
 		    <div align="center">
 		    	
 			</div>
-			
+
 		</div>
+		
+		<script>
+		  document.addEventListener('DOMContentLoaded', function() {
+		    const xInput = document.getElementById('x');
+		    const yInput = document.getElementById('y');
+		    const fontSizeInput = document.getElementById('fontSize');
+		    const backgroundImage = document.getElementById('backgroundImage');
+		    const textElement = document.getElementById('textElement');
+		    const canvas = document.getElementById('canvas');
+
+		    xInput.addEventListener('input', updatePreview);
+		    yInput.addEventListener('input', updatePreview);
+		    fontSizeInput.addEventListener('input', updatePreview);
+
+		    const imageInput = document.getElementById('image');
+		    imageInput.addEventListener('change', function() {
+		      const file = imageInput.files[0];
+		      const reader = new FileReader();
+		      reader.onload = function(event) {
+		        backgroundImage.src = event.target.result;
+		        updatePreview();
+		      };
+		      reader.readAsDataURL(file);
+		    });
+
+		    function updatePreview() {
+		      const x = parseInt(xInput.value);
+		      const y = parseInt(yInput.value);
+		      const fontSize = parseInt(fontSizeInput.value);
+
+		      textElement.textContent = 'Seu texto aqui';
+		      textElement.style.left = x + 'px';
+		      textElement.style.top = y + 'px';
+		      textElement.style.fontSize = fontSize + 'px';
+
+		      canvas.style.position = 'relative';
+		      canvas.style.display = 'inline-block';
+		      canvas.style.backgroundImage = `url("${backgroundImage.src}")`;
+		      canvas.style.backgroundRepeat = 'no-repeat';
+		      canvas.style.backgroundSize = 'contain';
+		      canvas.style.width = backgroundImage.width + 'px';
+		      canvas.style.height = backgroundImage.height + 'px';
+
+		      textElement.style.position = 'absolute';
+		    }
+		  });
+
+    </script>
+		
+		
+		
+		
 	</body>
 
 </html>
