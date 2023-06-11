@@ -210,6 +210,20 @@
 	  z-index: 9999; /* garante que a janela esteja acima de outros elementos */
 	}
 	
+	.janelacodigos {
+	  display: none; /* inicialmente, a janela está escondida */
+	  position: fixed;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  width: 80%;
+	  height: 80%;
+	  background-color: #FFFFFFE6;
+	  border: 0px solid #000;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	  z-index: 9999; /* garante que a janela esteja acima de outros elementos */
+	}
+	
 	.janelaapoio {
 	  display: none; /* inicialmente, a janela está escondida */
 	  position: fixed;
@@ -271,6 +285,21 @@
 	    	janela.style.display = 'none';
 	    }
 	    
+	    function abrirJanelaCodigos() {
+	    	var janela = document.querySelector('.janelacodigos');
+	    	var fundo = document.createElement('div');
+	    	fundo.classList.add('janela-aberta');
+	    	document.body.appendChild(fundo);
+	    	janela.style.display = 'block';
+	    }
+	
+	    function fecharJanelaCodigos() {
+	    	var janela = document.querySelector('.janelacodigos');
+	    	var fundo = document.querySelector('.janela-aberta');
+	    	document.body.removeChild(fundo);
+	    	janela.style.display = 'none';
+	    }
+	    
 	    function abrirJanelaApoio() {
 	    	var janela = document.querySelector('.janelaapoio');
 	    	var fundo = document.createElement('div');
@@ -299,6 +328,7 @@
 			<h1 class="robotomono"><i>Sua aquarela de ferramentas de manipulação de imagens e documentos.</i></h1>
 			<text onclick="abrirJanelaCertificados()" class="btn btn-outline-dark rounded-0 robotomono botao" id="abrir-formulario" type="submit">Certificados</text>
 			<text onclick="abrirJanelaCores()" class="btn btn-outline-dark rounded-0 robotomono botao" type="submit">Cores</text>
+			<text onclick="abrirJanelaCodigos()" class="btn btn-outline-dark rounded-0 robotomono botao" type="submit">Códigos</text>
 			<text onclick="abrirJanelaApoio()" class="btn btn-outline-dark rounded-0 robotomono botao" type="submit">Apoie</text>
 		</div>
 		<h1 align="center" class="robotomonorodape" style="bottom: 30"><b>W H A L E - 2023</b></h1>
@@ -346,6 +376,31 @@
 	   	</div>
 	  </div>
 	</div>
+	
+	
+	
+	
+	
+	<div class="janelacodigos">
+	  <div class="conteudo" style="margin: 2%">
+	  	<div align="right">
+	  		<a href="/codigos/qrcode"><text class="btn btn-outline-success rounded-circle robotomono" type="submit" style="width: 40; height: 40; margin-right:1%;"></text></a>
+	  		<text onclick="fecharJanelaCodigos()" class="btn btn-outline-danger rounded-circle robotomono" style="width: 40; height: 40;"></text>
+	    </div>
+	    <div>
+	    	<h2 class="titulo" style="font-size: 2rem;">Códigos</h2>
+	    	<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;"><b>WHALE CÓDIGOS é um projeto capaz de gerar códigos QR-Code de qualquer link HTTP ou HTTPS, fazendo download automático em formato PNG</b></p>
+			<br>
+	   	</div>
+	   	<div align="center">
+	   		
+			<br><br>
+	   	</div>
+	  </div>
+	</div>
+	
+	
+	
 	
 	
 	
