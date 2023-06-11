@@ -35,8 +35,14 @@ public File alterarCor(MultipartFile imagemFormulario, String corDaImagem, Strin
 
 	    // Define a cor atual e a nova cor
 	    Color oldColor = new Color(r, g, b);
-	    Color newColor = new Color(0, 0, 0, 0);
-
+	    Color newColor;
+	    
+	    if(corDeSubstituicao == null || corDeSubstituicao.isEmpty()) {
+	    	newColor = new Color(0, 0, 0, 0);
+	    } else {
+	    	Color cor = Color.decode(corDeSubstituicao);
+	    	newColor = new Color(cor.getRed(), cor.getGreen(), cor.getBlue());
+	    }
 	    // Cria uma nova imagem com transparência
 	    BufferedImage novaImg = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
