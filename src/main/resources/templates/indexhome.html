@@ -224,6 +224,20 @@
 	  z-index: 9999; /* garante que a janela esteja acima de outros elementos */
 	}
 	
+	.janelaseguranca {
+	  display: none; /* inicialmente, a janela está escondida */
+	  position: fixed;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  width: 80%;
+	  height: 80%;
+	  background-color: #FFFFFFE6;
+	  border: 0px solid #000;
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	  z-index: 9999; /* garante que a janela esteja acima de outros elementos */
+	}
+	
 	.janelaapoio {
 	  display: none; /* inicialmente, a janela está escondida */
 	  position: fixed;
@@ -300,6 +314,21 @@
 	    	janela.style.display = 'none';
 	    }
 	    
+	    function abrirJanelaSeguranca() {
+	    	var janela = document.querySelector('.janelaseguranca');
+	    	var fundo = document.createElement('div');
+	    	fundo.classList.add('janela-aberta');
+	    	document.body.appendChild(fundo);
+	    	janela.style.display = 'block';
+	    }
+	
+	    function fecharJanelaSeguranca() {
+	    	var janela = document.querySelector('.janelaseguranca');
+	    	var fundo = document.querySelector('.janela-aberta');
+	    	document.body.removeChild(fundo);
+	    	janela.style.display = 'none';
+	    }
+	    
 	    function abrirJanelaApoio() {
 	    	var janela = document.querySelector('.janelaapoio');
 	    	var fundo = document.createElement('div');
@@ -329,6 +358,7 @@
 			<text onclick="abrirJanelaCertificados()" class="btn btn-outline-dark rounded-0 robotomono botao" id="abrir-formulario" type="submit">Certificados</text>
 			<text onclick="abrirJanelaCores()" class="btn btn-outline-dark rounded-0 robotomono botao" type="submit">Cores</text>
 			<text onclick="abrirJanelaCodigos()" class="btn btn-outline-dark rounded-0 robotomono botao" type="submit">Códigos</text>
+			<text onclick="abrirJanelaSeguranca()" class="btn btn-outline-dark rounded-0 robotomono botao" type="submit">Segurança</text>
 			<text onclick="abrirJanelaApoio()" class="btn btn-outline-dark rounded-0 robotomono botao" type="submit">Apoie</text>
 		</div>
 		<h1 align="center" class="robotomonorodape" style="bottom: 30"><b>W H A L E - 2023</b></h1>
@@ -401,6 +431,26 @@
 	
 	
 	
+	<div class="janelaseguranca">
+	  <div class="conteudo" style="margin: 2%">
+	  	<div align="right">
+	  		<a href="/seguranca/encriptografar"><text class="btn btn-outline-success rounded-circle robotomono" type="submit" style="width: 40; height: 40; margin-right:1%;"></text></a>
+	  		<text onclick="fecharJanelaSeguranca()" class="btn btn-outline-danger rounded-circle robotomono" style="width: 40; height: 40;"></text>
+	    </div>
+	    <div>
+	    	<h2 class="titulo" style="font-size: 2rem;">Segurança</h2>
+	    	<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;"><b>WHALE SEGURANÇA é um projeto capaz de criptografar e descriptografar seus arquivos, através de uma chave / senha personalizada</b></p>
+			<br>
+	   	</div>
+	   	<div align="center">
+	   		
+			<br><br>
+	   	</div>
+	  </div>
+	</div>
+	
+	
+	
 	
 	
 	
@@ -417,8 +467,7 @@
 	    	<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;">- Sistema de assinatura / autenticação de uma lista de documentos (Whale Certificados);</p>
 	    	<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;">- Sistema de susbstituição de cor por outra (Whale Cores);</p>
 			<br>
-			<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;"><b>Quer ajudar? Acesse nosso <a href="https://github.com/bioramonmoratori/whale"><span style="background-color: #000000; color: #FFFFFF">repositório do GitHub</span></a> e faça um contribuição.</b></p>
-			<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;"><b>Se curtiu nossa ideia, acesse nosso <a href="https://apoia.se/whale"><span style="background-color: #b2ffb2; color: #000000">APOIA-SE</span></a> e faça uma doação.</b></p>	   	
+			<p class="robotomonorodape" style="max-height: 50%; width: 100%; text-align: justify; font-size: 1rem;"><b>Acesse nosso <a href="https://github.com/bioramonmoratori/whale"><span style="background-color: #000000; color: #FFFFFF">repositório do GitHub</span></a></b></p>	   	
 	   	</div>
 	   	<div align="center">
 	   		

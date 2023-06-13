@@ -29,12 +29,6 @@ public class CoresController {
 	@Autowired
 	FormularioColors formulario;
 	
-	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String paginaInicial() {
-	
-		return "indexcolors";
-	}
-	
 	@RequestMapping(value="/imagemtransparente", method=RequestMethod.GET)
 	public String geradorDeCertificados(Model model) {
 		
