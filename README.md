@@ -29,7 +29,7 @@ RailWay Plataform
 
 ## Collaborators
 <a href="https://github.com/bioramonmoratori"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/d4afb72c-ec3a-4672-b376-c4d33a4aa11c" width="100" height="100"></a>
-<a href="https://github.com/erasmobezerra"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/397855a4-e7e9-4cc0-8795-c5f16a769b12" width="100" height="100"></a>
+<a href="https://github.com/erasmobezerra"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/837b8b18-b812-451a-b777-073e33b3d068" width="100" height="100"></a>
 <a href="https://github.com/amandapvln"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/4de40297-eb96-45ed-b4c4-7b1fb8cbb65a" width="100" height="100"></a>
 <a href="https://github.com/jose-fps"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/e1b170b6-b614-485a-ae3e-e24fb6a63cc7" width="100" height="100"></a>
 <a href="https://github.com/arleysouzadev"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/0ec92ed5-0296-4fac-ad03-0cb39acf7260" width="100" height="100"></a>
