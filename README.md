@@ -28,8 +28,8 @@ RailWay Plataform
 - MIT Licence
 
 ## Collaborators
-<a href="https://github.com/bioramonmoratori"><img src="https://github.com/ProjectBIGWHALE/whale/assets/90486302/68d60c6c-8cae-421a-b1d4-96fb1b7221cf" width="100" height="100"></a>
-<a href="https://github.com/erasmobezerra"><img src="https://github.com/ProjectBIGWHALE/whale/assets/90486302/d6e7cda1-4b59-4376-b3c5-a65dd86d51f9" width="100" height="100"></a>
-<a href="https://github.com/amandapvln"><img src="https://github.com/ProjectBIGWHALE/whale/assets/90486302/e53836fd-7b02-4c7b-9abc-ed5848ac89eb" width="100" height="100"></a>
-<a href="https://github.com/jose-fps"><img src="https://github.com/ProjectBIGWHALE/whale/assets/90486302/39ecc449-82bd-4cff-a1ef-237871e50523" width="100" height="100"></a>
-<a href="https://github.com/arleysouzadev"><img src="https://github.com/ProjectBIGWHALE/whale/assets/90486302/f02a1f97-5faf-4a88-9f7e-c5cc89ef27c1" width="100" height="100"></a>
+<a href="https://github.com/bioramonmoratori"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/d4afb72c-ec3a-4672-b376-c4d33a4aa11c" width="100" height="100"></a>
+<a href="https://github.com/erasmobezerra"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/397855a4-e7e9-4cc0-8795-c5f16a769b12" width="100" height="100"></a>
+<a href="https://github.com/amandapvln"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/4de40297-eb96-45ed-b4c4-7b1fb8cbb65a" width="100" height="100"></a>
+<a href="https://github.com/jose-fps"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/e1b170b6-b614-485a-ae3e-e24fb6a63cc7" width="100" height="100"></a>
+<a href="https://github.com/arleysouzadev"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/0ec92ed5-0296-4fac-ad03-0cb39acf7260" width="100" height="100"></a>
