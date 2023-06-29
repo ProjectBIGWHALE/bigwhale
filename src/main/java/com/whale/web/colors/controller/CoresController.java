@@ -1,9 +1,12 @@
 package com.whale.web.colors.controller;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.whale.web.colors.model.FormularioColors;
+import com.whale.web.colors.model.FormularioPaleta;
 import com.whale.web.colors.service.AlterarCorService;
+import com.whale.web.colors.service.PaletaDeCoresService;
 
 
 @Controller
@@ -28,6 +33,9 @@ public class CoresController {
 	
 	@Autowired
 	FormularioColors formulario;
+	
+	@Autowired
+	PaletaDeCoresService paletaDeCoresService;
 	
 	@RequestMapping(value="/imagemtransparente", method=RequestMethod.GET)
 	public String geradorDeCertificados(Model model) {
@@ -64,6 +72,33 @@ public class CoresController {
 		}
 		return null;
 		
+	}
+	
+	@RequestMapping(value="/paletadecores", method=RequestMethod.GET)
+	public String paletaDeCores(Model model) {
+		
+		model.addAttribute("formulario", formulario);
+		return "paletadecores";
+		
+	}
+	
+	@PostMapping("/criarpaleta")
+	public String criarPaleta(FormularioPaleta formulario, Model model) {
+		
+		try {
+			List<Color> listaDeCores = paletaDeCoresService.criarPaletaDeCores(formulario.getImagem());
+			formulario.setListaDeCores(listaDeCores);
+			
+			// Converter a imagem em base64
+	        String imagemBase64 = Base64.getEncoder().encodeToString(formulario.getImagem().getBytes());
+			
+			model.addAttribute("formulario", formulario);
+			model.addAttribute("imagemBase64", imagemBase64); // Adicionar a imagem base64 ao modelo
+			return "visualizacaodapaleta";
+			
+		} catch (Exception e) {
+			return "redirect:/cores/paletadecores";
+		}
 		
 	}
 	
