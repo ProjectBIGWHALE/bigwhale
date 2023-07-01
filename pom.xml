@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -51,7 +52,17 @@
 	        <artifactId>core</artifactId>
 	        <version>3.4.1</version>
 	    </dependency>
-
+		<dependency>
+		    <groupId>edu.stanford.nlp</groupId>
+		    <artifactId>stanford-corenlp</artifactId>
+		    <version>4.5.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>edu.stanford.nlp</groupId>
+		    <artifactId>stanford-corenlp</artifactId>
+		    <version>4.5.4</version>
+		    <classifier>models</classifier>
+		</dependency>
 	</dependencies>
 
 	<build>

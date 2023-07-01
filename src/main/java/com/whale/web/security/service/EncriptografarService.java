@@ -3,7 +3,7 @@ package com.whale.web.security.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.whale.web.security.model.FormularioSecurity;
+import com.whale.web.security.model.FormularioCriptoSecurity;
 
 import java.util.Arrays;
 
@@ -14,7 +14,7 @@ import javax.crypto.spec.SecretKeySpec;
 @Service
 public class EncriptografarService {
 	
-	public byte[] encriptografarArquivo(FormularioSecurity formulario) throws Exception {
+	public byte[] encriptografarArquivo(FormularioCriptoSecurity formulario) throws Exception {
 	    MultipartFile arquivoDoFormulario = formulario.getArquivo();
 	    String chaveDeCriptografia = formulario.getChave();
 	    
@@ -46,7 +46,7 @@ public class EncriptografarService {
 	    }
 	}
 
-	public byte[] descriptografarArquivo(FormularioSecurity formulario) throws Exception {
+	public byte[] descriptografarArquivo(FormularioCriptoSecurity formulario) throws Exception {
 	    MultipartFile arquivoDoFormulario = formulario.getArquivo();
 	    String chaveDeCriptografia = formulario.getChave();
 	    
