@@ -15,25 +15,24 @@ public class AlterColorService {
 	
 public File alterColor(MultipartFile imageForm, String colorOfImage, String replacementColor, Integer margin) throws IOException {
 	    
-	    // Carrega imagem
+	    // Load image
 	    BufferedImage img = ImageIO.read(imageForm.getInputStream());
 
-	    // Define a cor marcada
+	    // Defines the marked color
 	    Color markedColor = Color.decode(colorOfImage);
 
-	    // Define a margem superior e inferior para cada componente RGB
+	    // Sets the top and bottom margin for each RGB component
 	    int delta = (int) Math.round(255 * (margin / 100.0)); // Porcentagem de margem
 	    int r = markedColor.getRed();
 	    int g = markedColor.getGreen();
 	    int b = markedColor.getBlue();
-	    int newRmin = Math.max(0, r - delta); // Limite inferior para o componente R
-	    int newRmax = Math.min(255, r + delta); // Limite superior para o componente R
-	    int newGmin = Math.max(0, g - delta); // Limite inferior para o componente G
-	    int newGmax = Math.min(255, g + delta); // Limite superior para o componente G
-	    int newBmin = Math.max(0, b - delta); // Limite inferior para o componente B
-	    int newBmax = Math.min(255, b + delta); // Limite superior para o componente B
-
-	    // Define a cor atual e a nova cor
+	    int newRmin = Math.max(0, r - delta); // Lower limit for the R component
+	    int newRmax = Math.min(255, r + delta); // Lower limit for the R component
+	    int newGmin = Math.max(0, g - delta); // Lower limit for the G component
+	    int newGmax = Math.min(255, g + delta); // Upper limit for the G component
+	    int newBmin = Math.max(0, b - delta); // Lower limit for the B component 
+	    int newBmax = Math.min(255, b + delta); // Upper limit for the B component 
+	    // Sets current color and new color
 	    Color oldColor = new Color(r, g, b);
 	    Color newColor;
 	    
@@ -43,13 +42,13 @@ public File alterColor(MultipartFile imageForm, String colorOfImage, String repl
 	    	Color color = Color.decode(replacementColor);
 	    	newColor = new Color(color.getRed(), color.getGreen(), color.getBlue());
 	    }
-	    // Cria uma nova imagem com transparência
+	    // Creates a new image with transparency
 	    BufferedImage newImg = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-	    // Percorre todos os pixels da imagem
+	    // Cycles through all pixels in the image
 	    for (int x = 0; x < img.getWidth(); x++) {
 	        for (int y = 0; y < img.getHeight(); y++) {
-	            // Verifica a cor atual do pixel
+	            // Checks the current pixel color
 	            Color pixelColor = new Color(img.getRGB(x, y));
 	            int pixelR = pixelColor.getRed();
 	            int pixelG = pixelColor.getGreen();
@@ -57,18 +56,18 @@ public File alterColor(MultipartFile imageForm, String colorOfImage, String repl
 	            if (pixelR >= newRmin && pixelR <= newRmax &&
 	                pixelG >= newGmin && pixelG <= newGmax &&
 	                pixelB >= newBmin && pixelB <= newBmax) {
-	                // Define o valor RGBA completo usando o método getRGB()
+	                // Set the full RGBA value using the getRGB() method
 	                int newPixelValue = newColor.getRGB();
-	                // Define o novo valor do pixel na nova imagem
+	                // Sets the new pixel value in the new image
 	                newImg.setRGB(x, y, newPixelValue);
 	            } else {
-	                // Copia o pixel original para a nova imagem
+	                // Copies the original pixel to the new image
 	                newImg.setRGB(x, y, img.getRGB(x, y));
 	            }
 	        }
 	    }
 
-	    // Salva a nova imagem com transparência em um arquivo
+	    // Saves the new image with transparency to a file
 	    File ProcessedImage = new File("ColorTransparent.png");
 	    ImageIO.write(newImg, "png", ProcessedImage);
 

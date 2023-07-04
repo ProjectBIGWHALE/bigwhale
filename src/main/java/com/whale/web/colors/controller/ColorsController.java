@@ -51,15 +51,15 @@ public class ColorsController {
 		try {
 		    File processedImage = alterCorService.alterColor(form.getImage(), form.getColorOfImagem(), form.getColorForAlteration(), form.getMargin());
 	
-		    // Define o tipo de conteúdo e o tamanho da resposta
+		    // Define the content type and size of the response
 		    response.setContentType("image/png");
 		    response.setContentLength((int) processedImage.length());
 	
-		    // Define os cabeçalhos para permitir que a imagem seja baixada
+		    // Set headers to allow the image to be downloaded
 		    response.setHeader("Content-Disposition", "attachment; filename=\"ModifiedImage.png\"");
 		    response.setHeader("Cache-Control", "no-cache");
 	
-		    // Escreve a imagem modificada na resposta
+		    // Write the modified image in the answer
 		    try (InputStream is = new FileInputStream(processedImage)) {
 		        IOUtils.copy(is, response.getOutputStream());
 		    
@@ -89,11 +89,11 @@ public class ColorsController {
 			List<Color> listOfColors = colorPaletteService.createColorPalette(form.getImage());
 			form.setListOfColors(listOfColors);
 			
-			// Converter a imagem em base64
+			// Convert the image to base64
 	        String imageBase64 = Base64.getEncoder().encodeToString(form.getImage().getBytes());
 			
 			model.addAttribute("formulario", form);
-			model.addAttribute("imageBase64", imageBase64); // Adicionar a imagem base64 ao modelo
+			model.addAttribute("imageBase64", imageBase64); // Add the base64 image to the template
 			return "paletteview";
 			
 		} catch (Exception e) {

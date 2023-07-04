@@ -11,40 +11,41 @@ import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 @Service
 public class ColorPaletteService {
 
-    public List<Color> createColorPalette(MultipartFile imagem) throws Exception {
-        int numColors = 10; // Número de cores predominantes a serem extraídas
-        int maxColorDistance = 70; // Distância máxima permitida entre cores
+    public List<Color> createColorPalette(MultipartFile multipartFile) throws Exception {
+        int numColors = 10; // Number of predominant colors to be extracted
+        int maxColorDistance = 70; // Maximum allowed distance between colors
 
         try {
-            BufferedImage image = ImageIO.read(imagem.getInputStream());
+            BufferedImage image = ImageIO.read(multipartFile.getInputStream());
             int width = image.getWidth();
             int height = image.getHeight();
 
-            // Contagem das cores
+            // Color count
             Map<Integer, Integer> colorCount = new HashMap<>();
 
-            // Percorre todos os pixels da imagem
+            // Iterate through all pixels of the image
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     int rgb = image.getRGB(x, y);
                     int alpha = (rgb >> 24) & 0xFF;
 
-                    // Considera apenas os pixels completamente opacos
+                    // Consider only fully opaque pixels
                     if (alpha == 255) {
                         int red = (rgb >> 16) & 0xFF;
                         int green = (rgb >> 8) & 0xFF;
                         int blue = rgb & 0xFF;
                         int pixel = (red << 16) | (green << 8) | blue;
 
-                        // Verifica a distância para as cores existentes na paleta
+                        // Check distance to existing colors in the palette
                         boolean isDuplicate = colorCount.keySet().stream()
                                 .anyMatch(existingColor -> getColorDistance(existingColor, pixel) <= maxColorDistance);
 
                         if (!isDuplicate) {
-                            // Incrementa a contagem da cor
+                            // Increment the color count
                             int count = colorCount.getOrDefault(pixel, 0);
                             colorCount.put(pixel, count + 1);
                         }
@@ -52,7 +53,7 @@ public class ColorPaletteService {
                 }
             }
 
-            // Ordena as cores pela contagem em ordem decrescente
+            // Sort the colors by count in descending order
             List<Color> colorPalette = colorCount.entrySet().stream()
                     .sorted(Map.Entry.<Integer, Integer>comparingByValue().reversed())
                     .limit(numColors)
@@ -73,3 +74,4 @@ public class ColorPaletteService {
         return Math.sqrt(rDiff * rDiff + gDiff * gDiff + bDiff * bDiff);
     }
 }
+

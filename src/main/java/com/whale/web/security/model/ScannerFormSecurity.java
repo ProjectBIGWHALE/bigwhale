@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class ScannerFormSecurity {
-	
+
 	private MultipartFile file;
 
 	public MultipartFile getFile() {
@@ -15,6 +15,5 @@ public class ScannerFormSecurity {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	
-	
+
 }

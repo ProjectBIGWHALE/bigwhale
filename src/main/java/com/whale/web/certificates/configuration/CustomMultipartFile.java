@@ -1,4 +1,4 @@
-package com.whale.web.certifies.configuration;
+package com.whale.web.certificates.configuration;
 
 import java.io.File;
 import java.io.IOException;

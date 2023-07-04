@@ -23,23 +23,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.whale.web.security.model.CryptoFormSecurity;
-import com.whale.web.security.service.EncriptografarService;
+import com.whale.web.security.service.EncryptService;
 
 @Controller
-@RequestMapping("/seguranca")
-public class SegurancaController {
+@RequestMapping("/security")
+public class SecurityController {
 	
 	@Autowired
-	CryptoFormSecurity formulario;
+	CryptoFormSecurity form;
 	
 	@Autowired
-	EncriptografarService encriptografarService;
+	EncryptService encryptService;
 	
-	@RequestMapping(value="/encriptografar", method=RequestMethod.GET)
-	public String geradorDeCertificados(Model model) {
+	@RequestMapping(value="/encrypt", method=RequestMethod.GET)
+	public String certificateGenerator(Model model) {
 		
-		model.addAttribute("formulario", formulario);
-		return "segurancacriptografar";
+		model.addAttribute("form", form);
+		return "securityencrypt";
 		
 	}
 	
@@ -48,55 +48,54 @@ public class SegurancaController {
 	public String encryptFile(CryptoFormSecurity form, HttpServletResponse response) throws IOException{
 		
 		
-		// Cria um pipeline de anotação de sentenças
+		// Create a sentence annotation pipeline
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        // Texto de exemplo
+        // Sample Text
         String text = "Teaching is not for sensitive souls. While reviewing future, past, and present tenses with my English class, I posed this question: “‘I am beautiful’ is what tense?” One student raised...";
 
-        // Anotação de sentença e análise de sentimentos
+        // Sentence annotation and sentiment analysis
         Annotation annotation = new Annotation(text);
         pipeline.annotate(annotation);
 
-        // Obtém as anotações de sentimentos
+        // Get the sentiment notes
         List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
-        for (CoreMap sentence : sentences) {
-            String sentiment = sentence.get(SentimentCoreAnnotations.SentimentClass.class);
-            System.out.println("Sentença: " + sentence);
-            System.out.println("Sentimento: " + sentiment);
+        for (CoreMap verdict : sentences) {
+            String feeling = verdict.get(SentimentCoreAnnotations.SentimentClass.class);
+            System.out.println("Verdict: " + verdict);
+            System.out.println("Sentimento: " + feeling);
             System.out.println();
         }
         
       
 		try {
 			
-			byte[] arquivoCriptografado;
+			byte[] encryptedFile;
 			
-			if(formulario.getAction() == true) {
-				arquivoCriptografado = encriptografarService.encriptografarArquivo(formulario);
-				response.setHeader("Content-Disposition", "attachment; filename=arquivoCriptografado");
+			if(form.getAction() == true) {
+				encryptedFile = encryptService.encryptFile(form);
+				response.setHeader("Content-Disposition", "attachment; filename=encryptedFile");
 			} else {
-				arquivoCriptografado = encriptografarService.descriptografarArquivo(formulario);
-				response.setHeader("Content-Disposition", "attachment; filename=arquivoDescriptografado");
+				encryptedFile = encryptService.decryptFile(form);
+				response.setHeader("Content-Disposition", "attachment; filename=encryptedFile");
 			}
-			// Define o tipo de conteúdo e o tamanho da resposta
+			// Defines the content type and size of the response
 			response.setContentType("application/octet-stream");
-		    response.setContentLength(arquivoCriptografado.length);
+		    response.setContentLength(encryptedFile.length);
 	
-		    // Define os cabeçalhos para permitir que a imagem seja baixada
-		    
+		    // Set headers to allow the image to be downloaded		    
 		    response.setHeader("Cache-Control", "no-cache");
 			
 		    try (OutputStream outputStream = response.getOutputStream()) {
-		        outputStream.write(arquivoCriptografado);
+		        outputStream.write(encryptedFile);
 		        outputStream.flush();
 		    }catch(Exception e) {
-				throw new RuntimeException("Erro ao gerar arquivo criptografado", e);
+				throw new RuntimeException("Error generating encrypted file", e);
 			}
 		} catch(Exception e) {
-			return "redirect:/seguranca/encriptografar";
+			return "redirect:/security/encrypt";
 		}
 		
 		return null;

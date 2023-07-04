@@ -1,4 +1,4 @@
-package com.whale.web.certifies.service;
+package com.whale.web.certificates.service;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.whale.web.certifies.model.FormCertifies;
+import com.whale.web.certificates.model.FormCertifies;
 
 @Service
 public class CreateCertificateService {
 	
 	@Autowired
-	UploadImagemServiceCertifies uploadImagemService;
+	UploadImagemServiceCertifies uploadImageService;
 	
 	@Autowired
 	EditImageService editImageService;
@@ -26,7 +26,7 @@ public class CreateCertificateService {
 	    Integer y = form.getY();
 	    Integer fontSize = form.getFontSize();
 	    
-	    MultipartFile imageLayoult = uploadImagemService.uploadImage(form.getImageLayoult());
+	    MultipartFile imageLayoult = uploadImageService.uploadImage(form.getImageLayoult());
 	    
 	    if(x == null || y == null || fontSize == null || imageLayoult == null || imageLayoult.isEmpty()) {
 	    	throw new Exception();

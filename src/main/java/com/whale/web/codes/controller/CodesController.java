@@ -20,7 +20,7 @@ import com.whale.web.codes.service.QRCodeService;
 
 @Controller
 @RequestMapping("/codes")
-public class CodigosController {
+public class CodesController {
 	
 	@Autowired
 	FormCodes form;
@@ -29,7 +29,7 @@ public class CodigosController {
 	QRCodeService qrCodeService;
 	
 	@RequestMapping(value="/qrcode", method=RequestMethod.GET)
-	public String geradorDeCertificados(Model model) {
+	public String certificateGenerator(Model model) {
 		
 		model.addAttribute("form", form);
 		return "codes";
@@ -38,7 +38,7 @@ public class CodigosController {
 	
 
 	@PostMapping("/generateqrcode")
-	public String processarImagem(FormCodes form, HttpServletResponse response) throws IOException{
+	public String processImage(FormCodes form, HttpServletResponse response) throws IOException{
 		
 		try {
 			File processedImage = qrCodeService.generateQRCode(form.getLink());
@@ -48,7 +48,7 @@ public class CodigosController {
 		    response.setContentLength((int) processedImage.length());
 	
 		    // Define os cabeçalhos para permitir que a imagem seja baixada
-		    response.setHeader("Content-Disposition", "attachment; filename=\"ImagemAlterada.png\"");
+		    response.setHeader("Content-Disposition", "attachment; filename=\"ModifiedImage.png\"");
 		    response.setHeader("Cache-Control", "no-cache");
 			
 			try (InputStream is = new FileInputStream(processedImage)){

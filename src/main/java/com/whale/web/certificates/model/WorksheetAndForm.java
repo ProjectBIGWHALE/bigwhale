@@ -1,4 +1,4 @@
-package com.whale.web.certifies.model;
+package com.whale.web.certificates.model;
 
 import org.springframework.stereotype.Service;
 

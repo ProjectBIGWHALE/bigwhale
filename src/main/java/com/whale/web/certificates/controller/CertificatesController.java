@@ -1,4 +1,4 @@
-package com.whale.web.certifies.controller;
+package com.whale.web.certificates.controller;
 
 import java.util.List;
 
@@ -17,16 +17,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("/certificates")
-public class CertificadosController {
+public class CertificatesController {
 	
 	@Autowired
-	com.whale.web.certifies.service.ProcessWorksheetService processWorksheetService;
+	com.whale.web.certificates.service.ProcessWorksheetService processWorksheetService;
 	
 	@Autowired
-	com.whale.web.certifies.model.WorksheetAndForm worksheetAndForm;
+	com.whale.web.certificates.model.WorksheetAndForm worksheetAndForm;
 	
 	@Autowired
-	com.whale.web.certifies.service.CreateCertificateService createCertificateService;
+	com.whale.web.certificates.service.CreateCertificateService createCertificateService;
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String homePage() {
@@ -34,7 +34,7 @@ public class CertificadosController {
 		return "indexcertifies";
 	}
 	
-	@RequestMapping(value="/certificateGenerator", method=RequestMethod.GET)
+	@RequestMapping(value="/certificategenerator", method=RequestMethod.GET)
 	public String certificateGenerator(Model model) {
 		
 		model.addAttribute("worksheetAndForm", worksheetAndForm);
@@ -43,19 +43,19 @@ public class CertificadosController {
 	}
 	
 	@RequestMapping(value="/downloadimages", method=RequestMethod.POST)
-	public ResponseEntity<byte[]> downloadImages(com.whale.web.certifies.model.WorksheetAndForm worksheetAndForm) throws Exception {
+	public ResponseEntity<byte[]> downloadImages(com.whale.web.certificates.model.WorksheetAndForm worksheetAndForm) throws Exception {
 	    
 		try {
 			
 		    List<String> names = processWorksheetService.savingNamesInAList(worksheetAndForm.getWorksheet().getWorksheet(), worksheetAndForm.getForm());
 		    
-	        byte[] arquivoZip = createCertificateService.createCertificates(worksheetAndForm.getForm(), names);
+	        byte[] zipFile = createCertificateService.createCertificates(worksheetAndForm.getForm(), names);
 	
 	        HttpHeaders headers = new HttpHeaders();
 	        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-	        headers.setContentDisposition(ContentDisposition.builder("attachment").filename("certificados.zip").build());
+	        headers.setContentDisposition(ContentDisposition.builder("attachment").filename("certificates.zip").build());
 	        
-	        return new ResponseEntity<>(arquivoZip, headers, HttpStatus.valueOf(200));
+	        return new ResponseEntity<>(zipFile, headers, HttpStatus.valueOf(200));
 		} catch(Exception e) {
 			
 			HttpHeaders headers = new HttpHeaders();

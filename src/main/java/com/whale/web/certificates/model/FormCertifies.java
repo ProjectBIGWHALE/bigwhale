@@ -1,4 +1,4 @@
-package com.whale.web.certifies.model;
+package com.whale.web.certificates.model;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,13 +15,13 @@ public class FormCertifies {
 	public MultipartFile getImageLayoult() {
 		return imageLayoult;
 	}
-	public void setImagemLayoult(MultipartFile imageLayoult) {
+	public void setImageLayoult(MultipartFile imageLayoult) {
 		this.imageLayoult = imageLayoult;
 	}
-	public String getNomeDaPessoa() {
+	public String getPersonName() {
 		return personName;
 	}
-	public void setNomeDaPessoa(String personName) {
+	public void setPersonName(String personName) {
 		this.personName = personName;
 	}
 	public Integer getX() {

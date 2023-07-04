@@ -1,11 +1,11 @@
-package com.whale.web.certifies.service;
+package com.whale.web.certificates.service;
 
 import java.io.ByteArrayInputStream;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.whale.web.certifies.configuration.CustomMultipartFile;
+import com.whale.web.certificates.configuration.CustomMultipartFile;
 
 @Service
 public class UploadImagemServiceCertifies {

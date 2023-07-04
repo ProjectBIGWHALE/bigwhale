@@ -1,4 +1,4 @@
-package com.whale.web.certifies.service;
+package com.whale.web.certificates.service;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -25,7 +25,7 @@ public class EditImageService {
 
 	    for (String name : names) {
 	    	
-	        //criar uma imagem em branco com o mesmo tamanho da original
+	        //create a blank image the same size as the original
 	        BufferedImage imageWithText = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
 	        
 	        Graphics2D g2d = imageWithText.createGraphics();
@@ -33,12 +33,12 @@ public class EditImageService {
 
 	        g2d.setColor(Color.BLACK);
 	        g2d.setFont(new Font("Arial", Font.BOLD, fontSize));
-	        g2d.drawString(name, x, y); // coordenadas x=100, y=100
+	        g2d.drawString(name, x, y); // coordinates x=100, y=100
 
 	        ByteArrayOutputStream temporaryStorage = new ByteArrayOutputStream();
 	        ImageIO.write(imageWithText, "png", temporaryStorage);
 
-	        //adicionar a imagem com texto na lista
+	        //Add the image with text in the list
 	        imagesWithText.add(temporaryStorage.toByteArray());
 	    }
 
