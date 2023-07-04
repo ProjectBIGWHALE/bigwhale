@@ -11,21 +11,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class AlterarCorService {
+public class AlterColorService {
 	
-public File alterarCor(MultipartFile imagemFormulario, String corDaImagem, String corDeSubstituicao, Integer margem) throws IOException {
+public File alterColor(MultipartFile imageForm, String colorOfImage, String replacementColor, Integer margin) throws IOException {
 	    
 	    // Carrega imagem
-	    BufferedImage img = ImageIO.read(imagemFormulario.getInputStream());
+	    BufferedImage img = ImageIO.read(imageForm.getInputStream());
 
 	    // Define a cor marcada
-	    Color corMarcada = Color.decode(corDaImagem);
+	    Color markedColor = Color.decode(colorOfImage);
 
 	    // Define a margem superior e inferior para cada componente RGB
-	    int delta = (int) Math.round(255 * (margem / 100.0)); // Porcentagem de margem
-	    int r = corMarcada.getRed();
-	    int g = corMarcada.getGreen();
-	    int b = corMarcada.getBlue();
+	    int delta = (int) Math.round(255 * (margin / 100.0)); // Porcentagem de margem
+	    int r = markedColor.getRed();
+	    int g = markedColor.getGreen();
+	    int b = markedColor.getBlue();
 	    int newRmin = Math.max(0, r - delta); // Limite inferior para o componente R
 	    int newRmax = Math.min(255, r + delta); // Limite superior para o componente R
 	    int newGmin = Math.max(0, g - delta); // Limite inferior para o componente G
@@ -37,14 +37,14 @@ public File alterarCor(MultipartFile imagemFormulario, String corDaImagem, Strin
 	    Color oldColor = new Color(r, g, b);
 	    Color newColor;
 	    
-	    if(corDeSubstituicao == null || corDeSubstituicao.isEmpty()) {
+	    if(replacementColor == null || replacementColor.isEmpty()) {
 	    	newColor = new Color(0, 0, 0, 0);
 	    } else {
-	    	Color cor = Color.decode(corDeSubstituicao);
-	    	newColor = new Color(cor.getRed(), cor.getGreen(), cor.getBlue());
+	    	Color color = Color.decode(replacementColor);
+	    	newColor = new Color(color.getRed(), color.getGreen(), color.getBlue());
 	    }
 	    // Cria uma nova imagem com transparência
-	    BufferedImage novaImg = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
+	    BufferedImage newImg = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
 	    // Percorre todos os pixels da imagem
 	    for (int x = 0; x < img.getWidth(); x++) {
@@ -60,19 +60,19 @@ public File alterarCor(MultipartFile imagemFormulario, String corDaImagem, Strin
 	                // Define o valor RGBA completo usando o método getRGB()
 	                int newPixelValue = newColor.getRGB();
 	                // Define o novo valor do pixel na nova imagem
-	                novaImg.setRGB(x, y, newPixelValue);
+	                newImg.setRGB(x, y, newPixelValue);
 	            } else {
 	                // Copia o pixel original para a nova imagem
-	                novaImg.setRGB(x, y, img.getRGB(x, y));
+	                newImg.setRGB(x, y, img.getRGB(x, y));
 	            }
 	        }
 	    }
 
 	    // Salva a nova imagem com transparência em um arquivo
-	    File imagemProcessada = new File("CorTransparente.png");
-	    ImageIO.write(novaImg, "png", imagemProcessada);
+	    File ProcessedImage = new File("ColorTransparent.png");
+	    ImageIO.write(newImg, "png", ProcessedImage);
 
-	    return imagemProcessada;
+	    return ProcessedImage;
 	}
 	
 }

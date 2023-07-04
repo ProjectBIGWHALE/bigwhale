@@ -2,7 +2,6 @@ package com.whale.web.colors.service;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +12,9 @@ import javax.imageio.ImageIO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 @Service
-public class PaletaDeCoresService {
+public class ColorPaletteService {
 
-    public List<Color> criarPaletaDeCores(MultipartFile imagem) throws Exception {
+    public List<Color> createColorPalette(MultipartFile imagem) throws Exception {
         int numColors = 10; // Número de cores predominantes a serem extraídas
         int maxColorDistance = 70; // Distância máxima permitida entre cores
 

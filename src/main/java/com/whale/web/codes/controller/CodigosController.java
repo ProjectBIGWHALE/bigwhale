@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.whale.web.codes.model.FormularioCodes;
+import com.whale.web.codes.model.FormCodes;
 import com.whale.web.codes.service.QRCodeService;
 
 @Controller
-@RequestMapping("/codigos")
+@RequestMapping("/codes")
 public class CodigosController {
 	
 	@Autowired
-	FormularioCodes formulario;
+	FormCodes form;
 	
 	@Autowired
 	QRCodeService qrCodeService;
@@ -31,33 +31,33 @@ public class CodigosController {
 	@RequestMapping(value="/qrcode", method=RequestMethod.GET)
 	public String geradorDeCertificados(Model model) {
 		
-		model.addAttribute("formulario", formulario);
-		return "codigos";
+		model.addAttribute("form", form);
+		return "codes";
 		
 	}
 	
 
-	@PostMapping("/gerarqrcode")
-	public String processarImagem(FormularioCodes formulario, HttpServletResponse response) throws IOException{
+	@PostMapping("/generateqrcode")
+	public String processarImagem(FormCodes form, HttpServletResponse response) throws IOException{
 		
 		try {
-			File imagemProcessada = qrCodeService.gerarQRCode(formulario.getLink());
+			File processedImage = qrCodeService.generateQRCode(form.getLink());
 			
 			// Define o tipo de conteúdo e o tamanho da resposta
 		    response.setContentType("image/png");
-		    response.setContentLength((int) imagemProcessada.length());
+		    response.setContentLength((int) processedImage.length());
 	
 		    // Define os cabeçalhos para permitir que a imagem seja baixada
 		    response.setHeader("Content-Disposition", "attachment; filename=\"ImagemAlterada.png\"");
 		    response.setHeader("Cache-Control", "no-cache");
 			
-			try (InputStream is = new FileInputStream(imagemProcessada)){
+			try (InputStream is = new FileInputStream(processedImage)){
 				IOUtils.copy(is, response.getOutputStream());
 			}catch(Exception e) {
-				throw new RuntimeException("Erro ao escrever imagem na resposta.", e);
+				throw new RuntimeException("Error writing image in response.", e);
 			}
 		} catch(Exception e) {
-			return "redirect:/codigos/qrcode";
+			return "redirect:/codes/qrcode";
 		}
 		
 		return null;

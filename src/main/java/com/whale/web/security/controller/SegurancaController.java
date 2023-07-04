@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.whale.web.security.model.FormularioCriptoSecurity;
+import com.whale.web.security.model.CryptoFormSecurity;
 import com.whale.web.security.service.EncriptografarService;
 
 @Controller
@@ -30,7 +30,7 @@ import com.whale.web.security.service.EncriptografarService;
 public class SegurancaController {
 	
 	@Autowired
-	FormularioCriptoSecurity formulario;
+	CryptoFormSecurity formulario;
 	
 	@Autowired
 	EncriptografarService encriptografarService;
@@ -44,8 +44,8 @@ public class SegurancaController {
 	}
 	
 	
-	@PostMapping("/criptografararquivo")
-	public String criptografarArquivo(FormularioCriptoSecurity formulario, HttpServletResponse response) throws IOException{
+	@PostMapping("/encryptfile")
+	public String encryptFile(CryptoFormSecurity form, HttpServletResponse response) throws IOException{
 		
 		
 		// Cria um pipeline de anotação de sentenças
@@ -74,7 +74,7 @@ public class SegurancaController {
 			
 			byte[] arquivoCriptografado;
 			
-			if(formulario.getAcao() == true) {
+			if(formulario.getAction() == true) {
 				arquivoCriptografado = encriptografarService.encriptografarArquivo(formulario);
 				response.setHeader("Content-Disposition", "attachment; filename=arquivoCriptografado");
 			} else {

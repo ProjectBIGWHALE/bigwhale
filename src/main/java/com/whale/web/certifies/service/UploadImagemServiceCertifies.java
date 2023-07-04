@@ -10,7 +10,7 @@ import com.whale.web.certifies.configuration.CustomMultipartFile;
 @Service
 public class UploadImagemServiceCertifies {
 	
-    public MultipartFile uploadImagem(MultipartFile file) throws Exception {
+    public MultipartFile uploadImage(MultipartFile file) throws Exception {
         
         byte[] bytes = file.getBytes();
         

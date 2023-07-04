@@ -2,8 +2,6 @@ package com.whale.web.certifies.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -18,40 +16,40 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 
 @Controller
-@RequestMapping("/certificados")
+@RequestMapping("/certificates")
 public class CertificadosController {
 	
 	@Autowired
-	com.whale.web.certifies.service.ProcessarPlanilhaService processarPlanilhaService;
+	com.whale.web.certifies.service.ProcessWorksheetService processWorksheetService;
 	
 	@Autowired
-	com.whale.web.certifies.model.PlanilhaEFormulario planilhaEFormulario;
+	com.whale.web.certifies.model.WorksheetAndForm worksheetAndForm;
 	
 	@Autowired
-	com.whale.web.certifies.service.CriarCertificadosService criarCertificadosService;
+	com.whale.web.certifies.service.CreateCertificateService createCertificateService;
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String paginaInicial() {
+	public String homePage() {
 	
 		return "indexcertifies";
 	}
 	
-	@RequestMapping(value="/geradorDeCertificados", method=RequestMethod.GET)
-	public String geradorDeCertificados(Model model) {
+	@RequestMapping(value="/certificateGenerator", method=RequestMethod.GET)
+	public String certificateGenerator(Model model) {
 		
-		model.addAttribute("planilhaEFormulario",planilhaEFormulario);
-		return "certificados";
+		model.addAttribute("worksheetAndForm", worksheetAndForm);
+		return "certificates";
 		
 	}
 	
-	@RequestMapping(value="/baixarimagens", method=RequestMethod.POST)
-	public ResponseEntity<byte[]> baixarimagens(com.whale.web.certifies.model.PlanilhaEFormulario planilhaEFormulario) throws Exception {
+	@RequestMapping(value="/downloadimages", method=RequestMethod.POST)
+	public ResponseEntity<byte[]> downloadImages(com.whale.web.certifies.model.WorksheetAndForm worksheetAndForm) throws Exception {
 	    
 		try {
 			
-		    List<String> nomes = processarPlanilhaService.salvandoNomesEmUmaLista(planilhaEFormulario.getPlanilha().getPlanilha(), planilhaEFormulario.getFormulario());
+		    List<String> names = processWorksheetService.savingNamesInAList(worksheetAndForm.getWorksheet().getWorksheet(), worksheetAndForm.getForm());
 		    
-	        byte[] arquivoZip = criarCertificadosService.criarCertificados(planilhaEFormulario.getFormulario(), nomes);
+	        byte[] arquivoZip = createCertificateService.createCertificates(worksheetAndForm.getForm(), names);
 	
 	        HttpHeaders headers = new HttpHeaders();
 	        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -61,7 +59,7 @@ public class CertificadosController {
 		} catch(Exception e) {
 			
 			HttpHeaders headers = new HttpHeaders();
-		    headers.setLocation(UriComponentsBuilder.fromPath("/certificados/geradorDeCertificados").build().toUri());
+		    headers.setLocation(UriComponentsBuilder.fromPath("/certificates/certificateGenerator").build().toUri());
 		    return new ResponseEntity<>(headers, HttpStatus.FOUND);
 		}
         

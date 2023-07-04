@@ -19,7 +19,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 @Service
 public class QRCodeService {
 	
-	public File gerarQRCode(String link) throws Exception {
+	public File generateQRCode(String link) throws Exception {
 		
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
         Map<EncodeHintType, Object> hints = new HashMap<>();

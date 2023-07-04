@@ -3,7 +3,7 @@ package com.whale.web.codes.model;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FormularioCodes {
+public class FormCodes {
 	
 	String link;
 	

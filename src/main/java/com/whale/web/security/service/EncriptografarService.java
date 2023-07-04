@@ -3,7 +3,7 @@ package com.whale.web.security.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.whale.web.security.model.FormularioCriptoSecurity;
+import com.whale.web.security.model.CryptoFormSecurity;
 
 import java.util.Arrays;
 
@@ -14,21 +14,21 @@ import javax.crypto.spec.SecretKeySpec;
 @Service
 public class EncriptografarService {
 	
-	public byte[] encriptografarArquivo(FormularioCriptoSecurity formulario) throws Exception {
-	    MultipartFile arquivoDoFormulario = formulario.getArquivo();
-	    String chaveDeCriptografia = formulario.getChave();
+	public byte[] encriptografarArquivo(CryptoFormSecurity form) throws Exception {
+	    MultipartFile formFile = form.getFile();
+	    String encryptionKey = form.getKey();
 	    
 	    try {
 	    	
-		    if(arquivoDoFormulario.isEmpty() || arquivoDoFormulario == null || chaveDeCriptografia.isEmpty() || chaveDeCriptografia == null) {
+		    if(formFile.isEmpty() || formFile == null || encryptionKey.isEmpty() || encryptionKey == null) {
 		    	throw new Exception();
 		    }
 	    	
 	        // Obtém os bytes do arquivo do MultipartFile
-	        byte[] arquivoBytes = arquivoDoFormulario.getBytes();
+	        byte[] bytesInFile = formFile.getBytes();
 
 	        // Cria uma chave secreta com a chave fornecida
-	        byte[] chaveBytes = Arrays.copyOf(chaveDeCriptografia.getBytes("UTF-8"), 16); // Ajuste o tamanho da chave para 16 bytes
+	        byte[] chaveBytes = Arrays.copyOf(encryptionKey.getBytes("UTF-8"), 16); // Ajuste o tamanho da chave para 16 bytes
 	        SecretKeySpec secretKey = new SecretKeySpec(chaveBytes, "AES");
 
 	        // Cria um objeto Cipher para realizar a criptografia
@@ -37,30 +37,30 @@ public class EncriptografarService {
 	        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
 
 	        // Encripta o arquivo
-	        byte[] arquivoEncriptado = cipher.doFinal(arquivoBytes);
+	        byte[] encryptedFile = cipher.doFinal(bytesInFile);
 
-	        return arquivoEncriptado;
+	        return encryptedFile;
 	    } catch (Exception e) {
 	        // Trate a exceção de acordo com sua necessidade
-	        throw new Exception("Erro ao encriptografar o arquivo.", e);
+	        throw new Exception("Error encrypting the file.", e);
 	    }
 	}
 
-	public byte[] descriptografarArquivo(FormularioCriptoSecurity formulario) throws Exception {
-	    MultipartFile arquivoDoFormulario = formulario.getArquivo();
-	    String chaveDeCriptografia = formulario.getChave();
+	public byte[] descriptografarArquivo(CryptoFormSecurity form) throws Exception {
+	    MultipartFile fileOfForm = form.getFile();
+	    String encryptionKey = form.getKey();
 	    
 	    try {
 	    	
-	        if (arquivoDoFormulario.isEmpty() || arquivoDoFormulario == null || chaveDeCriptografia.isEmpty() || chaveDeCriptografia == null) {
+	        if (fileOfForm.isEmpty() || fileOfForm == null || encryptionKey.isEmpty() || encryptionKey == null) {
 	            throw new Exception();
 	        }
 	        
 	        // Obtém os bytes do arquivo do MultipartFile
-	        byte[] arquivoEncriptado = arquivoDoFormulario.getBytes();
+	        byte[] encryptedFile = fileOfForm.getBytes();
 
 	        // Cria uma chave secreta com a chave fornecida
-	        byte[] chaveBytes = Arrays.copyOf(chaveDeCriptografia.getBytes("UTF-8"), 16); // Ajuste o tamanho da chave para 16 bytes
+	        byte[] chaveBytes = Arrays.copyOf(encryptionKey.getBytes("UTF-8"), 16); // Ajuste o tamanho da chave para 16 bytes
 	        SecretKeySpec secretKey = new SecretKeySpec(chaveBytes, "AES");
 
 	        // Cria um objeto Cipher para realizar a descriptografia
@@ -69,12 +69,12 @@ public class EncriptografarService {
 	        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
 
 	        // Descriptografa o arquivo
-	        byte[] arquivoDescriptografado = cipher.doFinal(arquivoEncriptado);
+	        byte[] decryptedFile = cipher.doFinal(encryptedFile);
 
-	        return arquivoDescriptografado;
+	        return decryptedFile;
 	    } catch (Exception e) {
 	        // Trate a exceção de acordo com sua necessidade
-	        throw new Exception("Erro ao descriptografar o arquivo.", e);
+	        throw new Exception("Error decrypting the file.", e);
 	    }
 	}
 
