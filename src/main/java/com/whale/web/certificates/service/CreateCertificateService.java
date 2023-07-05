@@ -15,7 +15,7 @@ import com.whale.web.certificates.model.FormCertifies;
 public class CreateCertificateService {
 	
 	@Autowired
-	UploadImagemServiceCertifies uploadImageService;
+	UploadImagemService uploadImageService;
 	
 	@Autowired
 	EditImageService editImageService;
@@ -26,7 +26,7 @@ public class CreateCertificateService {
 	    Integer y = form.getY();
 	    Integer fontSize = form.getFontSize();
 	    
-	    MultipartFile imageLayoult = uploadImageService.uploadImage(form.getImageLayoult());
+	    MultipartFile imageLayoult = uploadImageService.uploadImage(form.getimageLayout());
 	    
 	    if(x == null || y == null || fontSize == null || imageLayoult == null || imageLayoult.isEmpty()) {
 	    	throw new Exception();

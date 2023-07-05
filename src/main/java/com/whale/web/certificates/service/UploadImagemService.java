@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.whale.web.certificates.configuration.CustomMultipartFile;
 
 @Service
-public class UploadImagemServiceCertifies {
+public class UploadImagemService {
 	
     public MultipartFile uploadImage(MultipartFile file) throws Exception {
         

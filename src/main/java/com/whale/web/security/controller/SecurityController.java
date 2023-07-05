@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.whale.web.security.model.CryptoFormSecurity;
+import com.whale.web.security.model.CryptographyFormSecurity;
 import com.whale.web.security.service.EncryptService;
 
 @Controller
@@ -30,7 +30,7 @@ import com.whale.web.security.service.EncryptService;
 public class SecurityController {
 	
 	@Autowired
-	CryptoFormSecurity form;
+	CryptographyFormSecurity form;
 	
 	@Autowired
 	EncryptService encryptService;
@@ -45,7 +45,7 @@ public class SecurityController {
 	
 	
 	@PostMapping("/encryptfile")
-	public String encryptFile(CryptoFormSecurity form, HttpServletResponse response) throws IOException{
+	public String encryptFile(CryptographyFormSecurity form, HttpServletResponse response) throws IOException{
 		
 		
 		// Create a sentence annotation pipeline
@@ -65,7 +65,7 @@ public class SecurityController {
         for (CoreMap verdict : sentences) {
             String feeling = verdict.get(SentimentCoreAnnotations.SentimentClass.class);
             System.out.println("Verdict: " + verdict);
-            System.out.println("Sentimento: " + feeling);
+            System.out.println("Feeling: " + feeling);
             System.out.println();
         }
         
@@ -74,7 +74,7 @@ public class SecurityController {
 			
 			byte[] encryptedFile;
 			
-			if(form.getAction() == true) {
+			if(form.getAction()) {
 				encryptedFile = encryptService.encryptFile(form);
 				response.setHeader("Content-Disposition", "attachment; filename=encryptedFile");
 			} else {

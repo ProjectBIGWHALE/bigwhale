@@ -1,4 +1,4 @@
-package com.whale.web.home.controller;
+package com.whale.web.homeController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

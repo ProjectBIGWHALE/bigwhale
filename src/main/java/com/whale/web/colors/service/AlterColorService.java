@@ -22,7 +22,7 @@ public File alterColor(MultipartFile imageForm, String colorOfImage, String repl
 	    Color markedColor = Color.decode(colorOfImage);
 
 	    // Sets the top and bottom margin for each RGB component
-	    int delta = (int) Math.round(255 * (margin / 100.0)); // Porcentagem de margem
+	    int delta = (int) Math.round(255 * (margin / 100.0)); // Margin percentage
 	    int r = markedColor.getRed();
 	    int g = markedColor.getGreen();
 	    int b = markedColor.getBlue();
@@ -31,7 +31,8 @@ public File alterColor(MultipartFile imageForm, String colorOfImage, String repl
 	    int newGmin = Math.max(0, g - delta); // Lower limit for the G component
 	    int newGmax = Math.min(255, g + delta); // Upper limit for the G component
 	    int newBmin = Math.max(0, b - delta); // Lower limit for the B component 
-	    int newBmax = Math.min(255, b + delta); // Upper limit for the B component 
+	    int newBmax = Math.min(255, b + delta); // Upper limit for the B component
+
 	    // Sets current color and new color
 	    Color oldColor = new Color(r, g, b);
 	    Color newColor;

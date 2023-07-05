@@ -6,17 +6,17 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FormCertifies {
 	
-	private MultipartFile imageLayoult;
+	private MultipartFile imageLayout;
 	private String personName;
 	private Integer x;
 	private Integer y;
 	private Integer fontSize;
 	
-	public MultipartFile getImageLayoult() {
-		return imageLayoult;
+	public MultipartFile getimageLayout() {
+		return imageLayout;
 	}
-	public void setImageLayoult(MultipartFile imageLayoult) {
-		this.imageLayoult = imageLayoult;
+	public void setImageLayout(MultipartFile imageLayout) {
+		this.imageLayout = imageLayout;
 	}
 	public String getPersonName() {
 		return personName;

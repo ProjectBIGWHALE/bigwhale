@@ -29,7 +29,7 @@ import com.whale.web.colors.service.ColorPaletteService;
 public class ColorsController {
 	
 	@Autowired
-	AlterColorService alterCorService;
+	AlterColorService alterColorService;
 	
 	@Autowired
 	FormColors form;
@@ -49,7 +49,7 @@ public class ColorsController {
 	public String processImage(FormColors form, HttpServletResponse response) throws IOException{
 		
 		try {
-		    File processedImage = alterCorService.alterColor(form.getImage(), form.getColorOfImagem(), form.getColorForAlteration(), form.getMargin());
+		    File processedImage = alterColorService.alterColor(form.getImage(), form.getColorOfImagem(), form.getColorForAlteration(), form.getMargin());
 	
 		    // Define the content type and size of the response
 		    response.setContentType("image/png");
@@ -74,16 +74,16 @@ public class ColorsController {
 		
 	}
 	
-	@RequestMapping(value="/colorpalette", method=RequestMethod.GET)
-	public String paletaDeCores(Model model) {
+	@RequestMapping(value="/colorspalette", method=RequestMethod.GET)
+	public String colorsPalette(Model model) {
 		
 		model.addAttribute("form", form);
-		return "colorpalette";
+		return "colorspalette";
 		
 	}
 	
 	@PostMapping("/createpalette")
-	public String criarPaleta(FormPalette form, Model model) {
+	public String createPalette(FormPalette form, Model model) {
 		
 		try {
 			List<Color> listOfColors = colorPaletteService.createColorPalette(form.getImage());
@@ -91,9 +91,10 @@ public class ColorsController {
 			
 			// Convert the image to base64
 	        String imageBase64 = Base64.getEncoder().encodeToString(form.getImage().getBytes());
-			
-			model.addAttribute("formulario", form);
-			model.addAttribute("imageBase64", imageBase64); // Add the base64 image to the template
+			model.addAttribute("form", form);
+			// Add the base64 image to the template
+			model.addAttribute("imageBase64", imageBase64);
+
 			return "paletteview";
 			
 		} catch (Exception e) {

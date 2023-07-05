@@ -3,8 +3,9 @@ package com.whale.web.security.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.whale.web.security.model.CryptoFormSecurity;
+import com.whale.web.security.model.CryptographyFormSecurity;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import javax.crypto.Cipher;
@@ -14,7 +15,7 @@ import javax.crypto.spec.SecretKeySpec;
 @Service
 public class EncryptService {
 
-	public byte[] encryptFile(CryptoFormSecurity form) throws Exception {
+	public byte[] encryptFile(CryptographyFormSecurity form) throws Exception {
 		MultipartFile formFile = form.getFile();
 		String encryptionKey = form.getKey();
 
@@ -28,13 +29,13 @@ public class EncryptService {
 			byte[] bytesInFile = formFile.getBytes();
 
 			// Create a secret key with the provided key
-			byte[] keyBytes = Arrays.copyOf(encryptionKey.getBytes("UTF-8"), 16); // Adjust the key size to 16 bytes
+			byte[] keyBytes = Arrays.copyOf(encryptionKey.getBytes(StandardCharsets.UTF_8), 16); // Adjust the key size to 16 bytes
 			SecretKeySpec secretKey = new SecretKeySpec(keyBytes, "AES");
 
 			// Create a Cipher object for encryption
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			IvParameterSpec ivParameterSpec = new IvParameterSpec(new byte[16]); // Empty initialization vector for CBC
-																					// mode
+			// Empty initialization vector for CBC mode
+			IvParameterSpec ivParameterSpec = new IvParameterSpec(new byte[16]);
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
 
 			// Encrypt the file
@@ -47,7 +48,7 @@ public class EncryptService {
 		}
 	}
 
-	public byte[] decryptFile(CryptoFormSecurity form) throws Exception {
+	public byte[] decryptFile(CryptographyFormSecurity form) throws Exception {
 		MultipartFile fileOfForm = form.getFile();
 		String encryptionKey = form.getKey();
 
@@ -61,13 +62,13 @@ public class EncryptService {
 			byte[] encryptedFile = fileOfForm.getBytes();
 
 			// Create a secret key with the provided key
-			byte[] keyBytes = Arrays.copyOf(encryptionKey.getBytes("UTF-8"), 16); // Adjust the key size to 16 bytes
+			byte[] keyBytes = Arrays.copyOf(encryptionKey.getBytes(StandardCharsets.UTF_8), 16); // Adjust the key size to 16 bytes
 			SecretKeySpec secretKey = new SecretKeySpec(keyBytes, "AES");
 
 			// Create a Cipher object for decryption
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			IvParameterSpec ivParameterSpec = new IvParameterSpec(new byte[16]); // Empty initialization vector for CBC
-																					// mode
+			// Empty initialization vector for CBC mode
+			IvParameterSpec ivParameterSpec = new IvParameterSpec(new byte[16]);
 			cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
 
 			// Decrypt the file

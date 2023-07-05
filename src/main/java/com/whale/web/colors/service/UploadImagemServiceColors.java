@@ -2,6 +2,7 @@ package com.whale.web.colors.service;
 
 import java.io.ByteArrayInputStream;
 
+import com.whale.web.colors.configuration.CustomMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,7 +15,7 @@ public class UploadImagemServiceColors {
         
         ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
         
-        MultipartFile multipartFile = new com.whale.web.colors.configuration.CustomMultipartFile(file.getOriginalFilename(), file.getContentType(), inputStream);
+        MultipartFile multipartFile = new CustomMultipartFile(file.getOriginalFilename(), file.getContentType(), inputStream);
         
         return multipartFile;
         

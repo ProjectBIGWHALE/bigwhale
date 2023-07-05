@@ -59,7 +59,7 @@ public class CertificatesController {
 		} catch(Exception e) {
 			
 			HttpHeaders headers = new HttpHeaders();
-		    headers.setLocation(UriComponentsBuilder.fromPath("/certificates/certificateGenerator").build().toUri());
+		    headers.setLocation(UriComponentsBuilder.fromPath("/certificates/certificategenerator").build().toUri());
 		    return new ResponseEntity<>(headers, HttpStatus.FOUND);
 		}
         

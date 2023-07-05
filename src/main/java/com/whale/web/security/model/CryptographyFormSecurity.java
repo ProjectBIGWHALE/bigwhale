@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
-public class CryptoFormSecurity {
+public class CryptographyFormSecurity {
 	
 	private MultipartFile file;
 	private String key;
