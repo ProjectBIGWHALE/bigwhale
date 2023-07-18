@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadImagemServiceColors {
 	
-    public MultipartFile uploadImagem(MultipartFile file) throws Exception {
+    public MultipartFile uploadImage(MultipartFile file) throws Exception {
         
         byte[] bytes = file.getBytes();
         

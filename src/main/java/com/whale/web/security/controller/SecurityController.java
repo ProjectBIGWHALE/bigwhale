@@ -46,29 +46,6 @@ public class SecurityController {
 	
 	@PostMapping("/encryptfile")
 	public String encryptFile(CryptographyFormSecurity form, HttpServletResponse response) throws IOException{
-		
-		
-		// Create a sentence annotation pipeline
-        Properties props = new Properties();
-        props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
-        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-
-        // Sample Text
-        String text = "Teaching is not for sensitive souls. While reviewing future, past, and present tenses with my English class, I posed this question: “‘I am beautiful’ is what tense?” One student raised...";
-
-        // Sentence annotation and sentiment analysis
-        Annotation annotation = new Annotation(text);
-        pipeline.annotate(annotation);
-
-        // Get the sentiment notes
-        List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
-        for (CoreMap verdict : sentences) {
-            String feeling = verdict.get(SentimentCoreAnnotations.SentimentClass.class);
-            System.out.println("Verdict: " + verdict);
-            System.out.println("Feeling: " + feeling);
-            System.out.println();
-        }
-        
       
 		try {
 			
@@ -79,7 +56,7 @@ public class SecurityController {
 				response.setHeader("Content-Disposition", "attachment; filename=encryptedFile");
 			} else {
 				encryptedFile = encryptService.decryptFile(form);
-				response.setHeader("Content-Disposition", "attachment; filename=encryptedFile");
+				response.setHeader("Content-Disposition", "attachment; filename=decryptedFile");
 			}
 			// Defines the content type and size of the response
 			response.setContentType("application/octet-stream");

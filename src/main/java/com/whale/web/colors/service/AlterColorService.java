@@ -2,21 +2,30 @@ package com.whale.web.colors.service;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.whale.web.certificates.configuration.CustomMultipartFile;
 
 @Service
 public class AlterColorService {
 	
-public File alterColor(MultipartFile imageForm, String colorOfImage, String replacementColor, Integer margin) throws IOException {
+	@Autowired
+	UploadImagemServiceColors uploadImageService;
+	
+	public byte[] alterColor(MultipartFile imageForm, String colorOfImage, String replacementColor, Integer margin) throws Exception {
 	    
-	    // Load image
-	    BufferedImage img = ImageIO.read(imageForm.getInputStream());
+	    MultipartFile upload = uploadImageService.uploadImage(imageForm);
+	    BufferedImage img = ImageIO.read(upload.getInputStream());
 
 	    // Defines the marked color
 	    Color markedColor = Color.decode(colorOfImage);
@@ -36,13 +45,14 @@ public File alterColor(MultipartFile imageForm, String colorOfImage, String repl
 	    // Sets current color and new color
 	    Color oldColor = new Color(r, g, b);
 	    Color newColor;
-	    
-	    if(replacementColor == null || replacementColor.isEmpty()) {
-	    	newColor = new Color(0, 0, 0, 0);
+
+	    if (replacementColor == null || replacementColor.isEmpty()) {
+	        newColor = new Color(0, 0, 0, 0);
 	    } else {
-	    	Color color = Color.decode(replacementColor);
-	    	newColor = new Color(color.getRed(), color.getGreen(), color.getBlue());
+	        Color color = Color.decode(replacementColor);
+	        newColor = new Color(color.getRed(), color.getGreen(), color.getBlue());
 	    }
+
 	    // Creates a new image with transparency
 	    BufferedImage newImg = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
@@ -68,11 +78,15 @@ public File alterColor(MultipartFile imageForm, String colorOfImage, String repl
 	        }
 	    }
 
-	    // Saves the new image with transparency to a file
-	    File ProcessedImage = new File("ColorTransparent.png");
-	    ImageIO.write(newImg, "png", ProcessedImage);
+	    // Convert BufferedImage to byte array
+	    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	    ImageIO.write(newImg, "png", bos);
+	    bos.flush();
+	    byte[] imageBytes = bos.toByteArray();
+	    bos.close();
 
-	    return ProcessedImage;
+	    return imageBytes;
 	}
+
 	
 }

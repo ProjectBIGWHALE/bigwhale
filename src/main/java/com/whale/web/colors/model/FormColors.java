@@ -6,10 +6,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FormColors {
 	
-	MultipartFile image;
-	String colorOfImage;
-	String colorForAlteration;
-	Integer margin;
+	private MultipartFile image;
+	private String colorOfImage;
+	private String colorForAlteration;
+	private Integer margin;
 	
 	
 	public MultipartFile getImage() {
@@ -18,7 +18,7 @@ public class FormColors {
 	public void setImage(MultipartFile image) {
 		this.image = image;
 	}
-	public String getColorOfImagem() {
+	public String getColorOfImage() {
 		return colorOfImage;
 	}
 	public void setColorOfImage(String colorOfImage) {

@@ -20,18 +20,18 @@
 		
 		<div align="center" id="preview"></div>
 		
-		<form th:action="@{/cores/criarpaleta}"
+		<form th:action="@{/colors/createpalette}"
 		      class="card-body d-flex justify-content-center p-5" method="POST"
-		      enctype="multipart/form-data" th:object="${formulario}">
+		      enctype="multipart/form-data" th:object="${form}">
 		      
 		      <div class="form-row">
 		      
 		      	<div class="form-group mb-3 col-md-12">
 			        <p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Imagem (JPG, PNG)</b></p>
-			        <input type="file" th:field="*{imagem}"
+			        <input type="file" th:field="*{image}"
 			               style="border-radius: 10px; padding: 10px 72px; text-align: center;"
 			               class="form-control" id="image-input" onchange="previewImage(event)"/>
-			        <span th:errors="*{imagem}" class="text-danger"></span>
+			        <span th:errors="*{image}" class="text-danger"></span>
 			        
 			    </div>
 			    

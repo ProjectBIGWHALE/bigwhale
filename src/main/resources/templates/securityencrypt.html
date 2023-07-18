@@ -60,40 +60,40 @@
 	<body style="background-color:#FFFFFF;">
 		<div><br><br><br><br></div>
 		
-		<form th:action="@{/seguranca/criptografararquivo}"
+		<form th:action="@{/security/encryptfile}"
 		      class="card-body d-flex justify-content-center p-5" method="POST"
-		      enctype="multipart/form-data" th:object="${formulario}">
+		      enctype="multipart/form-data" th:object="${form}">
 		      
 			<div class="form-row">
 				<div class="form-group mb-3 col-md-12">
 					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Anexe um arquivo</b></p>
 					<div class="input-group">
-						<input type="file" th:field="*{arquivo}" 
+						<input type="file" th:field="*{file}" 
 							   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
 							   class="form-control"/>
 					</div>
-					<span th:errors="*{arquivo}" class="text-danger"></span>
+					<span th:errors="*{file}" class="text-danger"></span>
 				</div>
 				
 				<div class="form-group mb-3 col-md-12">
 					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Digite um texto como Chave de Criptografia (necessária para criptografar e descriptografar seus arquivos)</b></p>
 					<div class="input-group">
-						<input th:field="*{chave}" 
+						<input th:field="*{key}" 
 							   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
 							   class="form-control"/>
 					</div>
-					<span th:errors="*{chave}" class="text-danger"></span>
+					<span th:errors="*{key}" class="text-danger"></span>
 				</div>
 				
 				<div class="form-group mb-3 col-md-12">
 		            <p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Escolha uma ação:</b></p>
 		            <div class="input-group">
-		                <select th:field="*{acao}" class="form-control">
+		                <select th:field="*{action}" class="form-control">
 		                    <option value="true">Criptografar</option>
 		                    <option value="false">Descriptografar</option>
 		                </select>
 		            </div>
-		            <span th:errors="*{acao}" class="text-danger"></span>
+		            <span th:errors="*{action}" class="text-danger"></span>
 		        </div>
 				
 				

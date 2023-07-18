@@ -1,6 +1,7 @@
 package com.whale.web.codes.service;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 @Service
 public class QRCodeService {
 	
-	public File generateQRCode(String link) throws Exception {
+	public byte[] generateQRCode(String link) throws Exception {
 		
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
         Map<EncodeHintType, Object> hints = new HashMap<>();
@@ -35,11 +36,16 @@ public class QRCodeService {
                     qrCodeImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
                 }
             }
-
-            File qrCodeFile = new File("qrcode.png");
-            ImageIO.write(qrCodeImage, "png", qrCodeFile);
             
-            return qrCodeFile;
+            // Convert BufferedImage to byte array
+    	    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    	    ImageIO.write(qrCodeImage, "png", bos);
+            
+    	    bos.flush();
+    	    byte[] imageBytes = bos.toByteArray();
+    	    bos.close();
+
+    	    return imageBytes;
         } catch (WriterException | IOException e) {
             throw new Exception();
         }

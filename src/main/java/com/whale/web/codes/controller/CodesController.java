@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,21 +41,20 @@ public class CodesController {
 	public String processImage(FormCodes form, HttpServletResponse response) throws IOException{
 		
 		try {
-			File processedImage = qrCodeService.generateQRCode(form.getLink());
+			byte[] processedImage = qrCodeService.generateQRCode(form.getLink());
 			
 			// Define o tipo de conteúdo e o tamanho da resposta
-		    response.setContentType("image/png");
-		    response.setContentLength((int) processedImage.length());
-	
-		    // Define os cabeçalhos para permitir que a imagem seja baixada
-		    response.setHeader("Content-Disposition", "attachment; filename=\"ModifiedImage.png\"");
-		    response.setHeader("Cache-Control", "no-cache");
-			
-			try (InputStream is = new FileInputStream(processedImage)){
-				IOUtils.copy(is, response.getOutputStream());
-			}catch(Exception e) {
-				throw new RuntimeException("Error writing image in response.", e);
-			}
+	        response.setContentType("image/png");
+	        response.setHeader("Content-Disposition", "attachment; filename=\"ModifiedImage.png\"");
+	        response.setHeader("Cache-Control", "no-cache");
+
+	        // Copia os bytes do arquivo para o OutputStream
+	        try (OutputStream os = response.getOutputStream()) {
+	            os.write(processedImage);
+	            os.flush();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 		} catch(Exception e) {
 			return "redirect:/codes/qrcode";
 		}

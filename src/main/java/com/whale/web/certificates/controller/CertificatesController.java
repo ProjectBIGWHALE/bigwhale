@@ -1,18 +1,16 @@
 package com.whale.web.certificates.controller;
 
+import java.io.OutputStream;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.util.UriComponentsBuilder;
 
 
 @Controller
@@ -28,12 +26,6 @@ public class CertificatesController {
 	@Autowired
 	com.whale.web.certificates.service.CreateCertificateService createCertificateService;
 	
-	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String homePage() {
-	
-		return "indexcertifies";
-	}
-	
 	@RequestMapping(value="/certificategenerator", method=RequestMethod.GET)
 	public String certificateGenerator(Model model) {
 		
@@ -42,28 +34,27 @@ public class CertificatesController {
 		
 	}
 	
-	@RequestMapping(value="/downloadimages", method=RequestMethod.POST)
-	public ResponseEntity<byte[]> downloadImages(com.whale.web.certificates.model.WorksheetAndForm worksheetAndForm) throws Exception {
-	    
+	@RequestMapping(value = "/downloadimages", method = RequestMethod.POST)
+	public String downloadImages(com.whale.web.certificates.model.WorksheetAndForm worksheetAndForm, HttpServletResponse response) throws Exception {
 		try {
-			
 		    List<String> names = processWorksheetService.savingNamesInAList(worksheetAndForm.getWorksheet().getWorksheet(), worksheetAndForm.getForm());
-		    
-	        byte[] zipFile = createCertificateService.createCertificates(worksheetAndForm.getForm(), names);
+		    byte[] zipFile = createCertificateService.createCertificates(worksheetAndForm.getForm(), names);
 	
-	        HttpHeaders headers = new HttpHeaders();
-	        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-	        headers.setContentDisposition(ContentDisposition.builder("attachment").filename("certificates.zip").build());
-	        
-	        return new ResponseEntity<>(zipFile, headers, HttpStatus.valueOf(200));
-		} catch(Exception e) {
-			
-			HttpHeaders headers = new HttpHeaders();
-		    headers.setLocation(UriComponentsBuilder.fromPath("/certificates/certificategenerator").build().toUri());
-		    return new ResponseEntity<>(headers, HttpStatus.FOUND);
-		}
-        
+		    
+		        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+		        response.setHeader("Content-Disposition", "attachment; filename=\"certificates.zip\"");
+	
+		        try (OutputStream outputStream = response.getOutputStream()) {
+			        outputStream.write(zipFile);
+			        outputStream.flush();
+			    }catch(Exception e) {
+					throw new RuntimeException("Error generating encrypted file", e);
+				}
+	    } catch (Exception e) {
+	    	return "redirect:/certificates/certificategenerator";
+	    }
 	    
+	    return null;
 	}
 	
 	

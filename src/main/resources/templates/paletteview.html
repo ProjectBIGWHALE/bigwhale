@@ -72,14 +72,14 @@
       <div class="notification" id="notification">Hexadecimal Copiado!</div>
       <div class="mt-4">
         <!-- Exibição da imagem -->
-        <img th:if="${formulario.imagem != null}" th:src="@{'data:image/png;base64,' + ${imagemBase64}}"
+        <img th:if="${form.image != null}" th:src="@{'data:image/png;base64,' + ${imagemBase64}}"
              alt="Imagem" style="max-width: 500px; width: 100%;" data-cursorzoom>
       </div>
       <div class="cores-predominantes mt-5">
         <h2>Cores predominantes:</h2>
         <div class="mb-3">
-          <div th:each="cor : ${formulario.listaDeCores}" class="cor" th:style="'background-color: rgb(' + ${cor.getRed()} + ',' + ${cor.getGreen()} + ',' + ${cor.getBlue()} + ')'"
-               th:attr="title=*{cor.toString()}" data-cursorzoom onclick="copyHexColor(this)"></div>
+          <div th:each="color : ${form.listOfColors}" class="cor" th:style="'background-color: rgb(' + ${color.getRed()} + ',' + ${color.getGreen()} + ',' + ${color.getBlue()} + ')'"
+               th:attr="title=*{color.toString()}" data-cursorzoom onclick="copyHexColor(this)"></div>
         </div>
       </div>
     </div>

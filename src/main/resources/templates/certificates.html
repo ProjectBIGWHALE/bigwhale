@@ -88,45 +88,45 @@
 			   <div id="textElement" class="text"></div>
     		</div>
 			</div>
-			<form th:action="@{/certificados/baixarimagens}"
+			<form th:action="@{/certificates/downloadimages}"
 		      class="card-body d-flex justify-content-center p-5" method="POST"
-		      enctype="multipart/form-data" th:object="${planilhaEFormulario}">
+		      enctype="multipart/form-data" th:object="${worksheetAndForm}">
 			    <div class="form-row">
 			        <div class="form-group mb-3 col-md-12">
 			        	<br>
 			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Lista de Nomes (CSV)</b></p>
-			            <input type="file" th:field="*{planilha.planilha}"
+			            <input type="file" th:field="*{worksheet.worksheet}"
 			                   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
 			                   class="form-control"/>
-			            <span th:errors="*{planilha.planilha}" class="text-danger"></span>
+			            <span th:errors="*{worksheet.worksheet}" class="text-danger"></span>
 			        </div>
 			        <div class="form-group mb-3 col-md-12">
 			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada X (px)</b></p>
-			            <input th:field="*{formulario.x}" type="number"
+			            <input th:field="*{form.x}" type="number"
 			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
 			                   class="form-control" id="x"/>
-			            <span th:errors="*{formulario.x}" class="text-danger"></span>
+			            <span th:errors="*{form.x}" class="text-danger"></span>
 			        </div>
 			        <div class="form-group mb-3 col-md-12">
 			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada Y (px)</b></p>
-			            <input th:field="*{formulario.y}" type="number"
+			            <input th:field="*{form.y}" type="number"
 			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
 			                   class="form-control" id="y"/>
-			            <span th:errors="*{formulario.y}" class="text-danger"></span>
+			            <span th:errors="*{form.y}" class="text-danger"></span>
 			        </div>
 			        <div class="form-group mb-3 col-md-12">
 			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Tamanho da Fonte (px)</b></p>
-			            <input th:field="*{formulario.tamanhoDaFonte}" type="number"
+			            <input th:field="*{form.fontSize}" type="number"
 			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
 			                   class="form-control" id="fontSize"/>
-			            <span th:errors="*{formulario.tamanhoDaFonte}" class="text-danger"></span>
+			            <span th:errors="*{form.fontSize}" class="text-danger"></span>
 			        </div>
 			        <div class="form-group mb-3 col-md-12">
 			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Modelo de Certificado (JPG, PNG)</b></p>
-			            <input type="file" th:field="*{formulario.imagemLayoult}"
+			            <input type="file" th:field="*{form.imageLayout}"
 			                   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
 			                   class="form-control" id="image"/>
-			            <span th:errors="*{formulario.imagemLayoult}" class="text-danger"></span>
+			            <span th:errors="*{form.imageLayout}" class="text-danger"></span>
 			        </div>
 					<div align="center">
 						<br>

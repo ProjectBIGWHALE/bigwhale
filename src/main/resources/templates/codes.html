@@ -64,9 +64,9 @@
 		
 		<div align="center" id="preview"></div>
 		
-		<form th:action="@{/codigos/gerarqrcode}"
+		<form th:action="@{/codes/generateqrcode}"
 		      class="card-body d-flex justify-content-center p-5" method="POST"
-		      enctype="multipart/form-data" th:object="${formulario}">
+		      enctype="multipart/form-data" th:object="${form}">
 		      
 				<div class="form-row">
 				    <div class="form-group mb-3 col-md-12">

@@ -9,13 +9,16 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ColorPaletteService {
-
+	
     public List<Color> createColorPalette(MultipartFile multipartFile) throws Exception {
+    	
+    	
         int numColors = 10; // Number of predominant colors to be extracted
         int maxColorDistance = 70; // Maximum allowed distance between colors
 
