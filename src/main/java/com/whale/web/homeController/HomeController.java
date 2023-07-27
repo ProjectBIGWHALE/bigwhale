@@ -11,7 +11,19 @@ public class HomeController {
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String homePage() {
 	
-		return "indexhome";
+		return "index";
+	}
+	
+	@RequestMapping(value="/ajuda", method=RequestMethod.GET)
+	public String help() {
+	
+		return "ajuda";
+	}
+	
+	@RequestMapping(value="/apoie", method=RequestMethod.GET)
+	public String apoie() {
+	
+		return "apoie";
 	}
 	
 }

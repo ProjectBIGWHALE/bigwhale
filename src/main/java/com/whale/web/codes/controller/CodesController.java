@@ -1,9 +1,6 @@
 package com.whale.web.codes.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +26,7 @@ public class CodesController {
 	QRCodeService qrCodeService;
 	
 	@RequestMapping(value="/qrcode", method=RequestMethod.GET)
-	public String certificateGenerator(Model model) {
+	public String certificateGenerator(Model model) throws IOException {
 		
 		model.addAttribute("form", form);
 		return "codes";
@@ -39,6 +36,7 @@ public class CodesController {
 
 	@PostMapping("/generateqrcode")
 	public String processImage(FormCodes form, HttpServletResponse response) throws IOException{
+		
 		
 		try {
 			byte[] processedImage = qrCodeService.generateQRCode(form.getLink());
@@ -61,4 +59,6 @@ public class CodesController {
 		
 		return null;
 	}
+	
+	
 }
