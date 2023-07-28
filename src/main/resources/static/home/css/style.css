@@ -1,0 +1,267 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    list-style: none;
+}
+
+body {
+    color: #0d0d0d;
+    background: #d3d3d3;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+.nav {
+    display: flex;
+    justify-content: end;
+    padding: 9px 28px;
+    text-align: right;
+}
+    
+.nav li a {
+    text-decoration: none;
+    padding: 9px 28px;
+    width: 93px;
+    height: 33px;
+    color: #000;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 0px 0px 15px 15px;
+    background: #91f2a0;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-weight: bold;
+    transition: 0.2s;
+}
+    
+.nav li a:hover {
+    background-color: #50c878;
+
+}
+
+#logo{
+    width: 60em;
+    height: 37em;
+    margin-left: 5em;
+}
+
+
+#descricao {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 300;
+    padding: 10px 0 80px 0;
+}
+/*LINHAS*/
+
+
+.linhas-esquerda {
+    position: absolute;
+    z-index: 1; /*define a ordem de sobreposicão dos elementos quanto maior o numero define qual item vai ficar sobreposto*/
+    left: 0;
+    right: 50%;
+    top: 45px;
+    height: 78%;
+}
+
+  .vertical-esq {
+    position: absolute;
+    border-left: 3px solid black;
+    height: 50%;
+    margin-left: 38px;
+   
+  }
+
+  .horizontal-esq {
+    width: 95%;
+    border-top: 3px dotted black;
+    border-spacing:3px;
+    margin-left: 45px;
+   
+  }
+
+
+.linhas-direita {
+    position: absolute;
+    left: 50%;
+    right: 0;
+    top: 45px;
+    height: 78%;
+}
+
+.vertical-dir {
+    position: absolute;
+    border-left: 3px solid black;
+    height: 50%;
+    margin-right: 40px;
+    bottom: 30px;
+    right: 0;
+
+}
+
+.horizontal-dir {
+    position: absolute;
+    width: 95%;
+    border-bottom: 3px dotted black;
+    margin-left: auto;
+    margin-right: 45px;
+    right: 0px;
+    bottom: 30px;
+}
+/*FERRAMENTAS/CARROSSEL*/
+.tipo {
+    padding-top: 72px;
+}
+    
+.tipo h3 {
+    text-align: right;
+    font-size: 24px;
+    background: #50c878;
+    margin-right: 85%;
+    padding: 7px 27px;
+    border-radius: 0px 15px 15px 0px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+
+
+
+
+.carrossel {
+    
+    display: flex;
+    height: 30em;
+    border-radius: 4px;
+    background: rgba(13, 13, 13, 0.2);
+    margin: 17px 60px;
+    justify-content: center;
+    align-items: center;
+}
+
+#carrossel-item {
+    text-align: center;
+    width: 20em;
+    height: 25em;
+    margin: 0 45px;
+    border-radius: 8px;
+    background: #c9f2e3;
+    box-shadow: 8px 8px 4px 0px #3f514a;
+    transition: 0.3s;
+}
+
+#carrossel-item a {
+    text-decoration: none;
+    color: #000;
+    padding: 9px;
+}
+
+#carrossel-item ion-icon {
+    padding: 20px;
+    width: 150px;
+    height: 150px;
+}
+
+#carrossel-item h4 {
+    font-size: 20px;
+    padding: 0 22px;
+}
+
+
+#carrossel-item p {
+    padding: 9px;
+    font-size: 20px;
+}
+
+
+#carrossel-item:hover {
+    transform: scale(1.05); /* Ao passar o mouse, o item aumentará em 5% */
+   
+}
+
+
+
+/*SESSÃO SOBRE*/
+#sobre {
+    margin: 49px 223px;
+}
+#sobre h3 {
+    text-align: center;
+    font-size: 24px;
+    padding: 87px 0 23px 0;
+}
+#sobre p {
+    text-align: justify;
+    font-size: 20px;
+    margin: 0;
+}
+
+.colaboradores {
+    display: flex;
+    justify-content: center;
+    height: 13em;
+
+}
+.colaboradores img {
+   
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    margin-right: 38px;
+    transition: 0.2s;
+}
+.colaboradores img:hover {
+    transform: scale(1.05);
+}
+.colaboradores a {
+   
+    display: flex; 
+    text-decoration: none;
+    align-items: center;
+}
+
+/*BOTÃO DE AJUDA*/
+#button {
+    text-align: right;
+    padding: 142px 91px;
+    transition: 0.2s;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
+
+#button ion-icon {
+    background: #50c878;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    color: #0d0d0d;
+    transition: 0.2s;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+#button ion-icon:hover {
+    background: #50c878;
+    width: 55px;
+    height: 55px;
+    flex-shrink: 0;
+    color: #0d0d0d;
+}
+
+
+
+/* RODAPE */
+footer {
+    padding: 56px 125px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+footer p {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
