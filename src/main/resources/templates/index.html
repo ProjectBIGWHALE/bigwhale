@@ -5,221 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whale</title>
-    <style>
-        * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        scroll-behavior: smooth;
-        }
-
-        body {
-        color: #0d0d0d;
-        background: #d3d3d3;
-        font-family: "Roboto Condensed", sans-serif;
-        }
-
-        .nav {
-        padding: 9px 28px;
-        text-align: right;
-        }
-        .nav a {
-        text-decoration: none;
-        padding: 9px 28px;
-        width: 93px;
-        height: 33px;
-        color: #000;
-        text-align: center;
-        font-size: 16px;
-        border-radius: 0px 0px 15px 15px;
-        background: #91f2a0;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        transition: 0.2s;
-        }
-        .nav a:hover {
-        background-color: #50c878;
-        }
-
-        h1 {
-        text-align: center;
-        font-size: 96px;
-        font-weight: bold;
-        }
-
-        p {
-        text-align: center;
-        font-size: 22px;
-        font-weight: 300;
-        padding-bottom: 72px;
-        }
-
-        /*FERRAMENTAS/CARROSSEL*/
-        .tipo {
-        padding-top: 72px;
-        }
-        .tipo h3 {
-        text-align: right;
-        font-size: 24px;
-        background: #50c878;
-        margin-right: 85%;
-        padding: 7px 27px;
-        border-radius: 0px 15px 15px 0px;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        }
-
-        .carrossel {
-        text-align: center;
-        display: flex;
-        border-radius: 4px;
-        background: rgba(13, 13, 13, 0.2);
-        margin: 17px 60px;
-        padding: 22px 163px;
-        }
-
-        #carrossel-item {
-        width: 248px;
-        height: 420px;
-        margin: 0 45px;
-        border-radius: 8px;
-        background: #c9f2e3;
-        box-shadow: 8px 8px 4px 0px #3f514a;
-        transition: 0.2s;
-        }
-        #carrossel-item:hover {
-        width: 288px;
-        height: 420px;
-        }
-        #carrossel-item a {
-        text-decoration: none;
-        color: #000;
-        padding: 9px;
-        }
-        #carrossel-item h4 {
-        font-size: 20px;
-        padding: 0 22px;
-        }
-        #carrossel-item p {
-        padding: 9px;
-        font-size: 20px;
-        }
-        #carrossel-item ion-icon {
-        padding: 20px;
-        width: 150px;
-        height: 150px;
-        }
-
-        /*SESSÃO SOBRE*/
-        #sobre {
-        margin: 49px 223px;
-        }
-        #sobre h3 {
-        text-align: center;
-        font-size: 24px;
-        padding: 87px 0 23px 0;
-        }
-        #sobre p {
-        text-align: justify;
-        font-size: 20px;
-        margin: 0;
-        }
-
-        .colaboradores {
-        text-align: center;
-        }
-        .colaboradores img {
-        width: 150px;
-        height: 150px;
-        border-radius: 100%;
-        margin: 0 23px 49px 23px;
-        transition: 0.2s;
-        }
-        .colaboradores img:hover {
-        width: 170px;
-        height: 170px;
-        }
-        .colaboradores a {
-        text-decoration: none;
-        }
-
-        /*BOTÃO DE AJUDA*/
-        #button {
-        text-align: right;
-        padding: 142px 91px;
-        transition: 0.2s;
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        }
-
-        #button ion-icon {
-        background: #50c878;
-        border-radius: 50%;
-        width: 45px;
-        height: 45px;
-        flex-shrink: 0;
-        color: #0d0d0d;
-        transition: 0.2s;
-        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-        }
-        #button ion-icon:hover {
-        background: #50c878;
-        width: 55px;
-        height: 55px;
-        flex-shrink: 0;
-        color: #0d0d0d;
-        }
-
-        /*LINHA*/
-        #linha {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        }
-
-        #linha hr {
-        width: 755px;
-        border: none;
-        border-top: 2px dotted black;
-        }
-
-        /* RODAPE */
-        footer {
-        padding: 56px 125px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        }
-
-        footer p {
-        font-size: 14px;
-        margin: 0;
-        padding: 0;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/home/css/style.css">
 </head>
 
 <body>
     <!--NAVEGAÇÃO-->
-    <div class="nav">
-        <a href="#design">Design</a>
-        <a href="#documentos">Documentos</a>
-        <a href="#seguranca">Segurança</a>
-        <a href="/apoie">Apoie</a>
-    </div>
+    <nav >
+        <ul class="nav">
+            <li><a href="#design">Design</a></li>
+            <li><a href="#documentos">Documentos</a></li>
+            <li><a href="#seguranca">Segurança</a></li>
+            <li><a href="/apoie">Apoie</a></li>
+        </ul>
+        
+   
+    </nav>
 
     <!--CABEÇALHO-->
     <header>
-        <img src="img/logo.png" alt="logo whale">
-        <h1>Whale</h1>
-        <p>Sua aquarela de ferramentas de manipulação de imagens e documentos.</p>
+        <img id="logo" src="/home/images/logo.png" alt="logo whale">
 
-        <div id="linha">
-            <hr>
-        </div>
+        <p id="descricao">Sua aquarela de ferramentas de manipulação de imagens e documentos.</p>
+
+        <!-- Linhas superiores-->
+    <div class="linhas-esquerda">
+        <hr class="vertical-esq">
+        <hr class="horizontal-esq">
+    </div>
+    <!--Linhas inferiores-->
+    <div class="linhas-direita">
+        <hr class="vertical-dir">
+        <hr class="horizontal-dir">
+    </div>
+        
     </header>
 
     <!--FERRAMENTAS/CARROSSEL-->
@@ -230,7 +48,6 @@
             <div id="carrossel-item">
                 <a href="/colors/transparentimage">
                     <ion-icon name="image-outline"></ion-icon>
-                    <br>
                     <h4>Remover Fundo de Imagens</h4>
                     <p>Você pode facilmente retirar o plano de fundo indesejado e obter imagens com transparência.</p>
                 </a>
@@ -239,7 +56,7 @@
             <div id="carrossel-item">
                 <a href="/colors/colorspalette">
                     <ion-icon name="color-palette-outline"></ion-icon>
-                    <br>
+      
                     <h4>Paleta de Cores a partir de Imagens</h4>
                     <p>Para extrair automaticamente as cores principais da sua imagem e obter inspiração para os seus
                         projetos de design.</p>
@@ -249,7 +66,6 @@
             <div id="carrossel-item">
                 <a href="">
                     <ion-icon name="resize-outline"></ion-icon>
-                    <br>
                     <h4>Redimensionar Imagens</h4>
                     <p>Você pode ajustar o tamanho das suas imagens de forma rápida e fácil, adaptando-as às suas
                         necessidades.</p>
@@ -265,7 +81,6 @@
             <div id="carrossel-item">
                 <a href="/certificates/certificategenerator">
                     <ion-icon name="ribbon-outline"></ion-icon>
-                    <br>
                     <h4>Gerador de Certificados</h4>
                     <p>Você pode criar certificados personalizados de forma rápida e fácil para reconhecimento e
                         autenticação.</p>
@@ -284,7 +99,6 @@
             <div id="carrossel-item">
                 <a href="">
                     <ion-icon name="contract-outline"></ion-icon>
-                    <br>
                     <h4>Compressor de Arquivos</h4>
                     <p>Para reduzir o tamanho dos seus arquivos e economizar espaço de armazenamento no seu dispositivo.
                     </p>
@@ -300,7 +114,6 @@
             <div id="carrossel-item">
                 <a href="/security/encrypt">
                     <ion-icon name="lock-closed-outline"></ion-icon>
-                    <br>
                     <h4>Criptografar</h4>
                     <p>Utilize uma chave de criptografia forte para proteger o seu arquivo.</p>
                 </a>
@@ -319,7 +132,6 @@
             <div id="carrossel-item">
                 <a href="/codes/qrcode/">
                     <ion-icon name="barcode-outline"></ion-icon>
-                    <br>
                     <h4>Criar QR-CODE</h4>
                     <p>Você pode gerar um QR-CODE personalizado com facilidade.</p>
                 </a>
