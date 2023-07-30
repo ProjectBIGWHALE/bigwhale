@@ -10,15 +10,15 @@
 
 <body>
     <!--NAVEGAÇÃO-->
-    <nav >
+    <nav>
         <ul class="nav">
             <li><a href="#design">Design</a></li>
             <li><a href="#documentos">Documentos</a></li>
             <li><a href="#seguranca">Segurança</a></li>
             <li><a href="/apoie">Apoie</a></li>
         </ul>
-        
-   
+
+
     </nav>
 
     <!--CABEÇALHO-->
@@ -28,90 +28,154 @@
         <p id="descricao">Sua aquarela de ferramentas de manipulação de imagens e documentos.</p>
 
         <!-- Linhas superiores-->
-    <div class="linhas-esquerda">
-        <hr class="vertical-esq">
-        <hr class="horizontal-esq">
-    </div>
-    <!--Linhas inferiores-->
-    <div class="linhas-direita">
-        <hr class="vertical-dir">
-        <hr class="horizontal-dir">
-    </div>
-        
+        <div class="linhas-esquerda">
+            <hr class="vertical-esq">
+            <hr class="horizontal-esq">
+        </div>
+        <!--Linhas inferiores-->
+        <div class="linhas-direita">
+            <hr class="vertical-dir">
+            <hr class="horizontal-dir">
+        </div>
+
     </header>
 
     <!--FERRAMENTAS/CARROSSEL-->
     <section class="tipo" id="design">
         <h3>Design</h3>
 
-        <div class="carrossel">
-            <div id="carrossel-item">
-                <a href="/colors/transparentimage">
-                    <ion-icon name="image-outline"></ion-icon>
-                    <h4>Remover Fundo de Imagens</h4>
-                    <p>Você pode facilmente retirar o plano de fundo indesejado e obter imagens com transparência.</p>
-                </a>
+        <div class="container">
+
+            <div class="setas">
+                <button onclick="showNextImage('carrossel')"> <ion-icon name="arrow-back-outline"></ion-icon></button>
             </div>
 
-            <div id="carrossel-item">
-                <a href="/colors/colorspalette">
-                    <ion-icon name="color-palette-outline"></ion-icon>
-      
-                    <h4>Paleta de Cores a partir de Imagens</h4>
-                    <p>Para extrair automaticamente as cores principais da sua imagem e obter inspiração para os seus
-                        projetos de design.</p>
-                </a>
+            <div class="carrossel">
+             
+                <!--a card-designer classe para marcar a div no javascript-->
+                <div class="carrossel-item card-designer ">
+                    <a href="/colors/transparentimage">
+                        <ion-icon name="image-outline"></ion-icon>
+
+                        <h4>Remover Fundo de Imagens</h4>
+                        <p>Você pode facilmente retirar o plano de fundo indesejado e obter imagens com transparência.
+                        </p>
+                    </a>
+                </div>
+
+                <div class="carrossel-item card-designer">
+
+                    <a href="/colors/colorspalette">
+                        <ion-icon name="color-palette-outline"></ion-icon>
+
+                        <h4>Paleta de Cores a partir de Imagens</h4>
+                        <p>Para extrair automaticamente as cores principais da sua imagem e obter inspiração para os
+                            seus
+                            projetos de design.</p>
+                    </a>
+                </div>
+
+                <div class="carrossel-item card-designer">
+                    <a href="">
+                        <ion-icon name="resize-outline"></ion-icon>
+                        <h4>Redimensionar Imagens</h4>
+                        <p>Você pode ajustar o tamanho das suas imagens de forma rápida e fácil, adaptando-as às suas
+                            necessidades.</p>
+                    </a>
+                </div>
+
+                <div class="carrossel-item card-designer">
+                    <a href="">
+                        <ion-icon name="arrow-back-outline"></ion-icon>
+                        <h4>TESTE</h4>
+                        <p>Testando carrossel.</p>
+                    </a>
+                </div>
+
             </div>
 
-            <div id="carrossel-item">
-                <a href="">
-                    <ion-icon name="resize-outline"></ion-icon>
-                    <h4>Redimensionar Imagens</h4>
-                    <p>Você pode ajustar o tamanho das suas imagens de forma rápida e fácil, adaptando-as às suas
-                        necessidades.</p>
-                </a>
+            <div class="setas">
+                <button onclick="showPreviousImage('carrossel')" class="inverter"><ion-icon
+                        name="arrow-back-outline"></ion-icon></button>
             </div>
+
+
         </div>
+
+
     </section>
 
     <section class="tipo" id="documentos">
         <h3>Documentos</h3>
 
-        <div class="carrossel">
-            <div id="carrossel-item">
-                <a href="/certificates/certificategenerator">
-                    <ion-icon name="ribbon-outline"></ion-icon>
-                    <h4>Gerador de Certificados</h4>
-                    <p>Você pode criar certificados personalizados de forma rápida e fácil para reconhecimento e
-                        autenticação.</p>
-                </a>
+        <div class="container">
+
+            <div class="setas">
+                <button onclick="showNextImage('carrossel-documento')"> <ion-icon name="arrow-back-outline"></ion-icon></button>
             </div>
 
-            <div id="carrossel-item">
-                <a href="">
-                    <ion-icon name="refresh-circle-outline"></ion-icon>
-                    <br>
-                    <h4>Conversor de Arquivos</h4>
-                    <p>Transforme facilmente seu documento em um formato compatível com o que você precisa.</p>
-                </a>
+                    
+            <div class="carrossel carrossel-documento">
+
+                <!--a classe card-documento e uma classe não para estiliza mais para marcar a div para ser usada no javascript-->
+                <!--a card-documento segui a mesma logica-->
+                <div class="carrossel-item card-documento">
+                    <a href="/certificates/certificategenerator">
+                        <ion-icon name="ribbon-outline"></ion-icon>
+                        <h4>Gerador de Certificados</h4>
+                        <p>Você pode criar certificados personalizados de forma rápida e fácil para reconhecimento e
+                            autenticação.</p>
+                    </a>
+                </div>
+
+                <div class="carrossel-item card-documento">
+                    <a href="">
+                        <ion-icon name="refresh-circle-outline"></ion-icon>
+                        <br>
+                        <h4>Conversor de Arquivos</h4>
+                        <p>Transforme facilmente seu documento em um formato compatível com o que você precisa.</p>
+                    </a>
+                </div>
+
+                <div class="carrossel-item card-documento">
+                    <a href="">
+                        <ion-icon name="contract-outline"></ion-icon>
+                        <h4>Compressor de Arquivos</h4>
+                        <p>Para reduzir o tamanho dos seus arquivos e economizar espaço de armazenamento no seu
+                            dispositivo.
+                        </p>
+                    </a>
+                </div>
+
+
+
             </div>
 
-            <div id="carrossel-item">
-                <a href="">
-                    <ion-icon name="contract-outline"></ion-icon>
-                    <h4>Compressor de Arquivos</h4>
-                    <p>Para reduzir o tamanho dos seus arquivos e economizar espaço de armazenamento no seu dispositivo.
-                    </p>
-                </a>
+            <div class="setas">
+                <button onclick="showPreviousImage('carrossel-documento')" class="inverter"><ion-icon
+                        name="arrow-back-outline"></ion-icon></button>
             </div>
+
         </div>
     </section>
 
     <section class="tipo" id="seguranca">
         <h3>Segurança</h3>
 
-        <div class="carrossel">
-            <div id="carrossel-item">
+        <div class="container">
+
+            
+            <div class="setas">
+                <button onclick="showNextImage('carrossel-seguranca')"> <ion-icon name="arrow-back-outline"></ion-icon></button>
+            </div>
+
+        <div class="carrossel carrossel-seguranca">
+
+    
+            
+                <!--a classe carrossel-seguranca e uam classe não para estiliza mais para marcar a div para ser usada no javascript-->
+                <!--a card-seguranca segui a mesma logica-->
+            <div class="carrossel-item card-seguranca">
                 <a href="/security/encrypt">
                     <ion-icon name="lock-closed-outline"></ion-icon>
                     <h4>Criptografar</h4>
@@ -119,7 +183,7 @@
                 </a>
             </div>
 
-            <div id="carrossel-item">
+            <div class="carrossel-item card-seguranca">
                 <a href="">
                     <ion-icon name="lock-open-outline"></ion-icon>
                     <br>
@@ -129,14 +193,23 @@
                 </a>
             </div>
 
-            <div id="carrossel-item">
+            <div class="carrossel-item card-seguranca">
                 <a href="/codes/qrcode/">
                     <ion-icon name="barcode-outline"></ion-icon>
                     <h4>Criar QR-CODE</h4>
                     <p>Você pode gerar um QR-CODE personalizado com facilidade.</p>
                 </a>
             </div>
+
+
         </div>
+        <div class="setas">
+            <button onclick="showPreviousImage('carrossel-seguranca')" class="inverter"><ion-icon
+                    name="arrow-back-outline"></ion-icon></button>
+        </div>
+
+        </div>
+
     </section>
 
     <!--SOBRE NÓS-->
@@ -186,10 +259,16 @@
     <footer>
         <p>© Whale - 2023</p>
         <p>contact@mybigwhale.com</p>
+
     </footer>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="/home/script/script.js"></script>
+
+
+
+
 </body>
 
 </html>
