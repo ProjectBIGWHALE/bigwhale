@@ -97,8 +97,11 @@
 		    <artifactId>junrar</artifactId>
 		    <version>7.5.5</version>
 		</dependency>
-
-
+		<dependency>
+			<groupId>net.sourceforge.tess4j</groupId>
+			<artifactId>tess4j</artifactId>
+			<version>4.5.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
