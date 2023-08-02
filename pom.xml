@@ -87,12 +87,6 @@
 			<artifactId>tess4j</artifactId>
 			<version>4.5.1</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-compress</artifactId>
-			<version>1.21</version>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-compress</artifactId>
@@ -103,7 +97,6 @@
 			<artifactId>junrar</artifactId>
 			<version>7.5.5</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
