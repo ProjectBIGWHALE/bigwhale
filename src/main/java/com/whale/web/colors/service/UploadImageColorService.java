@@ -14,7 +14,7 @@ public class UploadImageColorService {
         // Aqui, o método extrai os bytes da imagem enviada.
         byte[] bytes = file.getBytes();
 
-        // Os bytes da imagem são usados para criar um objeto ByteArrayInputStream.
+        // Os bytes da imagem são armazenados em um objeto ByteArrayInputStream.
         // Isto é útil quando você precisa manipular dados armazenados em memória
         ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
 

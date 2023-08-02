@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +16,7 @@ import com.whale.web.colors.service.ConvertImageFormatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +25,7 @@ import com.whale.web.colors.model.FormPalette;
 import com.whale.web.colors.service.AlterColorService;
 import com.whale.web.colors.service.ColorPaletteService;
 import com.whale.web.colors.service.UploadImageColorService;
-
+import org.springframework.util.StringUtils;
 
 @Controller
 @RequestMapping("/colors")
@@ -123,14 +125,19 @@ public class ColorsController {
 		return "imageconversion";
 	}
 
+
+
+// ...
+
 	@PostMapping("/convertformatimage")
 	public String convertAndDownloadImage(@ModelAttribute("form") FormConvert formConvert, HttpServletResponse response) throws Exception {
 
 		try {
-			// Converte a imagem para o formato de saída desejado
-			String convertedFileName = formConvert.getImage().getOriginalFilename() + "." + formConvert.getOutputFormat().toLowerCase();
-
 			byte[] formattedImage = convertImageFormatService.convertImageFormat(formConvert.getOutputFormat(), formConvert.getImage());
+
+			// Extrair o nome do arquivo original sem sua extensão e adicionar o novo formato.
+			String originalFileName = StringUtils.stripFilenameExtension(Objects.requireNonNull(formConvert.getImage().getOriginalFilename()));
+			String convertedFileName = originalFileName + "." + formConvert.getOutputFormat().toLowerCase();
 
 			// Define os cabeçalhos da resposta para fazer o download
 			response.setContentType("image/" + formConvert.getOutputFormat().toLowerCase());
@@ -149,5 +156,6 @@ public class ColorsController {
 		return null;
 	}
 
-	
+
+
 }
