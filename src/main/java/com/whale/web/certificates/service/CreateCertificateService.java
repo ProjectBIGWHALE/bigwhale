@@ -32,7 +32,7 @@ public class CreateCertificateService {
 	    	throw new Exception();
 	    }
 	    
-	    List<byte[]> imagesWithText = editImageService.editImage(imageLayoult, names, y, x, fontSize);
+	    List<byte[]> imagesWithText = editImageService.editImage(imageLayoult, names, x, y, fontSize);
 
 	    ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	    ZipOutputStream zos = new ZipOutputStream(bos);
@@ -49,8 +49,6 @@ public class CreateCertificateService {
 	    zos.close();
 
 	    return bos.toByteArray();
-		
-
 	}
 	
 }
