@@ -3,10 +3,6 @@ package com.whale.web.colors.service;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
@@ -14,13 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.whale.web.certificates.configuration.CustomMultipartFile;
-
 @Service
 public class AlterColorService {
 	
 	@Autowired
-	UploadImagemServiceColors uploadImageService;
+	UploadImagemService uploadImageService;
 	
 	public byte[] alterColor(MultipartFile imageForm, String colorOfImage, String replacementColor, Integer margin) throws Exception {
 	    

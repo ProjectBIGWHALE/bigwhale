@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversão de Imagem</title>
+</head>
+ <body>
+    <h2>Upload e Conversão de Imagem</h2>
+    <form th:action="@{/colors/convertformatimage}" method="POST" enctype="multipart/form-data" th:object="${form}">
+        <div>
+            <label for="image">Escolha uma imagem:</label>
+            <input type="file" th:field="*{image}" name="image" id="image" required />
+        </div>
+        <div>
+            <p><b>Formato de Saída</b></p>
+            <select th:field="*{outputFormat}" class="form-control">
+                <option th:each="format : ${list}" th:value="${format.name}" th:text="${format.name}"></option>
+            </select>
+            <span th:errors="*{outputFormat}" class="text-danger"></span>
+        </div>
+        <div>
+            <button type="submit">Converter e Baixar</button>
+        </div>
+
+ </body>
+</html>

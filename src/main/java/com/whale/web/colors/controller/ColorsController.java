@@ -1,35 +1,28 @@
 package com.whale.web.colors.controller;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import com.whale.web.colors.model.FormConvert;
+import com.whale.web.colors.model.Format;
+import com.whale.web.colors.service.ConvertImageFormatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.whale.web.colors.model.FormColors;
 import com.whale.web.colors.model.FormPalette;
 import com.whale.web.colors.service.AlterColorService;
 import com.whale.web.colors.service.ColorPaletteService;
-import com.whale.web.colors.service.UploadImagemServiceColors;
+import com.whale.web.colors.service.UploadImagemService;
 
 
 @Controller
@@ -38,22 +31,27 @@ public class ColorsController {
 	
 	@Autowired
 	AlterColorService alterColorService;
-	
+
 	@Autowired
 	FormColors form;
+
+	@Autowired
+	FormConvert formConvert;
 	
 	@Autowired
 	ColorPaletteService colorPaletteService;
 	
 	@Autowired
-	UploadImagemServiceColors uploadImageService;
+	UploadImagemService uploadImageService;
+
+	@Autowired
+	ConvertImageFormatService convertImageFormatService;
 	
 	@RequestMapping(value="/transparentimage", method=RequestMethod.GET)
 	public String certificateGenerator(Model model) {
 		
 		model.addAttribute("form", form);
-		return "colors";
-		
+		return "transparentimage";
 	}
 	
 
@@ -112,5 +110,44 @@ public class ColorsController {
 		}
 		
 	}
+
+	@RequestMapping(value = "/imageconversion", method = RequestMethod.GET)
+	public String convertimage(Model model) {
+		List<Format> list = Arrays.asList(new Format(1L, "jpg"),
+										  new Format(2L, "png"),
+									      new Format(3L, "gif"),
+									      new Format(4L, "bmp"));
+
+		model.addAttribute("list", list);
+		model.addAttribute("form", formConvert);
+		return "imageconversion";
+	}
+
+	@PostMapping("/convertformatimage")
+	public String convertAndDownloadImage(@ModelAttribute("form") FormConvert formConvert, HttpServletResponse response) throws Exception {
+
+		try {
+			// Converte a imagem para o formato de saída desejado
+			String convertedFileName = formConvert.getImage().getOriginalFilename() + "." + formConvert.getOutputFormat().toLowerCase();
+
+			byte[] formattedImage = convertImageFormatService.convertImageFormat(formConvert.getOutputFormat(), formConvert.getImage());
+
+			// Define os cabeçalhos da resposta para fazer o download
+			response.setContentType("image/" + formConvert.getOutputFormat().toLowerCase());
+			response.setHeader("Content-Disposition", "attachment; filename=" + convertedFileName);
+			response.setHeader("Cache-Control", "no-cache");
+
+			// Copia os bytes do arquivo para o OutputStream
+			try (OutputStream os = response.getOutputStream()) {
+				os.write(formattedImage);
+				os.flush();
+			}
+
+		} catch (Exception e) {
+			return "redirect:/colors/imageconversion";
+		}
+		return null;
+	}
+
 	
 }
