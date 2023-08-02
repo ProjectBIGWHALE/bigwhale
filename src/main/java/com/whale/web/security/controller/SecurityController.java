@@ -3,16 +3,6 @@ package com.whale.web.security.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import edu.stanford.nlp.pipeline.Annotation;
-import edu.stanford.nlp.pipeline.StanfordCoreNLP;
-import edu.stanford.nlp.ling.CoreAnnotations;
-import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
-import edu.stanford.nlp.util.CoreMap;
-
-
-import java.util.Properties;
-import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +26,7 @@ public class SecurityController {
 	EncryptService encryptService;
 	
 	@RequestMapping(value="/encrypt", method=RequestMethod.GET)
-	public String certificateGenerator(Model model) {
+	public String encrypt(Model model) {
 		
 		model.addAttribute("form", form);
 		return "securityencrypt";
