@@ -1,4 +1,4 @@
-package com.whale.web.text.extract.service;
+package com.whale.web.documents.service;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;

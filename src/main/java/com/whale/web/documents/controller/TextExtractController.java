@@ -1,6 +1,6 @@
-package com.whale.web.text.extract.controller;
+package com.whale.web.documents.controller;
 
-import com.whale.web.text.extract.service.TextExtractService;
+import com.whale.web.documents.service.TextExtractService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
