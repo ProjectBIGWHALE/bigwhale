@@ -14,11 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class AlterColorService {
 	
 	@Autowired
-	UploadImagemService uploadImageService;
+	UploadImageColorService uploadImageColorService;
 	
 	public byte[] alterColor(MultipartFile imageForm, String colorOfImage, String replacementColor, Integer margin) throws Exception {
 	    
-	    MultipartFile upload = uploadImageService.uploadImage(imageForm);
+	    MultipartFile upload = uploadImageColorService.uploadImage(imageForm);
 	    BufferedImage img = ImageIO.read(upload.getInputStream());
 
 	    // Defines the marked color

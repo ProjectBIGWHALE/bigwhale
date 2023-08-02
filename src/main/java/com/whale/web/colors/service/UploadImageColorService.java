@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class UploadImagemService {
+public class UploadImageColorService {
 	
     public MultipartFile uploadImage(MultipartFile file) throws Exception {
 

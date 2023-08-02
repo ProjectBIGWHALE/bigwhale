@@ -22,7 +22,7 @@ import com.whale.web.colors.model.FormColors;
 import com.whale.web.colors.model.FormPalette;
 import com.whale.web.colors.service.AlterColorService;
 import com.whale.web.colors.service.ColorPaletteService;
-import com.whale.web.colors.service.UploadImagemService;
+import com.whale.web.colors.service.UploadImageColorService;
 
 
 @Controller
@@ -42,7 +42,7 @@ public class ColorsController {
 	ColorPaletteService colorPaletteService;
 	
 	@Autowired
-	UploadImagemService uploadImageService;
+	UploadImageColorService uploadImageService;
 
 	@Autowired
 	ConvertImageFormatService convertImageFormatService;

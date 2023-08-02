@@ -13,11 +13,11 @@ import java.io.ByteArrayOutputStream;
 public class ConvertImageFormatService {
 
     @Autowired
-    UploadImagemService uploadImageService;
+    UploadImageColorService uploadImageColorService;
     public byte[] convertImageFormat(String outputFormat, MultipartFile file) throws Exception {
 
         // Upload da imagem anexada pelo usuário. Contém nome e tipo original e os bytes (inputstream) da imagem
-        MultipartFile uploadedImage = uploadImageService.uploadImage(file);
+        MultipartFile uploadedImage = uploadImageColorService.uploadImage(file);
 
         // O método ImageIO.read() é responsável por ler o InputStream fornecido e criar um
         // objeto BufferedImage correspondente à imagem.
