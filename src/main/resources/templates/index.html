@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whale</title>
-    <link rel="stylesheet" href="/home/css/style.css">
+    <link rel="stylesheet" href="../styles/home.css">
 </head>
 
 <body>
@@ -21,7 +21,7 @@
 
     <!--CABEÇALHO-->
     <header>
-        <img id="logo" src="/home/images/logo.png" alt="logo whale">
+        <img id="logo" src="../static/img/logo.png" alt="logo whale">
 
         <p id="descricao">Sua aquarela de ferramentas de manipulação de imagens e documentos.</p>
 
@@ -49,7 +49,7 @@
             </div>
 
             <div class="carrossel">
-             
+
                 <!--a card-designer classe para marcar a div no javascript-->
                 <div class="carrossel-item card-designer ">
                     <a href="/colors/transparentimage">
@@ -107,10 +107,11 @@
         <div class="container">
 
             <div class="setas">
-                <button onclick="showNextImage('carrossel-documento')"> <ion-icon name="arrow-back-outline"></ion-icon></button>
+                <button onclick="showNextImage('carrossel-documento')"> <ion-icon
+                        name="arrow-back-outline"></ion-icon></button>
             </div>
 
-                    
+
             <div class="carrossel carrossel-documento">
 
                 <!--a classe card-documento e uma classe não para estiliza mais para marcar a div para ser usada no javascript-->
@@ -165,49 +166,50 @@
 
         <div class="container">
 
-            
+
             <div class="setas">
-                <button onclick="showNextImage('carrossel-seguranca')"> <ion-icon name="arrow-back-outline"></ion-icon></button>
+                <button onclick="showNextImage('carrossel-seguranca')"> <ion-icon
+                        name="arrow-back-outline"></ion-icon></button>
             </div>
 
-        <div class="carrossel carrossel-seguranca">
+            <div class="carrossel carrossel-seguranca">
 
-    
-            
+
+
                 <!--a classe carrossel-seguranca e uam classe não para estiliza mais para marcar a div para ser usada no javascript-->
                 <!--a card-seguranca segui a mesma logica-->
-            <div class="carrossel-item card-seguranca">
-                <a href="/security/encrypt">
-                    <ion-icon name="lock-closed-outline"></ion-icon>
-                    <h4>Criptografar</h4>
-                    <p>Utilize uma chave de criptografia forte para proteger o seu arquivo.</p>
-                </a>
+                <div class="carrossel-item card-seguranca">
+                    <a href="/security/encrypt">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <h4>Criptografar</h4>
+                        <p>Utilize uma chave de criptografia forte para proteger o seu arquivo.</p>
+                    </a>
+                </div>
+
+                <div class="carrossel-item card-seguranca">
+                    <a href="">
+                        <ion-icon name="lock-open-outline"></ion-icon>
+                        <br>
+                        <h4>Descriptografar</h4>
+                        <p>Você pode descriptografar o documento utilizando a chave correta para acessar seu conteúdo
+                            original.</p>
+                    </a>
+                </div>
+
+                <div class="carrossel-item card-seguranca">
+                    <a href="/codes/qrcode/">
+                        <ion-icon name="barcode-outline"></ion-icon>
+                        <h4>Criar QR-CODE</h4>
+                        <p>Você pode gerar um QR-CODE personalizado com facilidade.</p>
+                    </a>
+                </div>
+
+
             </div>
-
-            <div class="carrossel-item card-seguranca">
-                <a href="">
-                    <ion-icon name="lock-open-outline"></ion-icon>
-                    <br>
-                    <h4>Descriptografar</h4>
-                    <p>Você pode descriptografar o documento utilizando a chave correta para acessar seu conteúdo
-                        original.</p>
-                </a>
+            <div class="setas">
+                <button onclick="showPreviousImage('carrossel-seguranca')" class="inverter"><ion-icon
+                        name="arrow-back-outline"></ion-icon></button>
             </div>
-
-            <div class="carrossel-item card-seguranca">
-                <a href="/codes/qrcode/">
-                    <ion-icon name="barcode-outline"></ion-icon>
-                    <h4>Criar QR-CODE</h4>
-                    <p>Você pode gerar um QR-CODE personalizado com facilidade.</p>
-                </a>
-            </div>
-
-
-        </div>
-        <div class="setas">
-            <button onclick="showPreviousImage('carrossel-seguranca')" class="inverter"><ion-icon
-                    name="arrow-back-outline"></ion-icon></button>
-        </div>
 
         </div>
 
@@ -217,7 +219,7 @@
     <section id="sobre">
         <h3>Sobre nós</h3>
 
-        <p>Nossa equipe é apaixonada por programação e dedicada a criar uma experiência excepcional
+        <p> Nossa equipe é apaixonada por programação e dedicada a criar uma experiência excepcional
             para nossos usuários. O Whale foi construído com todo o cuidado e expertise utilizando as
             linguagens Java e JavaScript. Essas tecnologias nos permitiram criar uma plataforma inovadora
             e poderosa para a manipulação de imagens e documentos. Nosso objetivo é oferecer ferramentas de
@@ -228,19 +230,35 @@
 
         <div class="colaboradores">
             <a href="https://www.linkedin.com/in/amanda-paiva-lino/" target="_blank">
-                <img src="img/time/amanda.jpg" alt="mulher branca sorrindo">
+                <img src="../static/img/time/amanda.jpg" alt="mulher branca sorrindo">
             </a>
 
             <a href="https://www.linkedin.com/in/erasmobezerra/" target="_blank">
-                <img src="img/time/erasmo.jpg" alt="homem pardo">
+                <img src="../static/img/time/erasmo.jpg" alt="homem pardo">
             </a>
 
             <a href="https://www.linkedin.com/in/ramon-moratori-86a558243/" target="_blank">
-                <img src="img/time/ramon.jpg" alt="homem branco sorrindo">
+                <img src="../static/img/time/ramon.jpg" alt="homem branco sorrindo">
             </a>
 
             <a href="https://www.linkedin.com/in/leo-silva011" target="_blank">
-                <img src="img/time/leo.jpg" alt="homem branco">
+                <img src="../static/img/time/leo.jpg" alt="homem branco">
+            </a>
+
+            <a href="ADICIONAR LINKEDIN DA ESTRELA!" target="_blank">
+                <img src="../static/img/time/Estrela.jpeg" alt="mulher sorrindo">
+            </a>
+
+            <a href="https://www.linkedin.com/in/syllas-braga/" target="_blank">
+                <img src="../static/img/time/Syllas.jpeg" alt="homem de boné e óculos">
+            </a>
+
+            <a href="https://www.linkedin.com/in/daniellyfreitasc/" target="_blank">
+                <img src="../static/img/time/Danielly.jpeg" alt="mulher de óculos sorrindo">
+            </a>
+
+            <a href="https://www.linkedin.com/in/larissa-lunguinho/" target="_blank">
+                <img src="../static/img/time/Larissa.jpeg" alt="mulher de óculos">
             </a>
         </div>
     </section>
@@ -266,9 +284,6 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="/home/script/script.js"></script>
-
-
-
 
 </body>
 
