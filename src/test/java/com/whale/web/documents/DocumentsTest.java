@@ -7,16 +7,22 @@ import java.net.URI;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.whale.web.documents.service.CompressorService;
+import com.whale.web.documents.service.TextExtractService;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
@@ -25,7 +31,13 @@ public class DocumentsTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
-	
+
+    @MockBean
+    private TextExtractService textExtractService;
+
+    @MockBean
+    private CompressorService compressorService;
+
 	@Test
 	public void shouldReturnTheHTMLForm() throws Exception {
 		
@@ -69,4 +81,63 @@ public class DocumentsTest {
                 .andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"))
                 .andExpect(MockMvcResultMatchers.content().bytes(testFile.getBytes()));
     }
+
+    @Test
+    public void textExtractshouldReturnTheHTMLForm() throws Exception {
+
+        URI uri = new URI("/documents/textextract");
+        mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
+                MockMvcResultMatchers.status().is(200));
+    }
+
+    @Test
+    public void textExtractedShouldReturnTheHTMLForm() throws Exception {
+        MockMultipartFile multipartFile = new MockMultipartFile(
+                "file",
+                "test-image.png",
+                "image/png",
+                "Test image content".getBytes()
+        );
+
+        String extractedText = "Extracted text from image.";
+
+        when(textExtractService.extractTextFromImage(any())).thenReturn(extractedText);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/textextracted")
+                        .file(multipartFile))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("textextracted"))
+                .andExpect(MockMvcResultMatchers.model().attribute("extractedText", extractedText));
+
+        verify(textExtractService, times(1)).extractTextFromImage(any());
+    }
+
+    @Test
+    public void compressFilePageShouldReturnTheHTMLForm() throws Exception {
+
+        URI uri = new URI("/documents/compressor");
+        mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
+                MockMvcResultMatchers.status().is(200));
+    }
+
+    @Test
+    public void compressFileShouldReturnTheFileZip() throws Exception {
+        MockMultipartFile multipartFile = new MockMultipartFile(
+                "file",
+                "test-file.txt",
+                "text/plain",
+                "Test file content".getBytes()
+        );
+
+        when(compressorService.compressFile(any())).thenReturn(multipartFile.getBytes());
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compressor")
+                        .file(multipartFile))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/octet-stream"))
+                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=test-file.txt.zip"));
+
+        verify(compressorService, times(1)).compressFile(any());
+    }
 }
+
