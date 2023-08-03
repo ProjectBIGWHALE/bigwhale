@@ -1,0 +1,197 @@
+<html>
+
+	<head>
+	
+			<title>WHALE - Certificados</title>
+			<meta charset="UTF-8"/>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+			<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@900&display=swap" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@700&display=swap" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
+			
+		    <style>
+			.montserrat{
+				font-family: 'Montserrat', cursive;
+				font-size: 3.0rem;
+			}
+			.nanum{
+				font-family: 'Nanum Gothic', sans-serif;
+				font-size: 2.0rem;
+			}
+			.impacto{
+				font-family: 'Urbanist', sans-serif;
+				font-size: 2.0rem;
+			}
+			.escrita{
+				font-family: 'Satisfy', cursive;
+				font-size: 2.0rem;
+			}
+			.robotomono{
+				font-family: 'Roboto Mono', monospace;
+				font-size: 0.7rem;
+				color: #000000;
+			}
+
+			.btn-custom {
+			  background-color: transparent;
+			  border-color: #FFFFFF;
+			  color: #ff0000;
+			}
+
+			.btn-custom:hover {
+			  background-color: #FF0022;
+			  color: #fff;
+			}
+			.btn-custom2 {
+			  background-color: transparent;
+			  border-color: transparent;
+			  color: #ff0000;
+			}
+
+			.btn-custom2:hover {
+			  background-color: #011627;
+			  border-color:#FFFFFF;
+			  color: #fff;
+			}
+			#canvas {
+			    position: relative;
+			    display: inline-block;
+			}
+			
+			#backgroundImage {
+            	justify-content: center;
+            	border-color: #000000;
+            	border-width: 3px;
+            	border-style: solid;
+			}
+
+			#textElement {
+			    position: absolute;
+			    left: 0;
+			    top: 0;
+			    font-family: 'Montserrat', cursive;
+			    font-size: 3.0rem;
+			    color: #FF0000; 
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<br><br><br>
+			<div  align="center">
+			<div id="canvas">
+			   <img id="backgroundImage" src="" alt="Imagem de fundo">
+			   <div id="textElement" class="text"></div>
+    		</div>
+			</div>
+			<form th:action="@{/certificates/downloadimages}"
+		      class="card-body d-flex justify-content-center p-5" method="POST"
+		      enctype="multipart/form-data" th:object="${worksheetAndForm}">
+			    <div class="form-row">
+			        <div class="form-group mb-3 col-md-12">
+			        	<br>
+			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Lista de Nomes (CSV)</b></p>
+			            <input type="file" th:field="*{worksheet.worksheet}"
+			                   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
+			                   class="form-control"/>
+			            <span th:errors="*{worksheet.worksheet}" class="text-danger"></span>
+			        </div>
+			        <div class="form-group mb-3 col-md-12">
+			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada X (px)</b></p>
+			            <input th:field="*{form.x}" type="number"
+			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
+			                   class="form-control" id="x"/>
+			            <span th:errors="*{form.x}" class="text-danger"></span>
+			        </div>
+			        <div class="form-group mb-3 col-md-12">
+			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada Y (px)</b></p>
+			            <input th:field="*{form.y}" type="number"
+			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
+			                   class="form-control" id="y"/>
+			            <span th:errors="*{form.y}" class="text-danger"></span>
+			        </div>
+			        <div class="form-group mb-3 col-md-12">
+			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Tamanho da Fonte (px)</b></p>
+			            <input th:field="*{form.fontSize}" type="number"
+			                   style="border-radius: 10px; padding: 10px 172px; text-align: center;"
+			                   class="form-control" id="fontSize"/>
+			            <span th:errors="*{form.fontSize}" class="text-danger"></span>
+			        </div>
+			        <div class="form-group mb-3 col-md-12">
+			        	<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Modelo de Certificado (JPG, PNG)</b></p>
+			            <input type="file" th:field="*{form.imageLayout}"
+			                   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
+			                   class="form-control" id="image"/>
+			            <span th:errors="*{form.imageLayout}" class="text-danger"></span>
+			        </div>
+					<div align="center">
+						<br>
+						<button class="btn btn-outline-success rounded-circle robotomono" type="submit" style="width: 50; height: 50;"></button>
+						<a href="/"><text class="btn btn-outline-danger rounded-circle robotomono" type="submit" style="width: 50; height: 50;"></text></a>
+					</div>
+				</div>
+		    </form>
+		    <div align="center">
+		    	
+			</div>
+
+		</div>
+		
+		<script>
+		  document.addEventListener('DOMContentLoaded', function() {
+		    const xInput = document.getElementById('x');
+		    const yInput = document.getElementById('y');
+		    const fontSizeInput = document.getElementById('fontSize');
+		    const backgroundImage = document.getElementById('backgroundImage');
+		    const textElement = document.getElementById('textElement');
+		    const canvas = document.getElementById('canvas');
+
+		    xInput.addEventListener('input', updatePreview);
+		    yInput.addEventListener('input', updatePreview);
+		    fontSizeInput.addEventListener('input', updatePreview);
+
+		    const imageInput = document.getElementById('image');
+		    imageInput.addEventListener('change', function() {
+		      const file = imageInput.files[0];
+		      const reader = new FileReader();
+		      reader.onload = function(event) {
+		        backgroundImage.src = event.target.result;
+		        updatePreview();
+		      };
+		      reader.readAsDataURL(file);
+		    });
+
+		    function updatePreview() {
+		      const x = parseInt(xInput.value);
+		      const y = parseInt(yInput.value);
+		      const fontSize = parseInt(fontSizeInput.value);
+
+		      textElement.textContent = 'Seu texto aqui';
+		      textElement.style.left = x + 'px';
+		      textElement.style.top = y + 'px';
+		      textElement.style.fontSize = fontSize + 'px';
+
+		      canvas.style.position = 'relative';
+		      canvas.style.display = 'inline-block';
+		      canvas.style.backgroundImage = `url("${backgroundImage.src}")`;
+		      canvas.style.backgroundRepeat = 'no-repeat';
+		      canvas.style.backgroundSize = 'contain';
+		      canvas.style.width = backgroundImage.width + 'px';
+		      canvas.style.height = backgroundImage.height + 'px';
+
+		      textElement.style.position = 'absolute';
+		    }
+		  });
+
+    </script>
+		
+		
+		
+		
+	</body>
+
+</html>
