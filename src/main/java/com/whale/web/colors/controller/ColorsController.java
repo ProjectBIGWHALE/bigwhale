@@ -115,10 +115,10 @@ public class ColorsController {
 
 	@RequestMapping(value = "/imageconversion", method = RequestMethod.GET)
 	public String convertimage(Model model) {
-		List<Format> list = Arrays.asList(new Format(1L, "jpg"),
-										  new Format(2L, "png"),
-									      new Format(3L, "gif"),
-									      new Format(4L, "bmp"));
+		List<Format> list = Arrays.asList(new Format(1L, "png"),
+											new Format(2L, "bmp"),
+											new Format(3L, "jpg"),
+											new Format(4L, "jpeg"));
 
 		model.addAttribute("list", list);
 		model.addAttribute("form", formConvert);
