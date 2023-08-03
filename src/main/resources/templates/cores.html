@@ -1,0 +1,310 @@
+<html>
+	<head>
+		<title>WHALE - Cores</title>
+		<meta charset="UTF-8"/>
+		<meta charset="UTF-8"/>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@900&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
+		<script src="https://unpkg.com/cursorzoom/dist/cursorzoom.min.js"></script>
+		<style>
+			.montserrat{
+				font-family: 'Montserrat', cursive;
+				font-size: 3.0rem;
+			}
+			.nanum{
+				font-family: 'Nanum Gothic', sans-serif;
+				font-size: 2.0rem;
+			}
+			.impacto{
+				font-family: 'Urbanist', sans-serif;
+				font-size: 2.0rem;
+			}
+			.escrita{
+				font-family: 'Satisfy', cursive;
+				font-size: 2.0rem;
+			}
+			.robotomono{
+				font-family: 'Roboto Mono', monospace;
+				font-size: 0.7rem;
+				color: #000000;
+			}
+			.btn-custom {
+			  background-color: transparent;
+			  border-color: #FFFFFF;
+			  color: #ff0000;
+			}
+
+			.btn-custom:hover {
+			  background-color: #FF0022;
+			  color: #fff;
+			}
+			.btn-custom2 {
+			  background-color: transparent;
+			  border-color: transparent;
+			  color: #ff0000;
+			}
+
+			.btn-custom2:hover {
+			  background-color: #011627;
+			  border-color:#FFFFFF;
+			  color: #fff;
+			}	
+			
+			#preview img{
+				
+				max-width: 25%;
+				max-height: 25%;
+            	display: inline-block;
+            	justify-content: center;
+			
+			}
+			body {
+		      cursor: default; /* Define o cursor padrão para o corpo da página */
+		    }
+		
+		    .color-picker {
+		      cursor: default;
+		    }
+		
+		    #preview img {
+			  cursor: crosshair;
+			}
+			.color-wheel {
+			width: 140px;
+			height: 140px;
+			border-radius: 50%;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.color-wheel::before {
+			content: "";
+			display: block;
+			width: 100%;
+			height: 100%;
+			border-radius: 20%;
+			background: linear-gradient(to right, red, yellow, lime, aqua, blue, magenta, red);
+			transform: rotate(30deg);
+		}
+		.color-picker2 {
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			border: 2px solid white;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			cursor: crosshair;
+		}
+		
+	        
+		</style>
+	</head>
+	<script>
+	function previewImage(event) {
+		var input = event.target;
+		var preview = document.getElementById('preview');
+
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				preview.innerHTML = '<img src="' + e.target.result + '" alt="Pré-visualização da imagem">';
+				enableColorPicker();
+			};
+
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	function enableColorPicker() {
+		var imagePreview = document.querySelector('#preview img');
+		imagePreview.addEventListener('click', pickColor);
+	}
+
+	function pickColor(event) {
+		var image = event.target;
+		var canvas = document.createElement('canvas');
+		var context = canvas.getContext('2d');
+
+		canvas.width = image.width;
+		canvas.height = image.height;
+		context.drawImage(image, 0, 0, image.width, image.height);
+
+		var rect = image.getBoundingClientRect();
+		var x = event.clientX - rect.left;
+		var y = event.clientY - rect.top;
+
+		var pixelData = context.getImageData(x, y, 1, 1).data;
+		var color = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
+
+		var colorInput = document.getElementById('color-input');
+		colorInput.value = color;
+	}
+
+	function rgbToHex(r, g, b) {
+		return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+	}
+
+	function pickColorWheel(event) {
+		var colorPicker = document.querySelector('.color-picker2');
+		var colorWheel = document.querySelector('.color-wheel');
+		var corValor = document.getElementById('cor-valor2');
+		var corInput = document.getElementById('cor-input2');
+
+		var rect = colorWheel.getBoundingClientRect();
+		var x = event.clientX - rect.left;
+		var y = event.clientY - rect.top;
+		var centerX = rect.width / 2;
+		var centerY = rect.height / 2;
+		var angle = Math.atan2(y - centerY, x - centerX);
+		var degrees = angle * (180 / Math.PI);
+		var hue = (degrees + 360) % 360;
+
+		var color = hslToHex(hue, 1, 0.5);
+		corValor.textContent = color;
+		corInput.value = color;
+
+		colorPicker.style.left = x + 'px';
+		colorPicker.style.top = y + 'px';
+	}
+
+	function hslToHex(h, s, l) {
+		h /= 360;
+		var r, g, b;
+		if (s === 0) {
+			r = g = b = l;
+		} else {
+			function hue2rgb(p, q, t) {
+				if (t < 0) t += 1;
+				if (t > 1) t -= 1;
+				if (t < 1 / 6) return p + (q - p) * 6 * t;
+				if (t < 1 / 2) return q;
+				if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+				return p;
+			}
+
+			var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+			var p = 2 * l - q;
+
+			r = Math.round(hue2rgb(p, q, h + 1 / 3) * 255);
+			g = Math.round(hue2rgb(p, q, h) * 255);
+			b = Math.round(hue2rgb(p, q, h - 1 / 3) * 255);
+		}
+
+		return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+	}
+    </script>			      	
+	<body style="background-color:#FFFFFF;">
+		<div><br><br><br><br></div>
+		
+		<div align="center" id="preview"></div>
+		
+		<form th:action="@{/cores/processarimagem}"
+		      class="card-body d-flex justify-content-center p-5" method="POST"
+		      enctype="multipart/form-data" th:object="${formulario}">
+		      
+		      <div class="form-row">
+		      
+		      	<div class="form-group mb-3 col-md-12">
+			        <p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Imagem (JPG, PNG)</b></p>
+			        <input type="file" th:field="*{imagem}"
+			               style="border-radius: 10px; padding: 10px 72px; text-align: center;"
+			               class="form-control" id="image-input" onchange="previewImage(event)"/>
+			        <span th:errors="*{imagem}" class="text-danger"></span>
+			        
+			    </div>
+		
+		      
+      		  
+      		  <div class="form-group mb-3 col-md-12">
+		        <p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Cor da Imagem (#XXXXXX) -> Clique em uma região da imagem</b></p>
+		        <input th:field="*{corDaImagem}" type="text" style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control color-picker" id="color-input" />
+		        <span th:errors="*{corDaImagem}" class="text-danger"></span>
+		      </div>
+		      
+		      
+			<div class="form-group mb-3 col-md-12">
+  <label for="cor-input2" class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Cor para Alteração</b></label>
+  <div class="input-group">
+    <input th:field="*{corParaAlteracao}" type="text" style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control" id="cor-input2" />
+
+  </div>
+  <span th:errors="*{corParaAlteracao}" class="text-danger"></span>
+</div>
+
+
+<div align="center">
+  <div id="preview" onclick="pickColor2(event)" style="cursor: crosshair;">
+    <img src="/colors/images/rodadecores.jpg" alt="Pré-visualização da imagem">
+  </div>
+  <div class="input-group-append">
+      <button class="btn btn-outline" type="button" id="color-marker" onclick="disableColorInput()">Transparente</button>
+  </div>
+  <br><br>
+</div>
+
+<script>
+
+function disableColorInput() {
+    var colorInput = document.getElementById('cor-input2');
+    colorInput.value = '';
+  }
+  
+  function pickColor2(event) {
+    var image = event.target;
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+
+    canvas.width = image.width;
+    canvas.height = image.height;
+    context.drawImage(image, 0, 0, image.width, image.height);
+
+    var rect = image.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+
+    var pixelData = context.getImageData(x, y, 1, 1).data;
+    var color = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
+
+    var colorInput = document.getElementById('cor-input2');
+    colorInput.value = color;
+  }
+
+  function rgbToHex(r, g, b) {
+    return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+  }
+</script>
+
+			
+		      
+	
+		      
+		      	 <div class="form-group mb-3 col-md-12">
+			        <p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Margem de Alteração (%)</b></p>
+			          <input th:field="*{margem}" type="number"
+			             style="border-radius: 10px; padding: 10px 172px; text-align: center;"
+			             class="form-control"/>
+			          <span th:errors="*{margem}" class="text-danger"></span>
+			     </div>
+		      	
+		      	<div align="center">
+					<br>
+					<button class="btn btn-outline-success rounded-circle robotomono" type="submit" style="width: 50; height: 50;"></button>
+					 <a href="/"><text class="btn btn-outline-danger rounded-circle robotomono" type="submit" style="width: 50; height: 50;"></text></a>
+				</div>
+		      </div>
+		      
+		</form>
+		<div align="center">
+		  
+		</div>
+		
+	</body>
+</html>
