@@ -54,18 +54,23 @@
         border-radius: 5px;
         }
 
-        button {
+        button, a{
         background-color: #007bff;
         color: #fff;
         padding: 10px 20px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        text-decoration: none;
+        height: 35px;
+        font-size: 15px;
         }
 
-        button:hover {
+
+        button:hover, a:hover {
         background-color: #0056b3;
         }
+
     </style>
 
     
@@ -101,7 +106,8 @@
             <span th:errors="*{outputFormat}" class="text-danger"></span>
         </div>
         <div>
-            <button type="submit">Converter e Baixar</button>
+            <button type="submit" >Converter e Baixar</button>    
+            <a href="/" >Voltar</a>        
         </div>
     </form>
 

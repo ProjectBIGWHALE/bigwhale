@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 
 @Service
@@ -15,24 +16,31 @@ public class ConvertImageFormatService {
 
     @Autowired
     UploadImageColorService uploadImageColorService;
-    public byte[] convertImageFormat(String outputFormat, MultipartFile imageFile) throws Exception {
+    public byte[] convertImageFormat(String outputFormat, MultipartFile imageFile) {
 
-        String contentType = imageFile.getContentType();
-        if (contentType == null || !contentType.startsWith("image/")) {
-            throw new IllegalArgumentException("Tipo de arquivo inválido. Apenas imagens são permitidas.");
+        try {
+            String contentType = imageFile.getContentType();
+            if (contentType == null || !contentType.startsWith("image/")) {
+                throw new IllegalArgumentException("Tipo de arquivo inválido. Apenas imagens são permitidas.");
+            }
+
+            byte[] bytes = imageFile.getBytes();
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+            BufferedImage image = ImageIO.read(inputStream);
+
+            ByteArrayOutputStream convertedImage = new ByteArrayOutputStream();
+            ImageIO.write(image, outputFormat, convertedImage);
+            convertedImage.flush();
+
+            byte[] convertedImageBytes = convertedImage.toByteArray();
+            convertedImage.close();
+            return convertedImageBytes;
+
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao carregar a imagem ou na conversão da image => " + e.getMessage());
         }
+     
 
-        byte[] bytes = imageFile.getBytes();
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
-        BufferedImage image = ImageIO.read(inputStream);
-
-        ByteArrayOutputStream convertedImage = new ByteArrayOutputStream();
-        ImageIO.write(image, outputFormat, convertedImage);
-        convertedImage.flush();
-
-        byte[] convertedImageBytes = convertedImage.toByteArray();
-        convertedImage.close();
-        return convertedImageBytes;
     }
     
 
