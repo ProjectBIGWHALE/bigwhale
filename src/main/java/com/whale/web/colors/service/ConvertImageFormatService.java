@@ -1,13 +1,14 @@
 package com.whale.web.colors.service;
 
-import com.whale.web.colors.configuration.CustomMultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 
 @Service
@@ -15,26 +16,46 @@ public class ConvertImageFormatService {
 
     @Autowired
     UploadImageColorService uploadImageColorService;
-    public byte[] convertImageFormat(String outputFormat, MultipartFile imageFile) throws Exception {
+    public byte[] convertImageFormat(String outputFormat, MultipartFile imageFile) {
 
-        // Upload da imagem anexada pelo usuário. Contém nome e tipo original e os bytes (inputstream) da imagem
-        MultipartFile uploadedImage = uploadImageColorService.uploadImage(imageFile);
+        try {
+            String contentType = imageFile.getContentType();
+            if (contentType == null || !contentType.startsWith("image/")) {
+                throw new IllegalArgumentException("Tipo de arquivo inválido. Apenas imagens são permitidas.");
+            }
 
-        // O método ImageIO.read() é responsável por ler o InputStream fornecido e criar um
-        // objeto BufferedImage correspondente à imagem.
-        BufferedImage image = ImageIO.read(uploadedImage.getInputStream());
+            byte[] bytes = imageFile.getBytes();
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+            BufferedImage image = ImageIO.read(inputStream);
 
-        // Método Grava a imagem convertida em um ByteArrayOutputStream
-        ByteArrayOutputStream convertedImage = new ByteArrayOutputStream();
-        ImageIO.write(image, outputFormat, convertedImage);
-        convertedImage.flush();
+            ByteArrayOutputStream convertedImage = new ByteArrayOutputStream();
+            ImageIO.write(image, outputFormat, convertedImage);
+            convertedImage.flush();
 
+            byte[] convertedImageBytes = convertedImage.toByteArray();
+            convertedImage.close();
+            return convertedImageBytes;
 
-        // Obtém os bytes da imagem convertida
-        byte[] convertedImageBytes = convertedImage.toByteArray();
-        convertedImage.close();
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao carregar a imagem ou na conversão da image => " + e.getMessage());
+        }
+     
 
-        return convertedImageBytes;
     }
-}
+    
 
+//    private byte[] convertToGif(byte[] imageBytes) throws IOException {
+//        // Carrega a imagem original em um BufferedImage
+//        ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
+//        BufferedImage originalImage = ImageIO.read(inputStream);
+//
+//        // Cria um ByteArrayOutputStream para armazenar a imagem GIF resultante
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//
+//        // Escreve a imagem original no formato GIF no ByteArrayOutputStream
+//        ImageIO.write(originalImage, "gif", outputStream);
+//
+//        return outputStream.toByteArray();
+//    }
+
+}
