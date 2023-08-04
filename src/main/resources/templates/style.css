@@ -71,7 +71,7 @@ p {
 #carrossel-item {
   width: 248px;
   height: 420px;
-  margin: 0 45px;
+  margin: 0 2em;
   border-radius: 8px;
   background: #c9f2e3;
   box-shadow: 8px 8px 4px 0px #3f514a;
@@ -190,3 +190,9 @@ footer p {
   margin: 0;
   padding: 0;
 }
+
+
+
+
+
+

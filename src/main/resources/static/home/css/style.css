@@ -36,8 +36,8 @@ body {
 }
 
 #logo{
-    width: 60em;
-    height: 37em;
+    width: 60%;
+    
     margin-top: 1em;
     margin-left: 5em;
 }
@@ -107,12 +107,13 @@ body {
 }
 /*FERRAMENTAS/CARROSSEL*/
 .tipo {
-    padding-top: 72px;
+    padding-top: 2em;
 }
     
 .tipo h3 {
     text-align: right;
     font-size: 24px;
+    width: 9em;
     background: #50c878;
     margin-right: 85%;
     padding: 7px 27px;
@@ -120,10 +121,7 @@ body {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.setas{
-    width: 5em;
-    height: 3em;
-}
+
 .setas button{
     background-color: transparent;
     border: none;
@@ -148,7 +146,7 @@ body {
     background: rgba(13, 13, 13, 0.2);
     align-items: center;
     height: 30em;
-    margin: 17px 60px;
+    margin: 15px 60px;
     justify-content: space-between;
 
 }
@@ -164,7 +162,7 @@ body {
     text-align: center;
     width: 20em;
     height: 25em;
-    margin: 0 45px;
+    margin: 0 1em;
     border-radius: 8px;
     background: #c9f2e3;
     box-shadow: 8px 8px 4px 0px #3f514a;
@@ -204,7 +202,7 @@ body {
 
 /*SESSÃO SOBRE*/
 #sobre {
-    margin: 49px 223px;
+    margin: 0px 55px;
 }
 #sobre h3 {
     text-align: center;
@@ -244,11 +242,12 @@ body {
 /*BOTÃO DE AJUDA*/
 #button {
     text-align: right;
-    padding: 142px 91px;
+    
     transition: 0.2s;
     position: fixed;
-    right: 0;
-    bottom: 0;
+    
+    right: 17px;
+    bottom: 30px;
 }
 
 #button ion-icon {
@@ -286,4 +285,84 @@ footer p {
     font-size: 14px;
     margin: 0;
     padding: 0;
+}
+
+
+/* Responsividade para telas hd  1280*/
+
+
+@media screen and (max-width: 600px) {
+    .nav {
+
+        justify-content: center;
+        margin-right: 0;
+    }
+    .nav li a {
+       
+        font-size: 13px;
+     
+    }
+
+
+    #logo {
+        width: 25em;
+        height: 20em;
+      
+    }
+
+    #descricao {
+      
+        font-size: 15px;
+       
+    }
+
+  
+
+    .container {
+       
+        margin: 17px 10px;
+       
+    }
+    
+    .carrossel-item {
+        
+        margin: 0;
+        
+    }
+
+    #sobre {
+        margin: 0 22px;
+    }
+
+    
+   footer {
+        padding: 56px 55px;
+       
+   
+    }
+    
+
+}
+  
+@media screen and (max-width: 1000px) {
+    .container {
+     
+        margin: 15px 15px;
+     
+    }
+
+    .carrossel-item {
+      
+        width: 20em;
+       
+    }
+
+
+#logo {
+    width: 75%;
+    margin-top: 1em;
+    margin-left: 5em;
+}
+
+
 }

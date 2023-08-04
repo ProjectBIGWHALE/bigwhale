@@ -3,7 +3,6 @@
 
    const carrossel_documento = document.querySelector(".carrossel-documento");
 
-
    const carrossel_seguranca = document.querySelector(".carrossel-seguranca");
    
    // Selecionar todas os cards dentro do carrossel
@@ -50,9 +49,12 @@
           }
     }
 
+    let imagesToShow = 0;
+     // Chame a função para ajustar o número de imagens assim que a página for carregada
+     ajustarNumeroDeImagens();
 
-      // Variável para definir a quantidade de imagens a serem exibidas no carrossel
-  const imagesToShow = 3; // Altere este valor para exibir uma quantidade diferente de imagens
+      // Variável para definir a quantidade de cards a serem exibidas no carrossel
+  // Altere este valor para exibir uma quantidade diferente de cards
 
 
     // Função para atualizar o carrossel com os tres cards 
@@ -75,8 +77,44 @@
           carouselElement.appendChild(div);
         });
       }
-  
-      // Inicializar os carrosseis com as tres primeiras imagens
+    
+      ajustarNumeroDeImagens();
+      window.addEventListener('resize', ajustarNumeroDeImagens);
+    
+
+
+
+
+
+
+      // Função para ajustar o número de imagens com base no tamanho da tela
+      function ajustarNumeroDeImagens() {
+          // Obtenha o tamanho da tela
+          var larguraDaTela = window.innerWidth;
+
+ // Verifique o tamanho da tela e ajuste o número de imagens conforme necessário
+          if(larguraDaTela < 850){
+            imagesToShow = 1;
+          } else if (larguraDaTela > 1850) { // Se a largura for menor que 1024 pixels
+            imagesToShow = 4; // Defina um valor intermediário
+          }else if (larguraDaTela > 1300) { // Por exemplo, se a largura for menor que 768 pixels
+            imagesToShow = 3; // Defina um valor menor para exibir menos imagens
+          } else if (larguraDaTela > 850) { // Se a largura for menor que 1024 pixels
+            imagesToShow = 2; // Defina um valor intermediário
+          }
+
+         
+         
+
+          
+          
+          // Inicializar os carrosseis com as tres primeiras imagens
       updateCarousel(carrossel, images, currentIndex);
       updateCarousel(carrossel_documento, documento, currentIndex2);
       updateCarousel(carrossel_seguranca, seguranca, currentIndex3);
+
+          // Agora você pode usar a variável numImagensExibidas para controlar o número de imagens exibidas no seu site.
+      }
+
+
+      

@@ -26,15 +26,15 @@
         <p id="descricao">Sua aquarela de ferramentas de manipulação de imagens e documentos.</p>
 
         <!-- Linhas superiores-->
-        <div class="linhas-esquerda">
+        <!-- <div class="linhas-esquerda">
             <hr class="vertical-esq">
             <hr class="horizontal-esq">
-        </div>
+        </div> -->
         <!--Linhas inferiores-->
-        <div class="linhas-direita">
+        <!-- <div class="linhas-direita">
             <hr class="vertical-dir">
             <hr class="horizontal-dir">
-        </div>
+        </div> -->
 
     </header>
 
@@ -45,8 +45,11 @@
         <div class="container">
 
             <div class="setas">
-                <button onclick="showNextImage('carrossel')"> <ion-icon name="arrow-back-outline"></ion-icon></button>
+                <button onclick="showPreviousImage('carrossel')" ><ion-icon
+                        name="arrow-back-outline"></ion-icon></button>
             </div>
+
+          
 
             <div class="carrossel">
              
@@ -90,10 +93,12 @@
 
             </div>
 
+
             <div class="setas">
-                <button onclick="showPreviousImage('carrossel')" class="inverter"><ion-icon
-                        name="arrow-back-outline"></ion-icon></button>
+                <button onclick="showNextImage('carrossel')" class="inverter"> <ion-icon name="arrow-back-outline"></ion-icon></button>
             </div>
+
+       
 
 
         </div>
