@@ -115,10 +115,13 @@ public class ColorsController {
 
 	@RequestMapping(value = "/imageconversion", method = RequestMethod.GET)
 	public String convertimage(Model model) {
-		List<Format> list = Arrays.asList(new Format(1L, "jpg"),
-										  new Format(2L, "png"),
-									      new Format(3L, "gif"),
-									      new Format(4L, "bmp"));
+		List<Format> list = Arrays.asList(	new Format(1L, "bmp"),
+											new Format(2L, "jpg"),
+											new Format(3L, "jpeg"),
+											new Format(4L, "gif"),
+											new Format(6L, "png"),
+											new Format(6L, "tiff"),
+											new Format(7L, "tif"));
 
 		model.addAttribute("list", list);
 		model.addAttribute("form", formConvert);
@@ -126,25 +129,18 @@ public class ColorsController {
 	}
 
 
-
-// ...
-
 	@PostMapping("/convertformatimage")
 	public String convertAndDownloadImage(@ModelAttribute("form") FormConvert formConvert, HttpServletResponse response) throws Exception {
-
 		try {
 			byte[] formattedImage = convertImageFormatService.convertImageFormat(formConvert.getOutputFormat(), formConvert.getImage());
 
-			// Extrair o nome do arquivo original sem sua extensão e adicionar o novo formato.
-			String originalFileName = StringUtils.stripFilenameExtension(Objects.requireNonNull(formConvert.getImage().getOriginalFilename()));
-			String convertedFileName = originalFileName + "." + formConvert.getOutputFormat().toLowerCase();
+			String originalFileNameWithoutExtension = StringUtils.stripFilenameExtension(Objects.requireNonNull(formConvert.getImage().getOriginalFilename()));
+			String convertedFileName = originalFileNameWithoutExtension + "." + formConvert.getOutputFormat().toLowerCase();
 
-			// Define os cabeçalhos da resposta para fazer o download
 			response.setContentType("image/" + formConvert.getOutputFormat().toLowerCase());
 			response.setHeader("Content-Disposition", "attachment; filename=" + convertedFileName);
 			response.setHeader("Cache-Control", "no-cache");
 
-			// Copia os bytes do arquivo para o OutputStream
 			try (OutputStream os = response.getOutputStream()) {
 				os.write(formattedImage);
 				os.flush();
@@ -155,7 +151,5 @@ public class ColorsController {
 		}
 		return null;
 	}
-
-
 
 }
