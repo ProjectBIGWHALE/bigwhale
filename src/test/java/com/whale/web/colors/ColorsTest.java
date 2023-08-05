@@ -16,13 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.whale.web.colors.model.FormColors;
 import com.whale.web.colors.model.FormPalette;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
@@ -48,6 +52,13 @@ public class ColorsTest {
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
 				MockMvcResultMatchers.status().is(200));
 		
+	}
+
+	@Test
+	public void shouldReturnHTMLformToConvertImageFormat() throws Exception {
+		URI uri = new URI("/colors/imageconversion");
+		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
+				MockMvcResultMatchers.status().is(200));
 	}
 	
     @Test
