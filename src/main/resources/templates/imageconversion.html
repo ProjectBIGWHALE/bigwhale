@@ -73,7 +73,7 @@
 
     </style>
 
-    
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BVGCNK1G97"></script>
     <script>
@@ -84,34 +84,49 @@
     gtag('config', 'G-BVGCNK1G97');
     </script>
 
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Obtém o elemento de input de arquivo com o ID "image"
+    const fileInput = document.getElementById("image");
+
+    // Adiciona um ouvinte de evento de mudança ao campo de arquivo
+    fileInput.addEventListener("change", function (event) {
+        const selectedFile = event.target.files[0]; // Obtém o arquivo selecionado
+
+            // Verifica se o arquivo selecionado excede o limite de 50MB (em bytes)
+            const maxSizeInBytes = 50 * 1024 * 1024; // 50MB em bytes
+            if (selectedFile.size > maxSizeInBytes) {
+            alert("Aviso! O arquivo excede o tamanho máximo permitido de 50MB.");
+            fileInput.value = ""; // Limpa o valor do input para evitar o envio do arquivo
+            }
+        });
+    });
+    </script>
 
 </head>
 
 
 <body>
-    <h2>Conversor online de imagens </h2>
-    <h3>Formatos suportados: (JPG, JPEG, BMP, GIF, TIF, TIFF, PNG) </h3>
-    <form th:action="@{/colors/convertformatimage}" method="POST" enctype="multipart/form-data" th:object="${form}">
-        <div>
-            <label for="image">Escolha uma imagem:</label>
-            <!--Permite que o cliente selecione apenas arquivos de imagens ao fazer upload-->
-            <input type="file" th:field="*{image}" name="image" id="image" accept="image/*" required />
-            <span class="error-message" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
-        </div>
-        <div>
-            <p><b>Formato de Saída</b></p>
-            <select th:field="*{outputFormat}" class="form-control">
-                <option th:each="format : ${list}" th:value="${format.name}" th:text="${format.name}"></option>
-            </select>
-            <span th:errors="*{outputFormat}" class="text-danger"></span>
-        </div>
-        <div>
-            <button type="submit" >Converter e Baixar</button>    
-            <a href="/" >Voltar</a>        
-        </div>
-    </form>
-
-    <script src="/static/home/script/imageconversionScript.js"></script>
-
-    </body>
+<h2>Conversor online de imagens </h2>
+<h3>Formatos suportados: (JPG, JPEG, BMP, GIF, TIF, TIFF, PNG) </h3>
+<form th:action="@{/colors/convertformatimage}" method="POST" enctype="multipart/form-data" th:object="${form}">
+    <div>
+        <label for="image">Escolha uma imagem:</label>
+        <!--Permite que o cliente selecione apenas arquivos de imagens ao fazer upload-->
+        <input type="file" th:field="*{image}" name="image" id="image" accept="image/*"  required />
+        <span class="error-message" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
+    </div>
+    <div>
+        <p><b>Formato de Saída</b></p>
+        <select th:field="*{outputFormat}" class="form-control">
+            <option th:each="format : ${list}" th:value="${format.name}" th:text="${format.name}"></option>
+        </select>
+        <span th:errors="*{outputFormat}" class="text-danger"></span>
+    </div>
+    <div>
+        <button type="submit" >Converter e Baixar</button>
+        <a href="/" >Voltar</a>
+    </div>
+</form>
+</body>
 </html>

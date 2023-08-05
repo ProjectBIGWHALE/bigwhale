@@ -146,7 +146,8 @@ public class ColorsController {
 				os.flush();
 			}
 
-		} catch (Exception e) {
+		} catch (IOException e) {
+			System.out.println("Erro ao converter a imagem");
 			return "redirect:/colors/imageconversion";
 		}
 		return null;

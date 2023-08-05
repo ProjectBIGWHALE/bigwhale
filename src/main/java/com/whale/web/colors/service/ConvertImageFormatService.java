@@ -37,7 +37,7 @@ public class ConvertImageFormatService {
             return convertedImageBytes;
 
         } catch (IOException e) {
-            throw new RuntimeException("Erro ao carregar a imagem ou na conversão da image => " + e.getMessage());
+            throw new RuntimeException("Erro ao carregar a imagem.");
         }
      
 
