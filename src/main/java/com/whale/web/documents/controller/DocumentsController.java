@@ -67,14 +67,22 @@ public class DocumentsController {
 
     @GetMapping("/textextract")
     public String textExtract(){
-        return "textextract";
+    	try {
+    		return "textextract";
+    	} catch(Exception e) {
+    		return "redirect:/";
+    	}
     }
 
     @PostMapping("/textextracted")
     public String extractFromImage(@RequestParam("file") MultipartFile fileModel, Model model){
-        String extractedText = textService.extractTextFromImage(fileModel);
-        model.addAttribute("extractedText", extractedText);
-        return "textextracted";
+    	try {
+    		String extractedText = textService.extractTextFromImage(fileModel);
+    		model.addAttribute("extractedText", extractedText);
+    		return "textextracted";
+    	}catch(Exception e) {
+    		return "redirect:/";
+    	}
     }
 
 }

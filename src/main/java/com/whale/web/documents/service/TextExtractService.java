@@ -13,7 +13,7 @@ import java.io.IOException;
 @Service
 public class TextExtractService {
 
-    private static final String PATCH = "../bigwhale/src/main/resources/tessdata";
+    private static final String PATCH = "../src/main/resources/templates/tessdata";
 
     public String extractTextFromImage(MultipartFile multipartFile) {
 
