@@ -5,6 +5,7 @@ import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.whale.web.documents.service.CompressorService;
 import com.whale.web.documents.service.TextExtractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,9 @@ public class DocumentsController {
 
     @Autowired
     TextExtractService textService;
+
+    @Autowired
+    CompressorService compressorService;
 
     @RequestMapping(value="/fileconverter", method=RequestMethod.GET)
     public String fileConverter(Model model) {
@@ -83,6 +87,29 @@ public class DocumentsController {
     	}catch(Exception e) {
     		return "redirect:/";
     	}
+    }
+
+    @GetMapping("/compressor")
+    public String compressFilePage() {
+        return "compressfile";
+    }
+
+    @PostMapping("/compressor")
+    public void compressFile(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
+        if(!file.isEmpty()){
+            try {
+                byte[] bytes = compressorService.compressFile(file);
+                response.setHeader("Content-Disposition", "attachment; filename="+file.getOriginalFilename()+".zip");
+                response.setContentType("application/octet-stream");
+                response.setHeader("Cache-Control", "no-cache");
+
+                OutputStream os = response.getOutputStream();
+                os.write(bytes);
+                os.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

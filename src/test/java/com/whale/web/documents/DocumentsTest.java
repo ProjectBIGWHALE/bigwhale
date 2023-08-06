@@ -7,6 +7,7 @@ import java.net.URI;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.whale.web.documents.service.CompressorService;
 import com.whale.web.documents.service.TextExtractService;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,9 @@ public class DocumentsTest {
 
     @MockBean
     private TextExtractService textExtractService;
+
+    @MockBean
+    private CompressorService compressorService;
 
 	@Test
 	public void shouldReturnTheHTMLForm() throws Exception {
@@ -106,5 +110,33 @@ public class DocumentsTest {
                 .andExpect(MockMvcResultMatchers.model().attribute("extractedText", extractedText));
 
         verify(textExtractService, times(1)).extractTextFromImage(any());
+    }
+
+    @Test
+    public void compressFilePageShouldReturnTheHTMLForm() throws Exception {
+
+        URI uri = new URI("/documents/compressor");
+        mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
+                MockMvcResultMatchers.status().is(200));
+    }
+
+    @Test
+    public void compressFileShouldReturnTheFileZip() throws Exception {
+        MockMultipartFile multipartFile = new MockMultipartFile(
+                "file",
+                "test-file.txt",
+                "text/plain",
+                "Test file content".getBytes()
+        );
+
+        when(compressorService.compressFile(any())).thenReturn(multipartFile.getBytes());
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compressor")
+                        .file(multipartFile))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/octet-stream"))
+                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=test-file.txt.zip"));
+
+        verify(compressorService, times(1)).compressFile(any());
     }
 }
