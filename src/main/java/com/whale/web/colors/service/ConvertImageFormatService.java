@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -29,19 +30,24 @@ public class ConvertImageFormatService {
             BufferedImage image = ImageIO.read(inputStream);
 
             ByteArrayOutputStream convertedImage = new ByteArrayOutputStream();
-            ImageIO.write(image, outputFormat, convertedImage);
+
+            boolean successfullyConverted = ImageIO.write(image, outputFormat, convertedImage);
             convertedImage.flush();
+
+            if (!successfullyConverted) {
+                throw new IllegalArgumentException("Conversão não realizada: o formato de saída especificado não é suportado.");
+            }
 
             byte[] convertedImageBytes = convertedImage.toByteArray();
             convertedImage.close();
             return convertedImageBytes;
 
         } catch (IOException e) {
-            throw new RuntimeException("Erro ao carregar a imagem.");
+            throw new RuntimeException("Erro ao processar a image: " + e.getMessage());
         }
-     
-
     }
+
+}
     
 
 //    private byte[] convertToGif(byte[] imageBytes) throws IOException {
@@ -58,4 +64,4 @@ public class ConvertImageFormatService {
 //        return outputStream.toByteArray();
 //    }
 
-}
+

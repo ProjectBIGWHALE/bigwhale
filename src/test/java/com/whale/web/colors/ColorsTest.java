@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 
 import javax.imageio.ImageIO;
@@ -25,8 +27,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.whale.web.colors.model.FormColors;
 import com.whale.web.colors.model.FormPalette;
+import org.springframework.web.util.NestedServletException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
@@ -52,13 +55,6 @@ public class ColorsTest {
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
 				MockMvcResultMatchers.status().is(200));
 		
-	}
-
-	@Test
-	public void shouldReturnHTMLformToConvertImageFormat() throws Exception {
-		URI uri = new URI("/colors/imageconversion");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				MockMvcResultMatchers.status().is(200));
 	}
 	
     @Test
@@ -164,5 +160,103 @@ public class ColorsTest {
                 .andExpect(MockMvcResultMatchers.status().is(200));
     	
     }
-	
+
+	@Test
+	public void shouldReturnHTMLformToConvertImageFormat() throws Exception {
+		URI uri = new URI("/colors/imageconversion");
+		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
+				MockMvcResultMatchers.status().is(200));
+	}
+
+	@Test
+	public void testToConvertAndDownloadImageSuccessfully() throws Exception {
+
+		// Criar a imagem em formato BufferedImage
+		BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+		Graphics2D graphics = image.createGraphics();
+		graphics.setColor(Color.WHITE);
+		graphics.fillRect(0, 0, 100, 100);
+		graphics.dispose();
+
+		// Formatos para teste na entrada: (jpg, jpeg, bmp, gif, tif, tiff, png)
+		String inputType = "jpeg";
+
+		// Converte a imagem em bytes
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(image, "jpeg", baos);
+		byte[] imageBytes = baos.toByteArray();
+
+		// Cria o objeto MockMultipartFile com os dados da imagem
+		MockMultipartFile file = new MockMultipartFile(
+				"image",
+				"test-image." + inputType,
+				"image/" + inputType,
+				imageBytes
+		);
+
+		// Formatos para teste na saída: (jpg, jpeg, bmp, gif, tif, tiff, png)
+		String outputType = "bmp";
+
+		// Faz uma requisição post na uri passando a imagem e formato de saída da imagem e esperar status 200.
+		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.multipart("/colors/convertformatimage")
+						.file(file)
+						.param("outputFormat", outputType))
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andReturn();
+
+		MockHttpServletResponse response = mvcResult.getResponse();
+		assertEquals("image/" + outputType, response.getContentType());
+		assertEquals("attachment; filename=test-image." + outputType, response.getHeader("Content-Disposition"));
+
+	}
+
+
+	@Test
+	public void testInvalidImageFormatForConversion() throws Exception {
+
+		// Criar a imagem em formato BufferedImage
+		BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+		Graphics2D graphics = image.createGraphics();
+		graphics.setColor(Color.WHITE);
+		graphics.fillRect(0, 0, 100, 100);
+		graphics.dispose();
+
+		// Formatos válidos para teste na entrada: (jpg, jpeg, bmp, gif, tif, tiff, png)
+		String inputType = "jpeg";
+
+		// Converte a imagem em bytes
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(image, "jpeg", baos);
+		byte[] imageBytes = baos.toByteArray();
+
+		// Cria o objeto MockMultipartFile com os dados da imagem
+		MockMultipartFile file = new MockMultipartFile(
+				"image",
+				"test-image." + inputType,
+				"image/" + inputType,
+				imageBytes
+		);
+
+		//Formato inválido para saída
+		String outputType = "teste";
+
+		// Faz uma requisição post na uri passando a imagem e formato de saída da imagem e esperar a exceção.
+		Throwable thrownException = assertThrows(NestedServletException.class, () -> {
+			mockMvc.perform(MockMvcRequestBuilders.multipart("/colors/convertformatimage")
+					.file(file)
+					.param("outputFormat", outputType));
+		});
+
+		// Verifica se a exceção interna é a IllegalArgumentException
+		assertTrue(thrownException.getCause() instanceof IllegalArgumentException);
+
+		// Verifica se a mensagem da exceção interna está correta
+		String expectedErrorMessage = "Conversão não realizada: o formato de saída especificado não é suportado.";
+		assertEquals(expectedErrorMessage, thrownException.getCause().getMessage());
+	}
+
+
+
+
+
 }
