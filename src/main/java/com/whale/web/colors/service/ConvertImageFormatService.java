@@ -3,6 +3,7 @@ package com.whale.web.colors.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.NestedServletException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -19,6 +20,11 @@ public class ConvertImageFormatService {
     public byte[] convertImageFormat(String outputFormat, MultipartFile imageFile) {
 
         try {
+
+            if (imageFile == null || imageFile.isEmpty()) {
+                throw new IllegalArgumentException("Erro ao processar arquivo: image == null!");
+            }
+
             String contentType = imageFile.getContentType();
             if (contentType == null || !contentType.startsWith("image/")) {
                 throw new IllegalArgumentException("Tipo de arquivo inválido. Apenas imagens são permitidas.");

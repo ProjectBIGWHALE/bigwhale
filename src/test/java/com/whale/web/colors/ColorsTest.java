@@ -3,7 +3,9 @@ package com.whale.web.colors;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.net.URI;
 
 import javax.imageio.ImageIO;
@@ -282,4 +284,38 @@ public class ColorsTest {
 		String expectedErrorMessage = "Tipo de arquivo inválido. Apenas imagens são permitidas.";
 		assertEquals(expectedErrorMessage, thrownException.getCause().getMessage());
 	}
+
+
+	@Test
+	public void testConvertImageFormatWithNullImage() throws Exception {
+		// Criar um InputStream vazio
+		InputStream emptyInputStream = new ByteArrayInputStream(new byte[0]);
+
+		// Criar um MockMultipartFile com um InputStream vazio
+		MockMultipartFile imageFile = new MockMultipartFile(
+				"image",
+				"test-image.jpg",
+				"image/jpeg",
+				emptyInputStream
+		);
+
+		// Defina um formato de saída válido
+		String outputType = "jpeg";
+
+		// Faz uma requisição post na uri passando a imagem e formato de saída da imagem e esperar a exceção.
+		Throwable thrownException = assertThrows(NestedServletException.class, () -> {
+			mockMvc.perform(MockMvcRequestBuilders.multipart("/colors/convertformatimage")
+					.file(imageFile)
+					.param("outputFormat", outputType));
+		});
+
+		// Verifica se a exceção interna é a IllegalArgumentException
+		assertTrue(thrownException.getCause() instanceof IllegalArgumentException);
+
+		// Verifica se a mensagem da exceção interna está correta
+		String expectedErrorMessage = "Erro ao processar arquivo: image == null!";
+		assertEquals(expectedErrorMessage, thrownException.getCause().getMessage());
+	}
+
+
 }
