@@ -37,7 +37,7 @@ public class AlterColorService {
 	    int newBmax = Math.min(255, b + delta); // Upper limit for the B component
 
 	    // Sets current color and new color
-	    Color oldColor = new Color(r, g, b);
+	    //Color oldColor = new Color(r, g, b);
 	    Color newColor;
 
 	    if (replacementColor == null || replacementColor.isEmpty()) {

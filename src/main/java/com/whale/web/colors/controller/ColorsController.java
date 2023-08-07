@@ -25,7 +25,7 @@ import com.whale.web.colors.model.FormPalette;
 import com.whale.web.colors.service.AlterColorService;
 import com.whale.web.colors.service.ColorPaletteService;
 import com.whale.web.colors.service.UploadImageColorService;
-import org.springframework.util.StringUtils;
+
 
 @Controller
 @RequestMapping("/colors")

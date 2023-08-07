@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 
 import javax.imageio.ImageIO;
