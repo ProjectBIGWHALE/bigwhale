@@ -256,7 +256,32 @@ public class ColorsTest {
 	}
 
 
+	@Test
+	public void testInvalidFileTypeForConversion() throws Exception {
+		// Cria um arquivo de texto simulando um upload de um arquivo que não é uma imagem
+		byte[] fileContent = "Este é um arquivo de texto".getBytes();
+		MockMultipartFile file = new MockMultipartFile(
+				"image", // Nome do parâmetro no método do controlador
+				"test.txt",
+				"text/plain",
+				fileContent
+		);
 
+		// Formato de saída
+		String outputFormat = "jpeg";
 
+		// Faz uma requisição post na uri passando o arquivo e formato de saída da imagem e esperar a exceção.
+		Throwable thrownException = assertThrows(NestedServletException.class, () -> {
+			mockMvc.perform(MockMvcRequestBuilders.multipart("/colors/convertformatimage")
+					.file(file)
+					.param("outputFormat", outputFormat));
+		});
 
+		// Verifica se a exceção interna é a IllegalArgumentException
+		assertTrue(thrownException.getCause() instanceof IllegalArgumentException);
+
+		// Verifica se a mensagem da exceção interna está correta
+		String expectedErrorMessage = "Tipo de arquivo inválido. Apenas imagens são permitidas.";
+		assertEquals(expectedErrorMessage, thrownException.getCause().getMessage());
+	}
 }
