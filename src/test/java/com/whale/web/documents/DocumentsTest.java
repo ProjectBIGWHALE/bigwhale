@@ -131,7 +131,7 @@ public class DocumentsTest {
 
         when(compressorService.compressFile(any())).thenReturn(multipartFile.getBytes());
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compressor")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compressorprocessing")
                         .file(multipartFile))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/octet-stream"))

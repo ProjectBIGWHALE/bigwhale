@@ -14,6 +14,11 @@ import java.util.zip.ZipOutputStream;
 public class CompressorService {
 
     public byte[] compressFile(MultipartFile multipartFile){
+    	
+    	if(multipartFile == null || multipartFile.isEmpty()) {
+    		throw new RuntimeException();
+    	}
+    	
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try (ZipOutputStream zipOut = new ZipOutputStream(byteArrayOutputStream)) {
             zipOut.setLevel(Deflater.BEST_COMPRESSION);

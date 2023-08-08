@@ -94,22 +94,27 @@ public class DocumentsController {
         return "compressfile";
     }
 
-    @PostMapping("/compressor")
-    public void compressFile(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
-        if(!file.isEmpty()){
+    @PostMapping("/compressorprocessing")
+    public String compressFile(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
+        
             try {
                 byte[] bytes = compressorService.compressFile(file);
                 response.setHeader("Content-Disposition", "attachment; filename="+file.getOriginalFilename()+".zip");
                 response.setContentType("application/octet-stream");
                 response.setHeader("Cache-Control", "no-cache");
-
-                OutputStream os = response.getOutputStream();
-                os.write(bytes);
-                os.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
+                
+                try (OutputStream outputStream = response.getOutputStream()) {
+	                OutputStream os = response.getOutputStream();
+	                os.write(bytes);
+	                os.flush();
+                } catch(Exception e) {
+                	e.printStackTrace();
+                }
+            } catch (Exception e) {
+            	return "redirect:/documents/compressor";
             }
-        }
+        
+        return null;
     }
 
 }
