@@ -34,3 +34,4 @@ E-mail: contact@mybigwhale.com
 <a href="https://github.com/Estrela-Marques"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/26dbb5ba-7635-438f-95ce-212054eca08d" width="100" height="100"></a>
 <a href="https://github.com/Daniellyfreitasc"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/21139113-f64d-4e3e-a0c5-6f7bebc255fa" width="100" height="100"></a>
 
+
