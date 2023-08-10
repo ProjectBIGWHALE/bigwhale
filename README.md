@@ -1,15 +1,7 @@
-<h1 align="center">
-W H A L E <a href="https://whale.up.railway.app/"><img src="https://img.icons8.com/?size=512&id=mrRKB0hCmNGJ&format=png" width="50" height="50"></a>
-</h1>
-<p align="center">
-  Open-source project WHALE. A watercolor of diverse tools. 
-</p>
-
 ## Products
 
-- Whale Certifies
-- Whale Colors
-- Whale Codes
+- Whale Design
+- Whale Documents
 - Whale Security
 
 ## Technologies Used
@@ -17,18 +9,28 @@ W H A L E <a href="https://whale.up.railway.app/"><img src="https://img.icons8.c
 - Java [v17]
 - Spring [v2.7.6]
 - MariaDB [v10.6.11] 
-- OpenCV [v5.5.2]
 - Maven [v4.0.0]
 - Thymeleaf
+- Prometheus
+- Grafana
+- Docker
+
 
 ## Deploy
-RailWay Plataform
-<a href="https://whale.up.railway.app/"><img src="https://img.icons8.com/?size=512&id=13450&format=png" width="35" height="35"></a>
-- Version: 2.0.0
+<a href="https://mybigwhale.com/"><img src="https://img.icons8.com/?size=512&id=13450&format=png" width="35" height="35"></a>
+- Version: 2.0.3
 - MIT Licence
+
+## Contact
+E-mail: contact@mybigwhale.com
 
 ## Collaborators
 <a href="https://github.com/bioramonmoratori"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/d4afb72c-ec3a-4672-b376-c4d33a4aa11c" width="100" height="100"></a>
 <a href="https://github.com/erasmobezerra"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/837b8b18-b812-451a-b777-073e33b3d068" width="100" height="100"></a>
 <a href="https://github.com/amandapvln"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/4de40297-eb96-45ed-b4c4-7b1fb8cbb65a" width="100" height="100"></a>
-<a href="https://github.com/jose-fps"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/e1b170b6-b614-485a-ae3e-e24fb6a63cc7" width="100" height="100"></a>
+<a href="https://github.com/LeoSilva011"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/8cc62cfd-c987-4b43-bc04-3ae7db9690e4" width="100" height="100"></a>
+<a href="https://github.com/LarissaLunguinho"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/c540875d-5e67-44eb-9708-8aacd848c1c6" width="100" height="100"></a>
+<a href="https://github.com/SyllasBraga"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/b8b1a4ef-6dd9-4dbc-a4b1-76c19f544ac7" width="100" height="100"></a>
+<a href="https://github.com/Estrela-Marques"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/26dbb5ba-7635-438f-95ce-212054eca08d" width="100" height="100"></a>
+<a href="https://github.com/Daniellyfreitasc"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/21139113-f64d-4e3e-a0c5-6f7bebc255fa" width="100" height="100"></a>
+
