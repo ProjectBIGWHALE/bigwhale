@@ -16,9 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import com.whale.web.security.controller.SecurityController;
-import com.whale.web.security.model.CryptographyFormSecurity;
-import com.whale.web.security.service.EncryptService;
+
+import com.whale.web.security.cryptograph.model.CryptographyForm;
+import com.whale.web.security.cryptograph.service.EncryptService;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
@@ -29,7 +29,7 @@ public class SecurityControllerTest {
 	private MockMvc mockMvc;
 	
 	@Autowired
-	private CryptographyFormSecurity criptographyFormSecurity = new CryptographyFormSecurity();
+	private CryptographyForm criptographyFormSecurity = new CryptographyForm();
 	
 	@Autowired
 	EncryptService encryptService;
@@ -37,7 +37,7 @@ public class SecurityControllerTest {
 	@Test
 	public void shouldReturnTheHTMLForm() throws Exception {
 		
-		URI uri = new URI("/security/encrypt");
+		URI uri = new URI("/security/cryptograph");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
 				MockMvcResultMatchers.status().is(200));
 		
@@ -49,7 +49,7 @@ public class SecurityControllerTest {
 
     @Test
     public void shouldReturnEncryptedFile() throws Exception {
-        URI uri = new URI("/security/encryptfile");
+        URI uri = new URI("/security/cryptograph");
 
         MockMultipartFile file = new MockMultipartFile("file", "test.txt",
                 MediaType.TEXT_PLAIN_VALUE, "Test content".getBytes());
@@ -74,7 +74,7 @@ public class SecurityControllerTest {
     
     @Test
     public void shouldReturnDecryptedFile() throws Exception {
-        URI uri = new URI("/security/encryptfile");
+        URI uri = new URI("/security/cryptograph");
 
         // Criação do arquivo simulado
         MockMultipartFile file = new MockMultipartFile("file", "test.txt",
@@ -107,7 +107,7 @@ public class SecurityControllerTest {
 
     @Test
     public void shouldReturnRedirectStatusPage302() throws Exception {
-        URI uri = new URI("/security/encryptfile");
+        URI uri = new URI("/security/cryptograph");
 
         // Criação do arquivo simulado
         MockMultipartFile file = new MockMultipartFile("file", "test.txt",
