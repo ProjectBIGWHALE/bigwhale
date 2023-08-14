@@ -5,16 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whale</title>
-    <link rel="stylesheet" href="home/css/style.css">
-    
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BVGCNK1G97"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-    gtag('config', 'G-BVGCNK1G97');
+        gtag('config', 'G-BVGCNK1G97');
     </script>
 
 </head>
@@ -32,20 +31,9 @@
 
     <!--CABEÇALHO-->
     <header>
-        <img id="logo" src="/home/images/logo.png" alt="logo whale">
+        <img id="logo" src="/images/logo.png" alt="logo whale">
 
         <p id="descricao">Sua aquarela de ferramentas de manipulação de imagens e documentos.</p>
-
-        <!-- Linhas superiores-->
-        <!-- <div class="linhas-esquerda">
-            <hr class="vertical-esq">
-            <hr class="horizontal-esq">
-        </div> -->
-        <!--Linhas inferiores-->
-        <!-- <div class="linhas-direita">
-            <hr class="vertical-dir">
-            <hr class="horizontal-dir">
-        </div> -->
 
     </header>
 
@@ -56,14 +44,13 @@
         <div class="container">
 
             <div class="setas">
-                <button onclick="showPreviousImage('carrossel')" ><ion-icon
-                        name="arrow-back-outline"></ion-icon></button>
+                <button onclick="showPreviousImage('carrossel')">
+                    <ion-icon name="arrow-back-outline"></ion-icon>
+                </button>
             </div>
 
-          
-
             <div class="carrossel">
-             
+
                 <!--a card-designer classe para marcar a div no javascript-->
                 <div class="carrossel-item card-designer ">
                     <a href="/design/altercolor">
@@ -80,14 +67,13 @@
                         <ion-icon name="color-palette-outline"></ion-icon>
                         <h4>Paleta de Cores a partir de Imagens</h4>
                         <p>Para extrair automaticamente as cores principais da sua imagem e obter inspiração para os
-                            seus
-                            projetos de design.</p>
+                            seus projetos de design.</p>
                     </a>
                 </div>
 
                 <div class="carrossel-item card-designer">
                     <a href="/documents/imageconverter">
-                        <ion-icon name="sync"></ion-icon> 
+                        <ion-icon name="sync"></ion-icon>
                         <h4>Converter Imagens</h4>
                         <p>Converta imagens em vários formatos de forma rápida e prática.</p>
                     </a>
@@ -101,21 +87,13 @@
                             necessidades.</p>
                     </a>
                 </div>
-      
-
             </div>
-
 
             <div class="setas">
-                <button onclick="showNextImage('carrossel')" class="inverter"> <ion-icon name="arrow-back-outline"></ion-icon></button>
+                <button onclick="showNextImage('carrossel')" class="inverter"> 
+                    <ion-icon name="arrow-back-outline"></ion-icon></button>
             </div>
-
-       
-
-
         </div>
-
-
     </section>
 
     <section class="tipo" id="documentos">
@@ -124,12 +102,10 @@
         <div class="container">
 
             <div class="setas">
-                <button onclick="showPreviousImage('carrossel-documento')" ><ion-icon
-                        name="arrow-back-outline"></ion-icon></button>
+                <button onclick="showPreviousImage('carrossel-documento')">
+                    <ion-icon name="arrow-back-outline"></ion-icon></button>
             </div>
 
-
-                    
             <div class="carrossel carrossel-documento">
 
                 <!--a classe card-documento e uma classe não para estiliza mais para marcar a div para ser usada no javascript-->
@@ -171,13 +147,10 @@
                 </div>
             </div>
 
-        
-
-
             <div class="setas">
-                <button onclick="showNextImage('carrossel-documento')" class="inverter"> <ion-icon name="arrow-back-outline"></ion-icon></button>
+                <button onclick="showNextImage('carrossel-documento')" class="inverter"> 
+                    <ion-icon name="arrow-back-outline"></ion-icon></button>
             </div>
-
         </div>
     </section>
 
@@ -186,56 +159,46 @@
 
         <div class="container">
             <div class="setas">
-                <button onclick="showPreviousImage('carrossel-seguranca')" ><ion-icon
-                        name="arrow-back-outline"></ion-icon></button>
+                <button onclick="showPreviousImage('carrossel-seguranca')">
+                    <ion-icon name="arrow-back-outline"></ion-icon></button>
             </div>
 
-            
-          
-        <div class="carrossel carrossel-seguranca">
-
-    
-            
+            <div class="carrossel carrossel-seguranca">
                 <!--a classe carrossel-seguranca e uam classe não para estilizar mas para marcar a div para ser usada no javascript-->
                 <!--a card-seguranca segue a mesma logica-->
-            <div class="carrossel-item card-seguranca">
-                <a href="/security/cryptograph">
-                    <ion-icon name="lock-closed-outline"></ion-icon>
-                    <h4>Criptografar</h4>
-                    <p>Utilize uma chave de criptografia forte para proteger o seu arquivo.</p>
-                </a>
+                <div class="carrossel-item card-seguranca">
+                    <a href="/security/cryptograph">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <h4>Criptografar</h4>
+                        <p>Utilize uma chave de criptografia forte para proteger o seu arquivo.</p>
+                    </a>
+                </div>
+
+                <div class="carrossel-item card-seguranca">
+                    <a href="/">
+                        <ion-icon name="lock-open-outline"></ion-icon>
+                        <br>
+                        <h4>Descriptografar</h4>
+                        <p>Você pode descriptografar o documento utilizando a chave correta para acessar seu conteúdo
+                            original.</p>
+                    </a>
+                </div>
+
+                <div class="carrossel-item card-seguranca">
+                    <a href="/documents/qrcodegenerator/">
+                        <ion-icon name="barcode-outline"></ion-icon>
+                        <h4>Criar QR-CODE</h4>
+                        <p>Você pode gerar um QR-CODE personalizado com facilidade.</p>
+                    </a>
+                </div>
+
             </div>
 
-            <div class="carrossel-item card-seguranca">
-                <a href="/">
-                    <ion-icon name="lock-open-outline"></ion-icon>
-                    <br>
-                    <h4>Descriptografar</h4>
-                    <p>Você pode descriptografar o documento utilizando a chave correta para acessar seu conteúdo
-                        original.</p>
-                </a>
+            <div class="setas">
+                <button onclick="showNextImage('carrossel-seguranca')" class="inverter"> 
+                    <ion-icon name="arrow-back-outline"></ion-icon></button>
             </div>
-
-            <div class="carrossel-item card-seguranca">
-                <a href="/documents/qrcodegenerator/">
-                    <ion-icon name="barcode-outline"></ion-icon>
-                    <h4>Criar QR-CODE</h4>
-                    <p>Você pode gerar um QR-CODE personalizado com facilidade.</p>
-                </a>
-            </div>
-
-
         </div>
-
-
-        <div class="setas">
-            <button onclick="showNextImage('carrossel-seguranca')" class="inverter"> <ion-icon name="arrow-back-outline"></ion-icon></button>
-        </div>
-
-     
-
-        </div>
-
     </section>
 
     <!--SOBRE NÓS-->
@@ -253,37 +216,37 @@
 
         <div class="colaboradores">
             <a href="https://www.linkedin.com/in/amanda-paiva-lino/" target="_blank">
-                <img src="/img/time/amanda.jpg" alt="mulher branca sorrindo">
+                <img src="/images/time/amanda.jpg" alt="mulher branca sorrindo">
             </a>
 
             <a href="https://www.linkedin.com/in/erasmobezerra/" target="_blank">
-                <img src="/img/time/erasmo.jpg" alt="homem pardo">
+                <img src="/images/time/erasmo.jpg" alt="homem pardo">
             </a>
 
             <a href="https://www.linkedin.com/in/ramon-moratori-86a558243/" target="_blank">
-                <img src="/img/time/ramon.jpg" alt="homem branco sorrindo">
+                <img src="/images/time/ramon.jpg" alt="homem branco sorrindo">
             </a>
 
             <a href="https://www.linkedin.com/in/leo-silva011" target="_blank">
-                <img src="/img/time/leo.jpg" alt="homem branco">
+                <img src="/images/time/leo.jpg" alt="homem branco">
             </a>
 
             <br>
 
             <a href="https://www.linkedin.com/in/estela-marques" target="_blank">
-                <img src="/img/time/Estrela.jpeg" alt="mulher sorrindo">
+                <img src="/images/time/Estrela.jpeg" alt="mulher sorrindo">
             </a>
 
             <a href="https://www.linkedin.com/in/syllas-braga/" target="_blank">
-                <img src="/img/time/Syllas.jpeg" alt="mulher sorrindo">
+                <img src="/images/time/Syllas.jpeg" alt="homem de boné">
             </a>
 
             <a href="https://www.linkedin.com/in/daniellyfreitasc/" target="_blank">
-                <img src="/img/time/Danielly.jpeg" alt="mulher de óculos sorrindo">
+                <img src="/images/time/Danielly.jpeg" alt="mulher de óculos sorrindo">
             </a>
 
             <a href="https://www.linkedin.com/in/larissa-lunguinho/" target="_blank">
-                <img src="/img/time/Larissa.jpeg" alt="mulher de óculos">
+                <img src="/images/time/Larissa.jpeg" alt="mulher de óculos">
             </a>
         </div>
     </section>
@@ -303,16 +266,11 @@
     <footer>
         <p>© Whale - 2023</p>
         <p>contact@mybigwhale.com</p>
-
     </footer>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="/home/script/script.js"></script>
-
-
-
+    <script src="/js/home.js"></script>
 
 </body>
-
 </html>
