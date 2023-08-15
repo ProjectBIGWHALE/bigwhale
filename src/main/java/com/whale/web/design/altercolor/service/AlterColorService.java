@@ -13,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.whale.web.configurations.UploadImage;
 
 /*
- * Classe para fazer a leitura dos pixels de uma imagem e substituir os pixels que estao em
- * um determinado espectro de cor. E possivel alterar a margem do espectro e alterar por uma cor
- * qualquer, alem da transparencia
+ * Class to read the pixels of an image and replace the pixels that are in
+ * a certain color spectrum. It is possible to change the edge of the spectrum and change it by a color
+ * any other than transparency
  */
 
 @Service
@@ -45,9 +45,7 @@ public class AlterColorService {
 	    int newBmax = Math.min(255, b + delta); // Upper limit for the B component
 
 	    // Sets current color and new color
-	    //Color oldColor = new Color(r, g, b);
 	    Color newColor;
-
 	    if (replacementColor == null || replacementColor.isEmpty()) {
 	        newColor = new Color(0, 0, 0, 0);
 	    } else {

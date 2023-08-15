@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
-public class ImageConverterForm {
+public class ImageConversionForm {
 	
     private MultipartFile image;
     private String outputFormat;

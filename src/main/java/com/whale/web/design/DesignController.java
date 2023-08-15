@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.whale.web.configurations.UploadImage;
@@ -22,9 +22,6 @@ import com.whale.web.design.altercolor.service.AlterColorService;
 import com.whale.web.design.colorspalette.model.PaletteForm;
 import com.whale.web.design.colorspalette.service.CreateColorsPaletteService;
 
-/*
- * Controller para mapear as funcionalidades de paleta de cores e substituir cor
- */
 
 @Controller
 @RequestMapping("/design")
@@ -47,7 +44,7 @@ public class DesignController {
 	
 	// ALTER COLOR
 	
-	@RequestMapping(value="/altercolor", method=RequestMethod.GET)
+	@GetMapping(value="/altercolor")
 	public String alterColor(Model model) {
 		
 		model.addAttribute("form", alterColorForm);
@@ -79,7 +76,7 @@ public class DesignController {
 	
 	// PALETTE COLOR
 	
-	@RequestMapping(value="/colorspalette", method=RequestMethod.GET)
+	@GetMapping(value="/colorspalette")
 	public String colorsPalette(Model model) {
 		
 		model.addAttribute("form", paletteForm);

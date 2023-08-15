@@ -20,12 +20,12 @@ public class ImageConverterService {
     public byte[] convertImageFormat(String outputFormat, MultipartFile imageFile) throws IOException {
 
         if (imageFile == null || imageFile.isEmpty()) {
-            throw new InvalidUploadedFileException("Não foi enviado um arquivo válido.");
+            throw new InvalidUploadedFileException("An invalid file was sent");
         }
 
         String contentType = imageFile.getContentType();
         if (contentType == null || !contentType.startsWith("image/")) {
-            throw new UnexpectedFileFormatException("Tipo de arquivo inválido. Apenas imagens são permitidas.");
+            throw new UnexpectedFileFormatException("Invalid file type. Only images are allowed.");
         }
 
         byte[] bytes = imageFile.getBytes();
@@ -39,15 +39,15 @@ public class ImageConverterService {
 
         String imageType = contentType.substring(6);
         if (imageType.isEmpty()) {
-            throw new UnableToReadImageFormatException("Não foi possível verificar o formato da imagem anexada.");
+            throw new UnableToReadImageFormatException("Unable to verify the format of the attached image.");
         } else {
             if (!successfullyConverted) {
                 throw new UnableToConvertImageToOutputFormatException(
-                        "Não foi possível converter uma imagem "
+                                 "Could not convert an image "
                                 + imageType
-                                + " para o formato "
+                                + " for format "
                                 + outputFormat
-                                + ". Tente novamente ou escolha outro formato de saída. ");
+                                + ". Please try again or choose another output format.");
 
             } else {
                 byte[] convertedImageBytes = convertedImage.toByteArray();

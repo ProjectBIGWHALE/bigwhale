@@ -26,17 +26,14 @@ public class CompactConverterService {
         String action = compactConverterForm.getAction();
         MultipartFile file = compactConverterForm.getFile();
 
-        if (action.equals(".zip")) {
-            return convertToZip(file.getBytes());
-        } else if (action.equals(".tar.gz")) {
-            return convertToTarGz(file.getBytes());
-        } else if(action.equals(".7z")) {
-            return convertTo7z(file.getBytes());
-        } else if(action.equals(".tar")) {
-            return convertToTar(file.getBytes());
-        }
+        return switch (action) {
+            case ".zip" -> convertToZip(file.getBytes());
+            case ".tar.gz" -> convertToTarGz(file.getBytes());
+            case ".7z" -> convertTo7z(file.getBytes());
+            case ".tar" -> convertToTar(file.getBytes());
+            default -> new byte[0];
+        };
 
-        return null;
     }
 
     public byte[] convertToTarGz(byte[] zipBytes) throws IOException {

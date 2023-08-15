@@ -1,6 +1,7 @@
 package com.whale.web.documents.certificategenerator.service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -21,7 +22,7 @@ public class CreateCertificateService {
 	@Autowired
 	EditImageService editImageService;
 	
-	public byte[] createCertificates(Certificate certificate, List<String> names) throws Exception {
+	public byte[] createCertificates(Certificate certificate, List<String> names) throws IOException {
 		
 	    Integer x = certificate.getX();
 	    Integer y = certificate.getY();
@@ -30,7 +31,7 @@ public class CreateCertificateService {
 	    MultipartFile imageLayoult = uploadImage.uploadImage(certificate.getimageLayout());
 	    
 	    if(x == null || y == null || fontSize == null || imageLayoult == null || imageLayoult.isEmpty()) {
-	    	throw new Exception();
+	    	throw new IOException();
 	    }
 	    
 	    List<byte[]> imagesWithText = editImageService.editImage(imageLayoult, names, x, y, fontSize);

@@ -3,6 +3,7 @@ package com.whale.web.documents.filecompressor.service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -22,7 +23,7 @@ public class FileCompressorService {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try (ZipOutputStream zipOut = new ZipOutputStream(byteArrayOutputStream)) {
             zipOut.setLevel(Deflater.BEST_COMPRESSION);
-            ZipEntry zipEntry = new ZipEntry(multipartFile.getOriginalFilename());
+            ZipEntry zipEntry = new ZipEntry(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             zipOut.putNextEntry(zipEntry);
 
             byte[] buffer = new byte[1024];
