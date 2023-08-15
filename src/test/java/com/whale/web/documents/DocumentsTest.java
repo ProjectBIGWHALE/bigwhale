@@ -310,7 +310,7 @@ public class DocumentsTest {
 	}
 	
 	@Test
-	public void shouldReturnImageConverterHTML() throws Exception {
+	void shouldReturnImageConverterHTML() throws Exception {
 		URI uri = new URI("/documents/imageconverter");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
 				status().is(200));
@@ -355,14 +355,12 @@ public class DocumentsTest {
 		MockHttpServletResponse response = mvcResult.getResponse();
 		assertEquals("image/" + outputType, response.getContentType());
 		assertEquals("attachment; filename=test-image." + outputType, response.getHeader("Content-Disposition"));
-
 	}
 
 
 	@Test
-	public void testInvalidImageFormatForConversion() throws Exception {
+	void testInvalidImageFormatForConversion() throws Exception {
 
-		// Criar a imagem em formato BufferedImage
 		BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 		Graphics2D graphics = image.createGraphics();
 		graphics.setColor(Color.WHITE);
@@ -371,13 +369,10 @@ public class DocumentsTest {
 
 		// Formatos válidos para teste na entrada: (jpg, jpeg, bmp, gif, tif, tiff, png)
 		String inputType = "jpeg";
-
-		// Converte a imagem em bytes
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write(image, "jpeg", baos);
 		byte[] imageBytes = baos.toByteArray();
 
-		// Cria o objeto MockMultipartFile com os dados da imagem
 		MockMultipartFile file = new MockMultipartFile(
 				"image",
 				"test-image." + inputType,
@@ -387,19 +382,14 @@ public class DocumentsTest {
 
 		//Formato inválido para saída
 		String outputType = "teste";
-
 		try {
-			// Faz uma requisição post na uri passando a imagem e formato de saída da imagem
 			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
 							.file(file)
 							.param("outputFormat", outputType))
-							.andExpect(status().isInternalServerError()); // Verifica o status HTTP 500
+							.andExpect(status().isInternalServerError());
 
 		} catch (NestedServletException ex) {
-			// Verifica se a exceção interna é a UnableToConvertImageToOutputFormatException
 			assertTrue(ex.getCause() instanceof UnableToConvertImageToOutputFormatException);
-
-			// Verifica a mensagem da exceção interna
 			String expectedErrorMessage = "Não foi possível converter uma imagem jpeg para o formato teste. "
 											+ "Tente novamente ou escolha outro formato de saída. ";
 			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
@@ -408,31 +398,24 @@ public class DocumentsTest {
 
 
 	@Test
-	public void testInvalidFileTypeForConversion() throws Exception {
-		// Cria um arquivo de texto simulando um upload de um arquivo que não é uma imagem
+	void testInvalidFileTypeForConversion() throws Exception {
 		byte[] fileContent = "Este é um arquivo de texto".getBytes();
 		MockMultipartFile file = new MockMultipartFile(
-				"image", // Nome do parâmetro no método do controlador
+				"image",
 				"test.txt",
 				"text/plain",
 				fileContent
 		);
-
 		// Formato de saída
 		String outputFormat = "jpeg";
-
 		try {
 			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
 							.file(file)
 							.param("outputFormat", outputFormat))
 							.andExpect(status().isBadRequest());
 
-
 		} catch (NestedServletException ex) {
-			// Verifica se a exceção interna é a UnexpectedFileFormatException
 			assertTrue(ex.getCause() instanceof UnexpectedFileFormatException);
-
-			// Verifica a mensagem da exceção interna
 			String expectedErrorMessage = "Tipo de arquivo inválido. Apenas imagens são permitidas.";
 			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
 		}
@@ -440,21 +423,16 @@ public class DocumentsTest {
 
 
 	@Test
-	public void testConvertImageFormatWithNullImage() throws Exception {
-		// Criar um InputStream vazio
+	void testConvertImageFormatWithNullImage() throws Exception {
 		InputStream emptyInputStream = new ByteArrayInputStream(new byte[0]);
-
-		// Criar um MockMultipartFile com um InputStream vazio
 		MockMultipartFile imageFile = new MockMultipartFile(
 				"image",
 				"test-image.jpg",
 				"image/jpeg",
 				emptyInputStream
 		);
-
 		// Defina um formato de saída válido
 		String outputType = "jpeg";
-
 		try {
 			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
 					.file(imageFile)
@@ -462,10 +440,7 @@ public class DocumentsTest {
 					.andExpect(status().isBadRequest());;
 
 		} catch (NestedServletException ex) {
-			// Verifica se a exceção interna é a InvalidUploadedFileException
 			assertTrue(ex.getCause() instanceof InvalidUploadedFileException);
-
-			// Verifica se a mensagem da exceção interna está correta
 			String expectedErrorMessage = "Não foi enviado um arquivo válido.";
 			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
 		}

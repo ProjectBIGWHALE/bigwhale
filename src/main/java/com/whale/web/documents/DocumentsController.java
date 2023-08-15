@@ -179,7 +179,7 @@ public class DocumentsController {
 
 
 	@PostMapping("/imageconverter")
-	public ResponseEntity<String> imageConverter(@ModelAttribute("form") ImageConverterForm imageConverterForm, HttpServletResponse response) throws Exception {
+	public ResponseEntity<String> imageConverter(@ModelAttribute("form") ImageConverterForm imageConverterForm, HttpServletResponse response) {
 		try {
 			byte[] formattedImage = imageConverterService.convertImageFormat(imageConverterForm.getOutputFormat(), imageConverterForm.getImage());
 
