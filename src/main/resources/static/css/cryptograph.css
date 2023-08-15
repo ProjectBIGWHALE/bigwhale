@@ -52,6 +52,7 @@ form .text {
     margin: 15px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .col #row .password label {
@@ -65,12 +66,24 @@ form .text {
     height: 40px;
 }
 
-.col #row .password input {
-    padding: 10px 20px 37px 30px;
-    border-radius: 3px;
+.col #row .password #pwd {
+    padding: 25px 30px;
     background: #F2F2F2;
+    border-radius: 3px;
+    border: none;
+
+   /* padding-left: 30px;
+     text-align: center; */
+    font-size: 18px;
+
+    position: relative;
     width: 500px;
     height: 40px;
+}
+
+.col #row .password #chk {
+    width: 30px;
+    height: 20px;
 }
 
 #row .change{
