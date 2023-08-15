@@ -8,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -22,10 +23,14 @@ import java.util.zip.ZipOutputStream;
 
 import javax.imageio.ImageIO;
 
+import com.whale.web.documents.imageconverter.exception.InvalidUploadedFileException;
+import com.whale.web.documents.imageconverter.exception.UnableToConvertImageToOutputFormatException;
+import com.whale.web.documents.imageconverter.exception.UnexpectedFileFormatException;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.platform.commons.function.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,7 +70,7 @@ public class DocumentsTest {
 		
 		URI uri = new URI("/documents/compactconverter");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				MockMvcResultMatchers.status().is(200));
+				status().is(200));
 		
 	}
 	
@@ -96,7 +101,7 @@ public class DocumentsTest {
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
                 .file(testFile)
                 .param("action", format))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.header().exists("Content-Disposition"))
                 .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=file" + format))
                 .andExpect(MockMvcResultMatchers.header().exists("Content-Type"))
@@ -109,7 +114,7 @@ public class DocumentsTest {
 
         URI uri = new URI("/documents/textextract");
         mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-                MockMvcResultMatchers.status().is(200));
+                status().is(200));
     }
 
     @Test
@@ -127,7 +132,7 @@ public class DocumentsTest {
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/textextracted")
                         .file(multipartFile))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("textextracted"))
                 .andExpect(MockMvcResultMatchers.model().attribute("extractedText", extractedText));
 
@@ -139,7 +144,7 @@ public class DocumentsTest {
 
         URI uri = new URI("/documents/filecompressor");
         mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-                MockMvcResultMatchers.status().is(200));
+                status().is(200));
     }
 
     @Test
@@ -155,7 +160,7 @@ public class DocumentsTest {
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/filecompressor")
                         .file(multipartFile))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/octet-stream"))
                 .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=test-file.txt.zip"));
 
@@ -167,7 +172,7 @@ public class DocumentsTest {
 		
 		URI uri = new URI("/documents/certificategenerator/");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				MockMvcResultMatchers.status().is(200));
+				status().is(200));
 		
 	}
     
@@ -214,7 +219,7 @@ public class DocumentsTest {
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/certificategenerator")
         		.file(file)
                 .flashAttr("certificateGeneratorForm", certificateGeneratorForm))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment")))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE));
     }
@@ -262,7 +267,7 @@ public class DocumentsTest {
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/certificategenerator")
         		.file(file)
                 .flashAttr("worksheetAndForm", certificateGeneratorForm))
-                .andExpect(MockMvcResultMatchers.status().is(302));
+                .andExpect(status().is(302));
     }
     
     @Test
@@ -270,7 +275,7 @@ public class DocumentsTest {
 		
 		URI uri = new URI("/documents/qrcodegenerator");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				MockMvcResultMatchers.status().is(200));
+				status().is(200));
 		
 	}
     
@@ -285,7 +290,7 @@ public class DocumentsTest {
         
         mockMvc.perform(MockMvcRequestBuilders.post(uri)
         		.param("link", qrCodeGeneratorForm.getLink()))
-        		.andExpect(MockMvcResultMatchers.status().is(200))
+        		.andExpect(status().is(200))
 		        .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment")))
 		        .andExpect(content().contentType(MediaType.IMAGE_PNG));
 	}
@@ -301,26 +306,14 @@ public class DocumentsTest {
         
         mockMvc.perform(MockMvcRequestBuilders.post(uri)
         		.param("link", qrCodeGeneratorForm.getLink()))
-        		.andExpect(MockMvcResultMatchers.status().is(302));
+        		.andExpect(status().is(302));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@Test
 	public void shouldReturnImageConverterHTML() throws Exception {
 		URI uri = new URI("/documents/imageconverter");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				MockMvcResultMatchers.status().is(200));
+				status().is(200));
 	}
 
 	@Test
@@ -356,7 +349,7 @@ public class DocumentsTest {
 		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
 						.file(file)
 						.param("outputFormat", outputType))
-						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(status().isOk())
 						.andReturn();
 
 		MockHttpServletResponse response = mvcResult.getResponse();
@@ -395,19 +388,22 @@ public class DocumentsTest {
 		//Formato inválido para saída
 		String outputType = "teste";
 
-		// Faz uma requisição post na uri passando a imagem e formato de saída da imagem e esperar a exceção.
-		Throwable thrownException = assertThrows(NestedServletException.class, () -> {
+		try {
+			// Faz uma requisição post na uri passando a imagem e formato de saída da imagem
 			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
-					.file(file)
-					.param("outputFormat", outputType));
-		});
+							.file(file)
+							.param("outputFormat", outputType))
+							.andExpect(status().isInternalServerError()); // Verifica o status HTTP 500
 
-		// Verifica se a exceção interna é a IllegalArgumentException
-		assertTrue(thrownException.getCause() instanceof IllegalArgumentException);
+		} catch (NestedServletException ex) {
+			// Verifica se a exceção interna é a UnableToConvertImageToOutputFormatException
+			assertTrue(ex.getCause() instanceof UnableToConvertImageToOutputFormatException);
 
-		// Verifica se a mensagem da exceção interna está correta
-		String expectedErrorMessage = "Conversão não realizada: o formato de saída especificado não é suportado.";
-		assertEquals(expectedErrorMessage, thrownException.getCause().getMessage());
+			// Verifica a mensagem da exceção interna
+			String expectedErrorMessage = "Não foi possível converter uma imagem jpeg para o formato teste. "
+											+ "Tente novamente ou escolha outro formato de saída. ";
+			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
+		}
 	}
 
 
@@ -425,19 +421,21 @@ public class DocumentsTest {
 		// Formato de saída
 		String outputFormat = "jpeg";
 
-		// Faz uma requisição post na uri passando o arquivo e formato de saída da imagem e esperar a exceção.
-		Throwable thrownException = assertThrows(NestedServletException.class, () -> {
+		try {
 			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
-					.file(file)
-					.param("outputFormat", outputFormat));
-		});
+							.file(file)
+							.param("outputFormat", outputFormat))
+							.andExpect(status().isBadRequest());
 
-		// Verifica se a exceção interna é a IllegalArgumentException
-		assertTrue(thrownException.getCause() instanceof IllegalArgumentException);
 
-		// Verifica se a mensagem da exceção interna está correta
-		String expectedErrorMessage = "Tipo de arquivo inválido. Apenas imagens são permitidas.";
-		assertEquals(expectedErrorMessage, thrownException.getCause().getMessage());
+		} catch (NestedServletException ex) {
+			// Verifica se a exceção interna é a UnexpectedFileFormatException
+			assertTrue(ex.getCause() instanceof UnexpectedFileFormatException);
+
+			// Verifica a mensagem da exceção interna
+			String expectedErrorMessage = "Tipo de arquivo inválido. Apenas imagens são permitidas.";
+			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
+		}
 	}
 
 
@@ -457,19 +455,21 @@ public class DocumentsTest {
 		// Defina um formato de saída válido
 		String outputType = "jpeg";
 
-		// Faz uma requisição post na uri passando a imagem e formato de saída da imagem e esperar a exceção.
-		Throwable thrownException = assertThrows(NestedServletException.class, () -> {
+		try {
 			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
 					.file(imageFile)
-					.param("outputFormat", outputType));
-		});
+					.param("outputFormat", outputType))
+					.andExpect(status().isBadRequest());;
 
-		// Verifica se a exceção interna é a IllegalArgumentException
-		assertTrue(thrownException.getCause() instanceof IllegalArgumentException);
+		} catch (NestedServletException ex) {
+			// Verifica se a exceção interna é a InvalidUploadedFileException
+			assertTrue(ex.getCause() instanceof InvalidUploadedFileException);
 
-		// Verifica se a mensagem da exceção interna está correta
-		String expectedErrorMessage = "Erro ao processar arquivo: image == null!";
-		assertEquals(expectedErrorMessage, thrownException.getCause().getMessage());
+			// Verifica se a mensagem da exceção interna está correta
+			String expectedErrorMessage = "Não foi enviado um arquivo válido.";
+			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
+		}
+
 	}
     
 }

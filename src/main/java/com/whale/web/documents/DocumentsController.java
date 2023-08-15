@@ -8,8 +8,14 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.whale.web.documents.imageconverter.exception.InvalidUploadedFileException;
+import com.whale.web.documents.imageconverter.exception.UnableToConvertImageToOutputFormatException;
+import com.whale.web.documents.imageconverter.exception.UnableToReadImageFormatException;
+import com.whale.web.documents.imageconverter.exception.UnexpectedFileFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -156,7 +162,7 @@ public class DocumentsController {
         return null;
     }
     
-	@RequestMapping(value = "/imageconverter", method = RequestMethod.GET)
+	@GetMapping(value = "/imageconverter")
 	public String imageConverter(Model model) {
 		List<Format> list = Arrays.asList(	new Format(1L, "bmp"),
 											new Format(2L, "jpg"),
@@ -173,7 +179,7 @@ public class DocumentsController {
 
 
 	@PostMapping("/imageconverter")
-	public String imageConverter(@ModelAttribute("form") ImageConverterForm imageConverterForm, HttpServletResponse response) throws Exception {
+	public ResponseEntity<String> imageConverter(@ModelAttribute("form") ImageConverterForm imageConverterForm, HttpServletResponse response) throws Exception {
 		try {
 			byte[] formattedImage = imageConverterService.convertImageFormat(imageConverterForm.getOutputFormat(), imageConverterForm.getImage());
 
@@ -189,11 +195,17 @@ public class DocumentsController {
 				os.flush();
 			}
 
-		} catch (IOException e) {
-			System.out.println("Erro ao converter a imagem");
-			return "redirect:/documents/imageconverter";
+			return ResponseEntity.ok().build();
+
+		} catch (UnexpectedFileFormatException | InvalidUploadedFileException ex) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+
+		} catch (UnableToConvertImageToOutputFormatException | UnableToReadImageFormatException ex) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+
+		} catch (IOException ex) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Um erro ocorreu:" + Arrays.toString(ex.getStackTrace()));
 		}
-		return null;
 	}
 	
 	@RequestMapping(value="/qrcodegenerator", method=RequestMethod.GET)
