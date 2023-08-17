@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
