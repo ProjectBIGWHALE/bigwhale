@@ -6,7 +6,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.opencsv.exceptions.CsvException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
