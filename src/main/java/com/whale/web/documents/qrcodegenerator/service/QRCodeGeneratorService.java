@@ -3,7 +3,7 @@ package com.whale.web.documents.qrcodegenerator.service;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -22,7 +22,7 @@ public class QRCodeGeneratorService {
 	public byte[] generateQRCode(String link) throws Exception {
 		
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        Map<EncodeHintType, Object> hints = new HashMap<>();
+        Map<EncodeHintType, Object> hints = new EnumMap<>(EncodeHintType.class);
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 
         try {

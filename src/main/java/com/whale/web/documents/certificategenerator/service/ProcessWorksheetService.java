@@ -1,5 +1,6 @@
 package com.whale.web.documents.certificategenerator.service;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -17,10 +18,10 @@ public class ProcessWorksheetService {
 	public List<String> savingNamesInAList(MultipartFile worksheet, Certificate certificate) throws Exception {
 
 		if (worksheet.isEmpty()) {
-			throw new Exception();
+			throw new IOException();
 		}
 
-		List<String> names = new ArrayList();
+		List<String> names = new ArrayList<>();
 
 		try (CSVReader reader = new CSVReader(
 				new InputStreamReader(worksheet.getInputStream(), StandardCharsets.UTF_8))) {

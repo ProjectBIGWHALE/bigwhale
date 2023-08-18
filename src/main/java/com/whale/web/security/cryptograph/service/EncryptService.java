@@ -1,5 +1,6 @@
 package com.whale.web.security.cryptograph.service;
 
+import com.whale.web.documents.imageconverter.exception.InvalidUploadedFileException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,8 +22,8 @@ public class EncryptService {
 
 		try {
 
-			if (formFile.isEmpty() || formFile == null || encryptionKey.isEmpty() || encryptionKey == null) {
-				throw new Exception();
+			if (formFile.isEmpty() || encryptionKey.isEmpty()) {
+				throw new InvalidUploadedFileException("An invalid file was sent");
 			}
 
 			// Get the bytes of the file from MultipartFile
@@ -39,9 +40,8 @@ public class EncryptService {
 			cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
 
 			// Encrypt the file
-			byte[] encryptedFile = cipher.doFinal(bytesInFile);
+			return cipher.doFinal(bytesInFile);
 
-			return encryptedFile;
 		} catch (Exception e) {
 			// Handle the exception according to your needs
 			throw new Exception("Error encrypting the file.", e);
@@ -54,8 +54,8 @@ public class EncryptService {
 
 		try {
 
-			if (fileOfForm.isEmpty() || fileOfForm == null || encryptionKey.isEmpty() || encryptionKey == null) {
-				throw new Exception();
+			if (fileOfForm.isEmpty() || encryptionKey.isEmpty()) {
+				throw new InvalidUploadedFileException("An invalid file was sent");
 			}
 
 			// Get the bytes of the file from MultipartFile
@@ -72,9 +72,8 @@ public class EncryptService {
 			cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
 
 			// Decrypt the file
-			byte[] decryptedFile = cipher.doFinal(encryptedFile);
-
-			return decryptedFile;
+			return cipher.doFinal(encryptedFile);
+			
 		} catch (Exception e) {
 			// Handle the exception according to your needs
 			throw new Exception("Error decrypting the file.", e);

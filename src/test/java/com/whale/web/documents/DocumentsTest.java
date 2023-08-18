@@ -1,7 +1,6 @@
 package com.whale.web.documents;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -30,7 +29,6 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.platform.commons.function.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,15 +63,7 @@ public class DocumentsTest {
     @MockBean
     private FileCompressorService compressorService;
 
-	@Test
-	public void shouldReturnTheHTMLCompactConverterForm() throws Exception {
-		
-		URI uri = new URI("/documents/compactconverter");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				status().is(200));
-		
-	}
-	
+
     public MockMultipartFile createTestZipFile() throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
              ZipOutputStream zipOut = new ZipOutputStream(baos)) {
@@ -90,14 +80,46 @@ public class DocumentsTest {
             return new MockMultipartFile("file", "test.zip", "application/zip", bais);
         }
     }
+
+
+	public MockMultipartFile createTestImage(String inputFormat) throws IOException{
+		BufferedImage bufferedImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+    	Graphics2D graphics = bufferedImage.createGraphics();
+    	graphics.setColor(Color.WHITE);
+    	graphics.fillRect(0, 0, 100, 100);
+    	graphics.dispose();
+
+    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    	ImageIO.write(bufferedImage, inputFormat, baos);
+    	baos.toByteArray();
+
+		MockMultipartFile image = new MockMultipartFile(
+				"image",
+				"test-image." + inputFormat,
+				"image/" + inputFormat,
+				baos.toByteArray()
+		);
+		return image;
+	}
+
+
+	@Test
+	void shouldReturnTheHTMLCompactConverterForm() throws Exception {
+		
+		URI uri = new URI("/documents/compactconverter");
+		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
+				status().is(200));
+		
+	}
+	
+
 	
     @Test
-    public void testConverter() throws Exception {
-        // Prepare your test file data and other necessary objects
-        MockMultipartFile testFile = this.createTestZipFile();
-        String format = ".zip";
+    void testConverter() throws Exception {
 
-        // Perform the mock HTTP POST request
+        MockMultipartFile testFile = this.createTestZipFile();
+		String format = ".zip";
+
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
                 .file(testFile)
                 .param("action", format))
@@ -110,7 +132,7 @@ public class DocumentsTest {
     }
 
     @Test
-    public void textExtractshouldReturnTheHTMLForm() throws Exception {
+    void textExtractshouldReturnTheHTMLForm() throws Exception {
 
         URI uri = new URI("/documents/textextract");
         mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
@@ -118,7 +140,7 @@ public class DocumentsTest {
     }
 
     @Test
-    public void textExtractedShouldReturnTheHTMLForm() throws Exception {
+    void textExtractedShouldReturnTheHTMLForm() throws Exception {
         MockMultipartFile multipartFile = new MockMultipartFile(
                 "file",
                 "test-image.png",
@@ -140,7 +162,7 @@ public class DocumentsTest {
     }
 
     @Test
-    public void compressFilePageShouldReturnTheHTMLForm() throws Exception {
+    void compressFilePageShouldReturnTheHTMLForm() throws Exception {
 
         URI uri = new URI("/documents/filecompressor");
         mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
@@ -148,7 +170,7 @@ public class DocumentsTest {
     }
 
     @Test
-    public void compressFileShouldReturnTheFileZip() throws Exception {
+    void compressFileShouldReturnTheFileZip() throws Exception {
         MockMultipartFile multipartFile = new MockMultipartFile(
                 "file",
                 "test-file.txt",
@@ -168,7 +190,7 @@ public class DocumentsTest {
     }
     
     @Test
-	public void shouldReturnTheHTMLCertificateGeneratorForm() throws Exception {
+	void shouldReturnTheHTMLCertificateGeneratorForm() throws Exception {
 		
 		URI uri = new URI("/documents/certificategenerator/");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
@@ -177,33 +199,17 @@ public class DocumentsTest {
 	}
     
 	@Test
-    public void shouldReturnTheCertificatesStatusCode200() throws Exception {
+    void shouldReturnTheCertificatesStatusCode200() throws Exception {
         CertificateGeneratorForm certificateGeneratorForm = new CertificateGeneratorForm();
-        Worksheet worksheet = new Worksheet();
+        Worksheet worksheet = new Worksheet();        
         
-        // Crie um arquivo CSV fictício para usar nos testes
         String csvContent = "col1,col2,col3\nvalue1,value2,value3";
         
         MockMultipartFile file = new MockMultipartFile("file", "worksheet.csv", MediaType.TEXT_PLAIN_VALUE, csvContent.getBytes());
-        
-        // Crie um arquivo de imagem fictício para usar nos testes
-    	BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
-    	Graphics2D graphics = image.createGraphics();
-    	graphics.setColor(Color.WHITE);
-    	graphics.fillRect(0, 0, 100, 100);
-    	graphics.dispose();
 
-    	// Converte a imagem em bytes
-    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    	ImageIO.write(image, "png", baos);
-    	byte[] imageBytes = baos.toByteArray();
+		MockMultipartFile imageLayout = this.createTestImage("png");
         
-        MockMultipartFile imageLayout = new MockMultipartFile(
-                "image",
-                "white_image.png",
-                MediaType.IMAGE_PNG_VALUE,
-                imageBytes
-        );
+
         
         worksheet.setWorksheet(file);
         Certificate certificate = new Certificate();
@@ -225,33 +231,15 @@ public class DocumentsTest {
     }
     
     @Test
-    public void shouldReturnARedirectionStatusCode302() throws Exception {
+    void shouldReturnARedirectionStatusCode302() throws Exception {
         CertificateGeneratorForm certificateGeneratorForm = new CertificateGeneratorForm();
         Worksheet worksheet = new Worksheet();
-        
-        // Crie um arquivo CSV fictício para usar nos testes
+
         String csvContent = "col1,col2,col3\nvalue1,value2,value3";
         
         MockMultipartFile file = new MockMultipartFile("file", "worksheet.csv", MediaType.TEXT_PLAIN_VALUE, csvContent.getBytes());
-        
-        // Crie um arquivo de imagem fictício para usar nos testes
-    	BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
-    	Graphics2D graphics = image.createGraphics();
-    	graphics.setColor(Color.WHITE);
-    	graphics.fillRect(0, 0, 100, 100);
-    	graphics.dispose();
 
-    	// Converte a imagem em bytes
-    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    	ImageIO.write(image, "png", baos);
-    	byte[] imageBytes = baos.toByteArray();
-        
-        MockMultipartFile imageLayout = new MockMultipartFile(
-                "image",
-                "white_image.png",
-                MediaType.IMAGE_PNG_VALUE,
-                imageBytes
-        );
+		MockMultipartFile imageLayout = this.createTestImage("png");
         
         worksheet.setWorksheet(null);
         Certificate certificate = new Certificate();
@@ -271,7 +259,7 @@ public class DocumentsTest {
     }
     
     @Test
-	public void shouldReturnTheQRCodeGeneratorHTMLForm() throws Exception {
+	void shouldReturnTheQRCodeGeneratorHTMLForm() throws Exception {
 		
 		URI uri = new URI("/documents/qrcodegenerator");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
@@ -280,7 +268,7 @@ public class DocumentsTest {
 	}
     
     @Test
-    public void shouldReturnAValidQRCode() throws Exception {
+    void shouldReturnAValidQRCode() throws Exception {
         URI uri = new URI("/documents/qrcodegenerator");
         
         QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
@@ -296,7 +284,7 @@ public class DocumentsTest {
 	}
     
 	@Test
-    public void shouldReturnAPageRedirectionStatusCode302() throws Exception {
+    void shouldReturnAPageRedirectionStatusCode302() throws Exception {
         URI uri = new URI("/documents/qrcodegenerator");
         
         QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
@@ -317,35 +305,12 @@ public class DocumentsTest {
 	}
 
 	@Test
-	public void testToConvertAndDownloadImageSuccessfully() throws Exception {
+	void testToConvertAndDownloadImageSuccessfully() throws Exception {
 
-		// Criar a imagem em formato BufferedImage
-		BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
-		Graphics2D graphics = image.createGraphics();
-		graphics.setColor(Color.WHITE);
-		graphics.fillRect(0, 0, 100, 100);
-		graphics.dispose();
-
-		// Formatos para teste na entrada: (jpg, jpeg, bmp, gif, tif, tiff, png)
 		String inputType = "jpeg";
+		MockMultipartFile file = this.createTestImage(inputType);
 
-		// Converte a imagem em bytes
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(image, "jpeg", baos);
-		byte[] imageBytes = baos.toByteArray();
-
-		// Cria o objeto MockMultipartFile com os dados da imagem
-		MockMultipartFile file = new MockMultipartFile(
-				"image",
-				"test-image." + inputType,
-				"image/" + inputType,
-				imageBytes
-		);
-
-		// Formatos para teste na saída: (jpg, jpeg, bmp, gif, tif, tiff, png)
 		String outputType = "bmp";
-
-		// Faz uma requisição post na uri passando a imagem e formato de saída da imagem e esperar status 200.
 		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
 						.file(file)
 						.param("outputFormat", outputType))
@@ -361,26 +326,9 @@ public class DocumentsTest {
 	@Test
 	void testInvalidImageFormatForConversion() throws Exception {
 
-		BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
-		Graphics2D graphics = image.createGraphics();
-		graphics.setColor(Color.WHITE);
-		graphics.fillRect(0, 0, 100, 100);
-		graphics.dispose();
-
-		// Formatos válidos para teste na entrada: (jpg, jpeg, bmp, gif, tif, tiff, png)
 		String inputType = "jpeg";
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(image, "jpeg", baos);
-		byte[] imageBytes = baos.toByteArray();
+		MockMultipartFile file = this.createTestImage(inputType);
 
-		MockMultipartFile file = new MockMultipartFile(
-				"image",
-				"test-image." + inputType,
-				"image/" + inputType,
-				imageBytes
-		);
-
-		//Formato inválido para saída
 		String outputType = "teste";
 		try {
 			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
@@ -390,8 +338,8 @@ public class DocumentsTest {
 
 		} catch (NestedServletException ex) {
 			assertTrue(ex.getCause() instanceof UnableToConvertImageToOutputFormatException);
-			String expectedErrorMessage = "Não foi possível converter uma imagem jpeg para o formato teste. "
-											+ "Tente novamente ou escolha outro formato de saída. ";
+			String expectedErrorMessage = "Could not convert an image jpeg for format teste. " +
+											"Please try again or choose another output format.";
 			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
 		}
 	}
@@ -406,7 +354,7 @@ public class DocumentsTest {
 				"text/plain",
 				fileContent
 		);
-		// Formato de saída
+
 		String outputFormat = "jpeg";
 		try {
 			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
@@ -416,7 +364,7 @@ public class DocumentsTest {
 
 		} catch (NestedServletException ex) {
 			assertTrue(ex.getCause() instanceof UnexpectedFileFormatException);
-			String expectedErrorMessage = "Tipo de arquivo inválido. Apenas imagens são permitidas.";
+			String expectedErrorMessage = "Invalid file type. Only images are allowed.";
 			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
 		}
 	}
@@ -431,7 +379,7 @@ public class DocumentsTest {
 				"image/jpeg",
 				emptyInputStream
 		);
-		// Defina um formato de saída válido
+
 		String outputType = "jpeg";
 		try {
 			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
@@ -441,7 +389,7 @@ public class DocumentsTest {
 
 		} catch (NestedServletException ex) {
 			assertTrue(ex.getCause() instanceof InvalidUploadedFileException);
-			String expectedErrorMessage = "Não foi enviado um arquivo válido.";
+			String expectedErrorMessage = "An invalid file was sent";
 			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
 		}
 

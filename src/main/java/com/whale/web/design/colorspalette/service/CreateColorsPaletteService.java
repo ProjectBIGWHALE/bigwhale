@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /*
- * Classe para criar uma lista de cores em hexadecimal com base em uma imagem.
- * Para fazer isso, o codigo se baseia na predominancia de cada cor.
- * Podemos determinar o numero de cores que desejamos na lista. Por exemplo: pegar as
- * 3 cores mais frequentes.
- * Ainda devemos otimizar esse codigo. Dependendo da distancia configurada entre as cores,
- * pode resultar em uma paleta de cores que destoa da nossa percepcao da imagem
+ * Class to create a list of colors in hexadecimal based on an image.
+ * To do this, the code is based on the predominance of each color.
+ * We can determine the number of colors we want in the list. For example: take the
+ * 3 most frequent colors.
+ * We still need to optimize this code. Depending on the configured distance between colors,
+ * can result in a color palette that clashes with our perception of the image
  */
 
 @Service
@@ -65,13 +65,11 @@ public class CreateColorsPaletteService {
             }
 
             // Sort the colors by count in descending order
-            List<Color> colorPalette = colorCount.entrySet().stream()
+            return colorCount.entrySet().stream()
                     .sorted(Map.Entry.<Integer, Integer>comparingByValue().reversed())
                     .limit(numColors)
                     .map(entry -> new Color(entry.getKey()))
                     .collect(Collectors.toList());
-
-            return colorPalette;
 
         } catch (Exception e) {
             throw new Exception();

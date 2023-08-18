@@ -33,8 +33,8 @@ import com.whale.web.documents.certificategenerator.service.ProcessWorksheetServ
 import com.whale.web.documents.compactconverter.model.CompactConverterForm;
 import com.whale.web.documents.compactconverter.service.CompactConverterService;
 import com.whale.web.documents.filecompressor.service.FileCompressorService;
-import com.whale.web.documents.imageconverter.model.Format;
-import com.whale.web.documents.imageconverter.model.ImageConverterForm;
+import com.whale.web.documents.imageconverter.model.ImageFormatsForm;
+import com.whale.web.documents.imageconverter.model.ImageConversionForm;
 import com.whale.web.documents.imageconverter.service.ImageConverterService;
 import com.whale.web.documents.qrcodegenerator.model.QRCodeGeneratorForm;
 import com.whale.web.documents.qrcodegenerator.service.QRCodeGeneratorService;
@@ -57,7 +57,7 @@ public class DocumentsController {
     FileCompressorService fileCompressorService;
     
     @Autowired
-    ImageConverterForm imageConverterForm;
+	ImageConversionForm imageConversionForm;
     
     @Autowired
     ImageConverterService imageConverterService;
@@ -77,7 +77,7 @@ public class DocumentsController {
     @Autowired
     CreateCertificateService createCertificateService;
 
-    @RequestMapping(value="/compactconverter", method=RequestMethod.GET)
+    @GetMapping(value="/compactconverter")
     public String compactConverter(Model model) {
 
         model.addAttribute("form", compactConverterForm);
@@ -90,15 +90,11 @@ public class DocumentsController {
 
         try {
             byte[] file = compactConverterService.converterFile(form);
-            String format = form.getAction().toString();
+            String format = form.getAction();
 
             response.setHeader("Content-Disposition", "attachment; filename=file" + format);
-
-            // Defines the content type and size of the response
             response.setContentType("application/octet-stream");
             response.setContentLength(file.length);
-
-            // Set headers to allow the image to be downloaded
             response.setHeader("Cache-Control", "no-cache");
 
             try (OutputStream outputStream = response.getOutputStream()) {
@@ -147,7 +143,7 @@ public class DocumentsController {
                 response.setHeader("Content-Disposition", "attachment; filename="+file.getOriginalFilename()+".zip");
                 response.setContentType("application/octet-stream");
                 response.setHeader("Cache-Control", "no-cache");
-                
+
                 try (OutputStream outputStream = response.getOutputStream()) {
 	                OutputStream os = response.getOutputStream();
 	                os.write(bytes);
@@ -158,43 +154,41 @@ public class DocumentsController {
             } catch (Exception e) {
             	return "redirect:/documents/filecompressor";
             }
-        
+
         return null;
     }
     
 	@GetMapping(value = "/imageconverter")
 	public String imageConverter(Model model) {
-		List<Format> list = Arrays.asList(	new Format(1L, "bmp"),
-											new Format(2L, "jpg"),
-											new Format(3L, "jpeg"),
-											new Format(4L, "gif"),
-											new Format(6L, "png"),
-											new Format(6L, "tiff"),
-											new Format(7L, "tif"));
+		List<ImageFormatsForm> list = Arrays.asList(	new ImageFormatsForm(1L, "bmp"),
+											new ImageFormatsForm(2L, "jpg"),
+											new ImageFormatsForm(3L, "jpeg"),
+											new ImageFormatsForm(4L, "gif"),
+											new ImageFormatsForm(6L, "png"),
+											new ImageFormatsForm(6L, "tiff"),
+											new ImageFormatsForm(7L, "tif"));
 
 		model.addAttribute("list", list);
-		model.addAttribute("form", imageConverterForm);
+		model.addAttribute("form", imageConversionForm);
 		return "imageconverter";
 	}
 
 
 	@PostMapping("/imageconverter")
-	public ResponseEntity<String> imageConverter(@ModelAttribute("form") ImageConverterForm imageConverterForm, HttpServletResponse response) {
+	public ResponseEntity<String> imageConverter(@ModelAttribute("form") ImageConversionForm imageConversionForm, HttpServletResponse response) {
 		try {
-			byte[] formattedImage = imageConverterService.convertImageFormat(imageConverterForm.getOutputFormat(), imageConverterForm.getImage());
+			byte[] formattedImage = imageConverterService.convertImageFormat(imageConversionForm.getOutputFormat(), imageConversionForm.getImage());
 
-			String originalFileNameWithoutExtension = StringUtils.stripFilenameExtension(Objects.requireNonNull(imageConverterForm.getImage().getOriginalFilename()));
-			String convertedFileName = originalFileNameWithoutExtension + "." + imageConverterForm.getOutputFormat().toLowerCase();
+			String originalFileNameWithoutExtension = StringUtils.stripFilenameExtension(Objects.requireNonNull(imageConversionForm.getImage().getOriginalFilename()));
+			String convertedFileName = originalFileNameWithoutExtension + "." + imageConversionForm.getOutputFormat().toLowerCase();
 
-			response.setContentType("image/" + imageConverterForm.getOutputFormat().toLowerCase());
+			response.setContentType("image/" + imageConversionForm.getOutputFormat().toLowerCase());
 			response.setHeader("Content-Disposition", "attachment; filename=" + convertedFileName);
 			response.setHeader("Cache-Control", "no-cache");
 
-			try (OutputStream os = response.getOutputStream()) {
+			OutputStream os = response.getOutputStream();
 				os.write(formattedImage);
 				os.flush();
-			}
-
 			return ResponseEntity.ok().build();
 
 		} catch (UnexpectedFileFormatException | InvalidUploadedFileException ex) {
@@ -208,8 +202,8 @@ public class DocumentsController {
 		}
 	}
 	
-	@RequestMapping(value="/qrcodegenerator", method=RequestMethod.GET)
-	public String qrCodeGenerator(Model model) throws IOException {
+	@GetMapping(value="/qrcodegenerator")
+	public String qrCodeGenerator(Model model) {
 		
 		model.addAttribute("form", qrCodeGeneratorForm);
 		return "qrcodegenerator";
@@ -220,16 +214,13 @@ public class DocumentsController {
 	@PostMapping("/qrcodegenerator")
 	public String qrCodeGenerator(QRCodeGeneratorForm qrCodeGeneratorForm, HttpServletResponse response) throws IOException{
 		
-		
 		try {
 			byte[] processedImage = qrCodeGeneratorService.generateQRCode(qrCodeGeneratorForm.getLink());
-			
-			// Define o tipo de conteúdo e o tamanho da resposta
+
 	        response.setContentType("image/png");
 	        response.setHeader("Content-Disposition", "attachment; filename=\"ModifiedImage.png\"");
 	        response.setHeader("Cache-Control", "no-cache");
 
-	        // Copia os bytes do arquivo para o OutputStream
 	        try (OutputStream os = response.getOutputStream()) {
 	            os.write(processedImage);
 	            os.flush();
@@ -243,7 +234,7 @@ public class DocumentsController {
 		return null;
 	}
 	
-	@RequestMapping(value="/certificategenerator", method=RequestMethod.GET)
+	@GetMapping(value="/certificategenerator")
 	public String certificateGenerator(Model model) {
 		
 		model.addAttribute("certificateGeneratorForm", certificateGeneratorForm);
@@ -256,8 +247,7 @@ public class DocumentsController {
 		try {
 		    List<String> names = processWorksheetService.savingNamesInAList(certificateGeneratorForm.getWorksheet().getWorksheet(), certificateGeneratorForm.getCertificate());
 		    byte[] zipFile = createCertificateService.createCertificates(certificateGeneratorForm.getCertificate(), names);
-	
-		    
+
 		        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
 		        response.setHeader("Content-Disposition", "attachment; filename=\"certificates.zip\"");
 	
@@ -267,10 +257,11 @@ public class DocumentsController {
 			    }catch(Exception e) {
 					throw new RuntimeException("Error generating encrypted file", e);
 				}
+
 	    } catch (Exception e) {
 	    	return "redirect:/documents/certificategenerator";
 	    }
-	    
+
 	    return null;
 	}
 

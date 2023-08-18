@@ -85,17 +85,23 @@ function ajustarNumeroDeImagens() {
   // Obtenha o tamanho da tela
   var larguraDaTela = window.innerWidth;
 
+  var larguraDaTelaSmartphone = window.screen.availWidth;
+
   // Verifique o tamanho da tela e ajuste o número de imagens conforme necessário
-  if (larguraDaTela < 850) {
-    imagesToShow = 1;
-  } else if (larguraDaTela > 1850) { // Se a largura for menor que 1024 pixels
+  if (larguraDaTela > 1850) { // Se a largura for menor que 1024 pixels
     imagesToShow = 4; // Defina um valor intermediário
-  } else if (larguraDaTela > 1300) { // Por exemplo, se a largura for menor que 768 pixels
+  }else if (larguraDaTela > 1300) { // Por exemplo, se a largura for menor que 768 pixels
     imagesToShow = 3; // Defina um valor menor para exibir menos imagens
   } else if (larguraDaTela > 850) { // Se a largura for menor que 1024 pixels
     imagesToShow = 2; // Defina um valor intermediário
+
+  } else if(larguraDaTela < 850 || larguraDaTelaSmartphone < 375){
+    imagesToShow = 1;
   }
 
+
+         console.log(larguraDaTela)
+         console.log(larguraDaTelaSmartphone)
 
 
 
