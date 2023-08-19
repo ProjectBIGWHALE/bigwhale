@@ -2,12 +2,14 @@ package com.whale.web.security;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,19 +43,19 @@ public class SecurityController {
 		try {
 
 			byte[] encryptedFile;
+			String originalFilename = form.getFile().getOriginalFilename();
+			String originalFileNameWithoutExtension = StringUtils.stripFilenameExtension(Objects.requireNonNull(originalFilename));
 
-			if(form.getAction()) {
+			if(Boolean.TRUE.equals(form.getAction())) {
 				encryptedFile = encryptService.encryptFile(form);
-				response.setHeader("Content-Disposition", "attachment; filename=encryptedFile");
+				response.setHeader("Content-Disposition", "attachment; filename=" + originalFilename + ".encrypted");
 			} else {
 				encryptedFile = encryptService.decryptFile(form);
-				response.setHeader("Content-Disposition", "attachment; filename=decryptedFile");
+				response.setHeader("Content-Disposition", "attachment; filename=" + originalFileNameWithoutExtension);
 			}
-			// Defines the content type and size of the response
+
 			response.setContentType("application/octet-stream");
 			response.setContentLength(encryptedFile.length);
-
-			// Set headers to allow the image to be downloaded
 			response.setHeader("Cache-Control", "no-cache");
 
 			try (OutputStream outputStream = response.getOutputStream()) {
