@@ -8,10 +8,6 @@
   <link rel="stylesheet" type="text/css" href="/css/paletteview.css">
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <script src="https://unpkg.com/cursorzoom/dist/cursorzoom.min.js"></script>
-
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-BVGCNK1G97"></script>
   <script>
@@ -43,7 +39,7 @@
 
       <h2>Cores predominantes:</h2>
 
-      <div class="mb-3">
+      <div class="mb-3" id="colorspalette">
         <div th:each="color : ${form.listOfColors}" class="cor"
           th:style="'background-color: rgb(' + ${color.getRed()} + ',' + ${color.getGreen()} + ',' + ${color.getBlue()} + ')'"
           th:attr="title=*{color.toString()}" data-cursorzoom onclick="copyHexColor(this)">

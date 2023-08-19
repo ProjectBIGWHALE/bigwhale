@@ -29,9 +29,16 @@ main {
     height: auto;
 }
 
+#colorspalette{
+    background-color: #FFFFFF;
+    padding: 15px;
+    border-radius: 5px;
+}
+
 .cores-predominantes h2 {
     font-size: 20px;
     font-weight: 400;
+    padding-bottom: 8px;
 }
 
 .cores-predominantes {
