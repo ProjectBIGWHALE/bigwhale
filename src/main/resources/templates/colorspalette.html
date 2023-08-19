@@ -37,6 +37,7 @@
 	</header>
 
 	<main>
+
 		<form id="uploadForm" th:action="@{/design/colorspalette}" method="POST" enctype="multipart/form-data"
 			th:object="${form}">
 			<div class="form-group">
@@ -45,10 +46,10 @@
 				</label>
 				<input type="file" id="image" th:field="*{image}" onchange="submitForm()" style="display: none;" />
 			</div>
+			
 			<p>Ou arraste e solte o arquivo aqui</p>
-			<img src="/images/logo.png" alt="logo 50% transparente">
 
-			<img id="uploadedImage" th:if="*{image}" th:data-image-base64="*{image}" style="display: none;">
+			<img id="uploadedImage" th:if="${imageBase64}" th:data-image-base64="${imageBase64}" style="display: none;">
 
 			<div class="content">
 				<div id="drop-area" class="drop-area">
@@ -58,15 +59,19 @@
 				</div>
 			</div>
 		</form>
+
+		<img class="image-logo" src="/images/logo.png" alt="logo 50% transparente">
+
 	</main>
 
 	<!--BOTÕES HOME E AJUDA-->
 
 	<div id="button-home">
 		<a href="/">
-			<ion-icon name="home-outline"></ion-icon>
+			<ion-icon name="return-down-back-outline"></ion-icon> 
 		</a>
 	</div>
+
 	<div id="button-help">
 		<a href="/help">
 			<ion-icon name="help-outline"></ion-icon>

@@ -27,7 +27,7 @@ public class CreateColorsPaletteService {
 	public List<Color> createColorPalette(MultipartFile multipartFile) throws Exception {
     	
     	
-        int numColors = 10; // Number of predominant colors to be extracted
+        int numColors = 6; // Number of predominant colors to be extracted
         int maxColorDistance = 70; // Maximum allowed distance between colors
 
         try {

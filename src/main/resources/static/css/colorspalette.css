@@ -27,6 +27,14 @@ header h3 {
     font-weight: 400;
 }
 
+.image-logo {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    width: 25%;
+    opacity: 0.5;
+}
+
 .form-group {
     text-align: center;
     margin-top: 100px;
@@ -67,12 +75,7 @@ p {
     display: flex;
 }
 
-img {
-    left: 0;
-    width: 25%;
-    opacity: 0.5;
-    float: left;
-}
+
 
 #uploadForm p {
     border: 2px dotted #25BFBF;
@@ -101,7 +104,7 @@ img {
 #button-home {
     position: fixed;
     right: 47px;
-    bottom: 520px;
+    top: 47px;
     background: #50c878;
     border-radius: 50%;
     width: 45px;
@@ -217,4 +220,51 @@ img {
     border-bottom: 2px dotted black;
     bottom: 38px;
     right: 38px;
+}
+
+/* Media query para telas de até 768px de largura */
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 22px;
+        padding-top: 135px;
+    }
+
+    header h3 {
+        font-size: 18px;
+        padding: 35px 85px;
+    }
+
+    .image-logo {
+        width: 50%;
+        bottom: 75px;
+    }
+
+    .form-group {
+        margin-top: 50px;
+    }
+
+    .form-group label {
+        font-size: 24px;
+        padding: 8px;
+    }
+
+    .form-action {
+        margin-top: 70px;
+    }
+
+}
+
+/* Media query para telas de até 480px de largura */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 20px;
+        padding-top: 135px;
+    }
+
+    header h3 {
+        font-size: 18px;
+        padding: 35px 85px;
+    }
+
 }
