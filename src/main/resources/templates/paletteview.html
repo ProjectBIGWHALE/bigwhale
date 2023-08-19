@@ -41,11 +41,6 @@
   </header>
 
   <main>
-    <!-- Exibição da imagem -->
-    <div id="image-view">
-      <img id="viewImage" alt="Imagem" th:if="${imageBase64}" th:src="@{'data:image/png;base64,' + ${imageBase64}}"
-        style="max-width: 500px; width: 100%;" data-cursorzoom>
-    </div>
 
     </div>
 
@@ -65,7 +60,11 @@
     </div>
 
     <div class="notification" id="notification">Hexadecimal Copiado!</div>
-
+	    <!-- Exibição da imagem -->
+<div id="image-view">
+  <img id="viewImage" alt="Imagem" 
+       th:src="@{'data:image/png;base64,' + ${form.imageBase64}}">
+</div>
   </main>
 
   <!--BOTÃO DE FECHAR PALETA E VOLTAR PARA A SELEÇÃO DE IMAGEM-->

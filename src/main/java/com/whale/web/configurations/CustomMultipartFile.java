@@ -1,5 +1,6 @@
 package com.whale.web.configurations;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,9 +47,9 @@ public class CustomMultipartFile implements MultipartFile {
 
     @Override
     public byte[] getBytes() throws IOException {
-        return new byte[0];
+    	return new byte[0];
     }
-
+    
     @Override
     public InputStream getInputStream() throws IOException {
         return this.inputStream;
@@ -58,5 +59,6 @@ public class CustomMultipartFile implements MultipartFile {
     public void transferTo(File file) throws IOException, IllegalStateException {
         
     }
+    
 	
 }

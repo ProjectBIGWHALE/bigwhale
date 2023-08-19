@@ -1,6 +1,7 @@
 package com.whale.web.design;
 
 import java.awt.Color;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Base64;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.whale.web.configurations.CustomMultipartFile;
 import com.whale.web.configurations.UploadImage;
 import com.whale.web.design.altercolor.model.AlterColorForm;
 import com.whale.web.design.altercolor.service.AlterColorService;
 import com.whale.web.design.colorspalette.model.PaletteForm;
+import com.whale.web.design.colorspalette.model.ViewForm;
 import com.whale.web.design.colorspalette.service.CreateColorsPaletteService;
 
 
@@ -85,21 +88,20 @@ public class DesignController {
 	}
 	
 	@PostMapping("/colorspalette")
-	public String colorsPalette(PaletteForm form, Model model) throws Exception {
+	public String colorsPalette(PaletteForm paletteForm, Model model) throws Exception {
 		
-		MultipartFile upload = uploadImage.uploadImage(form.getImage());
-		byte[] image = upload.getBytes();
+		ViewForm viewForm = new ViewForm();
 		
+		MultipartFile upload = uploadImage.uploadImage(paletteForm.getImage());
+
 		try {
 			List<Color> listOfColors = createColorsPaletteService.createColorPalette(upload);
-			form.setListOfColors(listOfColors);
-			
-			// Convert the image to base64
-	        String imageBase64 = Base64.getEncoder().encodeToString(image);
-			model.addAttribute("form", form);
-			// Add the base64 image to the template
-			model.addAttribute("imageBase64", imageBase64);
-
+	        
+	        //Using the ViewForm
+	        viewForm.setListOfColors(listOfColors);
+	        viewForm.setImageBase64(Base64.getEncoder().encodeToString(paletteForm.getImage().getBytes()));
+	        
+			model.addAttribute("form", viewForm);
 			return "paletteview";
 			
 		} catch (Exception e) {

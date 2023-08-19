@@ -48,7 +48,7 @@
 			<p>Ou arraste e solte o arquivo aqui</p>
 			<img src="/images/logo.png" alt="logo 50% transparente">
 
-			<img id="uploadedImage" th:if="${imageBase64}" th:data-image-base64="${imageBase64}" style="display: none;">
+			<img id="uploadedImage" th:if="*{image}" th:data-image-base64="*{image}" style="display: none;">
 
 			<div class="content">
 				<div id="drop-area" class="drop-area">

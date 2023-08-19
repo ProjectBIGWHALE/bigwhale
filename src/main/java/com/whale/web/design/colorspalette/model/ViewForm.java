@@ -4,27 +4,24 @@ import java.awt.Color;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 @Component
-public class PaletteForm {
+public class ViewForm {
 	
-	private MultipartFile image;
 	private List<Color> listOfColors;
-
-	public MultipartFile getImage() {
-		return image;
-	}
-
-	public void setImage(MultipartFile image) {
-		this.image = image;
-	}
+	private String imageBase64;
+	
 	public List<Color> getListOfColors() {
 		return listOfColors;
 	}
-
 	public void setListOfColors(List<Color> listOfColors) {
 		this.listOfColors = listOfColors;
+	}
+	public String getImageBase64() {
+		return imageBase64;
+	}
+	public void setImageBase64(String imageBase64) {
+		this.imageBase64 = imageBase64;
 	}
 	
 	
