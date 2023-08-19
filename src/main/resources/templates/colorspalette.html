@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Whale - Paleta de Cores</title>
+	<title>My big Whale - Paleta de Coresa partir de Imagens</title>
 	<link rel="stylesheet" type="text/css" href="/css/colorspalette.css">
 	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 
@@ -20,16 +20,7 @@
 </head>
 
 <body>
-	<!--Linhas superiores-->
-	<div class="linhas-esquerda">
-		<hr class="vertical-esq">
-		<hr class="horizontal-esq">
-	</div>
-	<!--Linhas inferiores-->
-	<div class="linhas-direita">
-		<hr class="vertical-dir">
-		<hr class="horizontal-dir">
-	</div>
+
 	<header>
 		<h1>Paleta de Cores a partir de imagens</h1>
 		<h3>Para extrair automaticamente as cores principais da sua imagem e obter inspiração para os seus projetos de
@@ -46,7 +37,7 @@
 				</label>
 				<input type="file" id="image" th:field="*{image}" onchange="submitForm()" style="display: none;" />
 			</div>
-			
+
 			<p>Ou arraste e solte o arquivo aqui</p>
 
 			<img id="uploadedImage" th:if="${imageBase64}" th:data-image-base64="${imageBase64}" style="display: none;">
@@ -68,7 +59,7 @@
 
 	<div id="button-home">
 		<a href="/">
-			<ion-icon name="return-down-back-outline"></ion-icon> 
+			<ion-icon name="return-down-back-outline"></ion-icon>
 		</a>
 	</div>
 
@@ -76,6 +67,17 @@
 		<a href="/help">
 			<ion-icon name="help-outline"></ion-icon>
 		</a>
+	</div>
+
+	<!--Linhas superiores-->
+	<div class="linhas-esquerda">
+		<hr class="vertical-esq">
+		<hr class="horizontal-esq">
+	</div>
+	<!--Linhas inferiores-->
+	<div class="linhas-direita">
+		<hr class="vertical-dir">
+		<hr class="horizontal-dir">
 	</div>
 
 	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

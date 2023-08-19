@@ -4,14 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>My big Whale - Conversor de Arquivos</title>
     <link rel="stylesheet" type="text/css" href="/css/cryptograph.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-
-    <title>Whale - Segurança</title>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BVGCNK1G97"></script>
@@ -75,7 +70,7 @@
     </div>
 
     <form th:action="@{/security/cryptograph}" method="POST" class="card-body d-flex justify-content-center"
-    enctype="multipart/form-data" th:object="${form}">
+        enctype="multipart/form-data" th:object="${form}">
         <div class="form-row">
             <p class="text">
                 Aumente a segurança de seus arquivos e utilize uma chave de criptografia forte para proteger
@@ -105,11 +100,11 @@
                     </label>
                 </div>
                 <span th:errors="*{action}" class="text-danger"></span>
-           
 
-        
-            <button type="submit" id="download">Download</button>
-         </div>
+
+
+                <button type="submit" id="download">Download</button>
+            </div>
         </div>
     </form>
     <script src="/js/cryptograph.js"></script>

@@ -2,13 +2,11 @@
 <html>
 
 <head>
-	<title>WHALE - Segurança</title>
+	<title>My big Whale - Conversor de Arquivos</title>
 	<meta charset="UTF-8" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-	<script src="https://unpkg.com/cursorzoom/dist/cursorzoom.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/compactconverter.css">
 	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 
@@ -63,19 +61,8 @@
 		</div>
 	</div>
 
-	<!--Linhas superiores-->
-	<div class="linhas-esquerda">
-		<hr class="vertical-esq">
-		<hr class="horizontal-esq">
-	</div>
-	<!--Linhas inferiores-->
-	<div class="linhas-direita">
-		<hr class="vertical-dir">
-		<hr class="horizontal-dir">
-	</div>
-	
-	<form th:action="@{/documents/compactconverter}" class="card-body d-flex justify-content-center" 
-	method="POST" enctype="multipart/form-data" th:object="${form}">
+	<form th:action="@{/documents/compactconverter}" class="card-body d-flex justify-content-center" method="POST"
+		enctype="multipart/form-data" th:object="${form}">
 
 		<div class="form-row">
 			<div class="form-group">
@@ -88,7 +75,7 @@
 			</div>
 
 			<p>Escolha o tipo da extensão que deseja:</p>
-			
+
 			<div class="input-group">
 				<label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-search"></i></label>
 				<select th:field="*{action}" class="form-select" id="inputGroupSelect01">
@@ -105,6 +92,18 @@
 			</div>
 		</div>
 	</form>
+
+	<!--Linhas superiores-->
+	<div class="linhas-esquerda">
+		<hr class="vertical-esq">
+		<hr class="horizontal-esq">
+	</div>
+	<!--Linhas inferiores-->
+	<div class="linhas-direita">
+		<hr class="vertical-dir">
+		<hr class="horizontal-dir">
+	</div>
+
 </body>
 
 </html>
