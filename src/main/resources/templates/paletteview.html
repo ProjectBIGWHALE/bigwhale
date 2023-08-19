@@ -1,75 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
+
 <head>
-  <title>WHALE - Cores</title>
-  <meta charset="UTF-8"/>
-  <meta charset="UTF-8"/>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whale - Paleta de Cores</title>
+  <link rel="stylesheet" type="text/css" href="/css/paletteview.css">
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <script src="https://unpkg.com/cursorzoom/dist/cursorzoom.min.js"></script>
-  <style>
-    body {
-      background-color: #FFFFFF;
-      font-family: 'Montserrat', sans-serif;
-    }
 
-    .color-square {
-      width: 50px;
-      height: 50px;
-      display: inline-block;
-      margin: 5px;
-    }
-
-    .cores-predominantes {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 50px;
-    }
-
-    h2 {
-      font-family: 'Urbanist', sans-serif;
-      font-weight: 900;
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    .cor {
-      width: 50px;
-      height: 50px;
-      display: inline-block;
-      margin: 5px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .cor:hover {
-      transform: scale(1.2);
-    }
-
-    .notification {
-      position: fixed;
-      top: 7%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 0, 0, 0.8);
-      color: #FFFFFF;
-      padding: 10px 20px;
-      border-radius: 5px;
-      display: none;
-    }
-  </style>
-
-    <!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-BVGCNK1G97"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', 'G-BVGCNK1G97');
@@ -77,22 +24,77 @@
 
 </head>
 
-
-
 <body>
-  <div class="container">
-    <div class="text-center mt-5">
-      <br><br><br>
-      <div class="notification" id="notification">Hexadecimal Copiado!</div>
-      <div class="mt-4">
-        <!-- Exibição da imagem -->
-        <img th:if="${form.image != null}" th:src="@{'data:image/png;base64,' + ${imagemBase64}}"
-             alt="Imagem" style="max-width: 500px; width: 100%;" data-cursorzoom>
+  <!--Linhas superiores-->
+  <div class="linhas-esquerda">
+    <hr class="vertical-esq">
+    <hr class="horizontal-esq">
+  </div>
+  <!--Linhas inferiores-->
+  <div class="linhas-direita">
+    <hr class="vertical-dir">
+    <hr class="horizontal-dir">
+  </div>
+  
+  <header>
+    <h1>Sua paleta de cores está pronta!</h1>
+  </header>
+
+  <main>
+    <!-- Exibição da imagem -->
+    <div id="image-view">
+      <img id="viewImage" alt="Imagem" th:if="${imageBase64}" th:src="@{'data:image/png;base64,' + ${imageBase64}}"
+        style="max-width: 500px; width: 100%;" data-cursorzoom>
+    </div>
+
+    </div>
+
+    <!-- Exibição da paleta de cores -->
+
+    <div class="cores-predominantes mt-5">
+
+      <h2>Cores predominantes:</h2>
+
+      <div class="mb-3">
+        <div th:each="color : ${form.listOfColors}" class="cor"
+          th:style="'background-color: rgb(' + ${color.getRed()} + ',' + ${color.getGreen()} + ',' + ${color.getBlue()} + ')'"
+          th:attr="title=*{color.toString()}" data-cursorzoom onclick="copyHexColor(this)">
+        </div>
       </div>
-      <div class="cores-predominantes mt-5">
-        <h2>Cores predominantes:</h2>
-        <div class="mb-3">
-          <div th:each="color : ${form.listOfColors}" class="cor" th:style="'background-color: rgb(' + ${color.getRed()} + ',' + ${color.getGreen()} + ',' + ${color.getBlue()} + ')'"
+
+    </div>
+
+    <div class="notification" id="notification">Hexadecimal Copiado!</div>
+
+  </main>
+
+  <!--BOTÃO DE FECHAR PALETA E VOLTAR PARA A SELEÇÃO DE IMAGEM-->
+  <div id="button-closed">
+    <a href="/design/colorspalette">
+      <ion-icon name="close-outline"></ion-icon>
+    </a>
+  </div>
+
+  <!--BOTÕES HOME E AJUDA-->
+
+  <div id="button-home">
+    <a href="/">
+      <ion-icon name="home-outline"></ion-icon>
+    </a>
+  </div>
+  <div id="button-help">
+    <a href="/help">
+      <ion-icon name="help-outline"></ion-icon>
+    </a>
+  </div>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="/js/paletteview.js"></script>
+
+</body>
+
+</html>   <div th:each="color : ${form.listOfColors}" class="cor" th:style="'background-color: rgb(' + ${color.getRed()} + ',' + ${color.getGreen()} + ',' + ${color.getBlue()} + ')'"
                th:attr="title=*{color.toString()}" data-cursorzoom onclick="copyHexColor(this)"></div>
         </div>
       </div>
