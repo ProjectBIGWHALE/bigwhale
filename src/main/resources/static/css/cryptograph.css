@@ -8,86 +8,47 @@ body {
     background: #D3D3D3;
     font-family: 'Roboto Condensed', sans-serif;
     text-align: center;
+    flex-direction: column;
+    
 }
-
+.title{
+    z-index: -1;
+}
 .title h1 {
-    margin: 0;
     font-size: 24px;
     font-weight: bold;
 }
-
 .title .icon-home {
     float: right;
+    margin-right: 20px;
+    margin-left: -20px;
 }
-
 form .text {
     margin: 0 auto;
     width: 803px;
     font-size: 20px;
 }
-.col #row .select-file{
-    margin: 15px;
+form .form-row {
+    margin-right: -40px;
+    text-align: center;
 }
-
-.col #row .select-file label {
-    padding: 10px 20px 40px 20px;
-    border-radius: 3px;
-    background: #ADEAEA;
-    color: #000;
-    font-family: Roboto Condensed;
-    font-size: 18px;
-    width: 300px;
-    height: 40px;
+form .form-row .form-group{
+    text-align: center;
+    margin: 0 auto;
 }
-
-.col #row .select-file input {
-    padding: 10px 20px 40px 20px;
-    border-radius: 3px;
-    background: #F2F2F2;
-    width: 500px;
-    height: 40px;
+form .form-row .form-group .input-group{
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 20px;
+    width: 480px;
 }
-
-.col #row .password{
-    margin: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.input-group .choice{
+    text-align: center;
+    margin: auto;
 }
-
-.col #row .password label {
-    padding: 10px 20px 40px 30px;
-    margin-right: 5px;
-    border-radius: 3px;
-    background: #ADEAEA;
-    color: #000;
-    font-family: Roboto Condensed;
-    font-size: 18px;
-    height: 40px;
-}
-
-.col #row .password #pwd {
-    padding: 25px 30px;
-    background: #F2F2F2;
-    border-radius: 3px;
-    border: none;
-
-   /* padding-left: 30px;
-     text-align: center; */
-    font-size: 18px;
-
-    position: relative;
-    width: 500px;
-    height: 40px;
-}
-
-.col #row .password #chk {
+.form-group .input-group #chk {
     width: 30px;
     height: 20px;
-}
-
-#row .change{
-    margin-top: 20px;
 }
 
 button {
@@ -106,7 +67,6 @@ button {
     margin-top: 20px;
 }
 
-
 button:hover {
     background-color: #0056b3;
 }
@@ -114,7 +74,8 @@ button:hover {
 /* Estilos para telas maiores */
 @media (min-width: 894px) {
     .title {
-        margin: 90px 30px 10px 105px;
+        margin-top: 105px;
+        
     }
 
     .linhas-esquerda,

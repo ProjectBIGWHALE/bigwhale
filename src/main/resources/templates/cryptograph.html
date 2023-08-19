@@ -73,43 +73,42 @@
         </div>
     </div>
 
-    <form th:action="@{/security/cryptograph}" method="POST" enctype="multipart/form-data" th:object="${form}">
-
-        <p class="text">Aumente a segurança de seus arquivos e utilize uma chave de criptografia forte para proteger
-            o seu documento ou se você quiser descriptografar o documento,
-            utilize a chave correta que foi gerada no nosso site para acessar o seu conteúdo
-            original com maior segurança.
-        </p>
-
-        <div class="col">
-            <div id="row">
-                <div class="select-file">
-                    <label for="arquivo" name="arquivo" id="arquivo">Selecione o arquivo:</label>
-                    <input type="file" th:field="*{file}" multiple>
+    <form th:action="@{/security/cryptograph}" method="POST" class="card-body d-flex justify-content-center"
+    enctype="multipart/form-data" th:object="${form}">
+        <div class="form-row">
+            <p class="text">
+                Aumente a segurança de seus arquivos e utilize uma chave de criptografia forte para proteger
+                o seu documento ou se você quiser descriptografar o documento,
+                utilize a chave correta que foi gerada no nosso site para acessar o seu conteúdo
+                original com maior segurança.
+            </p>
+            <div class="form-group">
+                <div class="input-group">
+                    <input for="arquivo" class="form-control" name="arquivo" type="file" th:field="*{file}" multiple>
                 </div>
 
-                <div class="password">
-                    <label for="senha">Insira a senha:</label>
-                    <input th:field="*{key}" type="password" id="pwd">
-                    <input type="checkbox" id="chk">Mostrar senha
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01">Insira a senha:</label>
+                    <input th:field="*{key}" type="password" id="pwd" class="form-control">
                 </div>
+                <input type="checkbox" id="chk">Mostrar senha
             </div>
 
-            <div id="row">
-                <div class="change">
-                    <label>
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="choice">
                         <input type="radio" th:field="*{action}" value="true" id="criptografar"> Criptografar
                     </label>
-                    <label>
+                    <label class="choice">
                         <input type="radio" th:field="*{action}" value="false" id="descriptografar"> Descriptografar
                     </label>
                 </div>
                 <span th:errors="*{action}" class="text-danger"></span>
-            </div>
-        </div>
+           
 
-        <div id="row">
-            <button type="submit" id="dowloand">Download</button>
+        
+            <button type="submit" id="download">Download</button>
+         </div>
         </div>
     </form>
     <script src="/js/cryptograph.js"></script>
