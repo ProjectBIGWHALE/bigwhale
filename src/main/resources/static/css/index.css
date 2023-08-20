@@ -276,7 +276,6 @@ footer p {
 }
 
 
-/* Responsividade para telas hd  1280*/
 
 
 @media screen and (max-width: 600px) {
@@ -295,7 +294,7 @@ footer p {
   }
 
   #descricao {
-    font-size: 15px;
+    font-size: 18px;
   }
 
   .container {
@@ -333,36 +332,61 @@ footer p {
   }
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 500px) {
 
-    .nav {
+  .nav {
 
-        justify-content: center;
-        margin-right: 0;
-    }
-    .nav li a {
+    justify-content: center;
+    margin-right: 0;
+  }
 
-        font-size: 13px;
+  .nav li a {
 
-    }
-    .nav li a {
+    font-size: 13px;
 
-        padding: 9px 15px;
-        font-size: 12px;
+  }
 
-    }
+  .nav li a {
 
-    .container {
-        margin: 15px 0px;
-    }
+    padding: 9px 15px;
+    font-size: 12px;
 
-    .carrossel-item {
-        width: 16em;
-    }
+  }
 
-    .setas ion-icon {
-        width: 3em;
+  #logo {
+    width: 87%;
+    margin-top: 1em;
+    margin-left: 0;
+     
+  }
 
-    }
+  #descricao {
+    font-size: 18px;
+    margin: 12px;
+    padding: 0;
+  }
+
+  .container {
+    margin: 15px 0px;
+  }
+
+  .carrossel-item {
+    width: 16em;
+  }
+
+  .carrossel-item h4 {
+      
+    padding: 0 2px;
+  }
+  
+  .carrossel-item p {
+    padding: 7px;
+    font-size: 18px;
+  }
+
+  .setas ion-icon {
+    width: 3em;
+
+  }
 
 }
