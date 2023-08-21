@@ -5,10 +5,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const criptografarRadio = document.getElementById("criptografar");
     const pwd = document.getElementById("pwd");
     const chk = document.getElementById("chk");
+    const showPasswordIcon = document.querySelector('.show-password');
+    const hidePasswordIcon = document.querySelector('.hide-password');
 
-    chk.onchange = function(e) {
-        pwd.type = chk.checked ? "text" : "password";
-    };
+    // Set initial visibility state
+    pwd.type = 'password';
+    hidePasswordIcon.style.display = 'none';
+
+    showPasswordIcon.addEventListener('click', () => {
+        pwd.type = 'text';
+        showPasswordIcon.style.display = 'none';
+        hidePasswordIcon.style.display = 'inline-block';
+    });
+
+    hidePasswordIcon.addEventListener('click', () => {
+        pwd.type = 'password';
+        hidePasswordIcon.style.display = 'none';
+        showPasswordIcon.style.display = 'inline-block';
+    });
 
     criptografarRadio.addEventListener("change", function () {
         if (this.checked) {

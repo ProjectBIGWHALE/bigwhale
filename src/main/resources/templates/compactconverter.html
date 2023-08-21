@@ -33,7 +33,7 @@
 				<p>Escolha um arquivo</p>
 
 				<div class="input-file">
-					<input type="file" th:field="*{file}"/>
+					<input type="file" th:field="*{file}" />
 				</div>
 
 				<span th:errors="*{file}" class="text-danger"></span>
@@ -62,9 +62,7 @@
 			</div>
 
 			<!--BOTÃO DE DOWNLOAD-->
-			<div>
-				<button type="submit" id="download">Download</button>
-			</div>
+			<button type="submit" id="download">Download</button>
 
 		</form>
 	</main>
