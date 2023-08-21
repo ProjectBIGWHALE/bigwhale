@@ -323,8 +323,6 @@ public class DocumentsTest {
 	}
 
 
-
-
 	@Test
 	void testUnableToConvertImageToOutputFormatException() throws Exception {
 
@@ -333,8 +331,8 @@ public class DocumentsTest {
 		mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
 						.file(imageFile)
 						.param("outputFormat", invalidOutputFormat))
-				.andExpect(MockMvcResultMatchers.status().isInternalServerError())
-				.andExpect(MockMvcResultMatchers.content()
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError())
+						.andExpect(MockMvcResultMatchers.content()
 						.string("Could not convert an image png for format "
 						+ invalidOutputFormat
 						+ ". Please try again or choose another output format."));
@@ -347,7 +345,7 @@ public class DocumentsTest {
 		MockMultipartFile file = new MockMultipartFile(
 				"image",
 				"test.txt",
-				"text/plain",
+				"text/txt",
 				"Este é um arquivo de texto".getBytes()
 		);
 
@@ -355,7 +353,7 @@ public class DocumentsTest {
 						.file(file)
 						.param("outputFormat", "png"))
 				.andExpect(MockMvcResultMatchers.status().isBadRequest())
-				.andExpect(MockMvcResultMatchers.content().string("Invalid file type. Only images are allowed."));
+				.andExpect(MockMvcResultMatchers.content().string("Only images are allowed."));
 	}
 
 	@Test
@@ -363,7 +361,7 @@ public class DocumentsTest {
 		MockMultipartFile file = new MockMultipartFile(
 				"image",
 				"test.png",
-				"image/png",
+				null,
 				new byte[0]
 		);
 
@@ -371,8 +369,10 @@ public class DocumentsTest {
 						.file(file)
 						.param("outputFormat", "png"))
 				.andExpect(MockMvcResultMatchers.status().isBadRequest())
-				.andExpect(MockMvcResultMatchers.content().string("An invalid file was sent"));
+				.andExpect(MockMvcResultMatchers.content().string("Uploaded image file is null, empty or image format is not supported"));
 
 	}
+
+
     
 }

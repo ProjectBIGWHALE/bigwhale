@@ -192,7 +192,7 @@ public class DocumentsController {
 		} catch (UnexpectedFileFormatException | InvalidUploadedFileException ex) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
 
-		} catch (UnableToConvertImageToOutputFormatException | UnableToReadImageFormatException ex) {
+		} catch (UnableToConvertImageToOutputFormatException ex) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
 
 		} catch (IOException ex) {
