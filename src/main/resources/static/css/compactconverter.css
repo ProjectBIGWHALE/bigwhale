@@ -9,32 +9,40 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
     text-align: center;
 }
-.title h1 {
-    margin-left: -150px;
-    padding: 0;
-    font-size: 24px;
-    font-weight: bold;
-}
-.title .icon-home {
-    float: right;
-}
-p{
-    margin: 1em 0px;
-    font-size: 18px;
-    font-weight: 300;
-}
-.form-row .form-group .input-group{
-    width: 480px;
-}
-form .input-group .form-select .options{
-    background: rgba(63, 81, 74, 0.50);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-.form-select .options:hover {
-    background-color: #3F514A;
-    color: white;
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 96px 0 18px 0;
 }
 
+p {
+    font-size: 20px;
+}
+
+.choose-file p{
+    padding: 8px;
+}
+
+.input-file{
+    border: 1px solid red;
+    margin: 0 31%;
+}
+
+.type-conversion {
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+}
+
+.form-select {
+    border-radius: 4px;
+    margin-left: 8px;
+    font-size: 20px;
+}
+
+
+/*BOTÃO DONWLOAD*/
 button {
     border-radius: 50px;
     background: #25BFBF;
@@ -49,11 +57,133 @@ button {
     width: 200px;
     height: 63px;
     margin-top: 20px;
+    transition: 0.2s;
 }
 
-
 button:hover {
-    background-color: #0056b3;
+    background-color: #158E8E;
+}
+
+/*BOTÃO DE HOME E AJUDA*/
+#button-home {
+    position: fixed;
+    right: 47px;
+    top: 47px;
+    background: #50c878;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    text-align: center;
+    transition: width 0.2s, height 0.2s, font-size 0.2s;
+}
+
+#button-home:hover {
+    width: 55px;
+    height: 55px;
+}
+
+#button-home ion-icon {
+    padding: 7px;
+    color: #0d0d0d;
+    font-size: 30px;
+    transition: font-size 0.2s;
+}
+
+#button-home:hover ion-icon {
+    font-size: 40px;
+}
+
+#button-help {
+    text-align: right;
+    transition: 0.2s;
+    position: fixed;
+    right: 47px;
+    bottom: 47px;
+    background: #50c878;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    transition: 0.2s;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+#button-help:hover {
+    width: 55px;
+    height: 55px;
+}
+
+#button-help ion-icon {
+    padding: 7px;
+    color: #0d0d0d;
+    font-size: 30px;
+    transition: font-size 0.2s;
+}
+
+#button-help ion-icon:hover {
+    font-size: 40px;
+}
+
+/*LINHAS*/
+
+.linhas-esquerda,
+.linhas-direita {
+    display: block;
+    position: absolute;
+    height: 100%;
+    z-index: -1;
+}
+
+.linhas-esquerda {
+    left: 0;
+    right: 50%;
+    top: 0;
+}
+
+.linhas-direita {
+    left: 50%;
+    right: 0;
+    bottom: 0;
+}
+
+.vertical-esq,
+.vertical-dir {
+    position: absolute;
+    border-left: 2px solid black;
+    height: 50%;
+}
+
+.vertical-esq {
+    margin-left: 38px;
+    top: 38px;
+}
+
+.vertical-dir {
+    margin-right: 38px;
+    bottom: 38px;
+    right: 0;
+}
+
+.horizontal-esq,
+.horizontal-dir {
+    position: absolute;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.horizontal-esq {
+    border-top: 2px dotted black;
+    top: 38px;
+    left: 38px;
+}
+
+.horizontal-dir {
+    border-bottom: 2px dotted black;
+    bottom: 38px;
+    right: 38px;
 }
 
 /* Estilos para telas maiores */
@@ -62,61 +192,5 @@ button:hover {
         margin: 90px 30px 10px 105px;
     }
 
-    .linhas-esquerda,
-    .linhas-direita {
-        display: block;
-        position: absolute;
-        height: 100%;
-        z-index: -1;
-    }
 
-    .linhas-esquerda {
-        left: 0;
-        right: 50%;
-        top: 0;
-    }
-
-    .linhas-direita {
-        left: 50%;
-        right: 0;
-        bottom: 0;
-    }
-
-    .vertical-esq,
-    .vertical-dir {
-        position: absolute;
-        border-left: 2px solid black;
-        height: 50%;
-    }
-
-    .vertical-esq {
-        margin-left: 38px;
-        top: 38px;
-    }
-
-    .vertical-dir {
-        margin-right: 38px;
-        bottom: 38px;
-        right: 0;
-    }
-
-    .horizontal-esq,
-    .horizontal-dir {
-        position: absolute;
-        width: 50%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .horizontal-esq {
-        border-top: 2px dotted black;
-        top: 38px;
-        left: 38px;
-    }
-
-    .horizontal-dir {
-        border-bottom: 2px dotted black;
-        bottom: 38px;
-        right: 38px;
-    }
 }
