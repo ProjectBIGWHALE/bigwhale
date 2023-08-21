@@ -8,10 +8,7 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.whale.web.documents.imageconverter.exception.InvalidUploadedFileException;
-import com.whale.web.documents.imageconverter.exception.UnableToConvertImageToOutputFormatException;
-import com.whale.web.documents.imageconverter.exception.UnableToReadImageFormatException;
-import com.whale.web.documents.imageconverter.exception.UnexpectedFileFormatException;
+import com.whale.web.documents.imageconverter.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -164,9 +161,10 @@ public class DocumentsController {
 											new ImageFormatsForm(2L, "jpg"),
 											new ImageFormatsForm(3L, "jpeg"),
 											new ImageFormatsForm(4L, "gif"),
-											new ImageFormatsForm(6L, "png"),
+											new ImageFormatsForm(5L, "png"),
 											new ImageFormatsForm(6L, "tiff"),
-											new ImageFormatsForm(7L, "tif"));
+											new ImageFormatsForm(7L, "raw"));
+											;
 
 		model.addAttribute("list", list);
 		model.addAttribute("form", imageConversionForm);

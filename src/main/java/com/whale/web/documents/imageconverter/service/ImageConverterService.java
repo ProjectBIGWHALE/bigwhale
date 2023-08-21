@@ -7,10 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.whale.web.documents.imageconverter.exception.InvalidUploadedFileException;
-import com.whale.web.documents.imageconverter.exception.UnableToConvertImageToOutputFormatException;
-import com.whale.web.documents.imageconverter.exception.UnableToReadImageFormatException;
-import com.whale.web.documents.imageconverter.exception.UnexpectedFileFormatException;
+import com.whale.web.documents.imageconverter.exception.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +17,7 @@ public class ImageConverterService {
     public byte[] convertImageFormat(String outputFormat, MultipartFile imageFile) throws IOException {
 
         if (imageFile == null || imageFile.isEmpty()) {
-            throw new InvalidUploadedFileException("An invalid file was sent");
+            throw new InvalidUploadedFileException("An invalid file was sent or the image format is not accepted.");
         }
 
         String contentType = imageFile.getContentType();
@@ -31,6 +28,9 @@ public class ImageConverterService {
         byte[] bytes = imageFile.getBytes();
         ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
         BufferedImage image = ImageIO.read(inputStream);
+        if (image == null) {
+            throw new InvalidUploadedFileException("An invalid file was sent or the image format is not accepted.");
+        }
 
         ByteArrayOutputStream convertedImage = new ByteArrayOutputStream();
 
@@ -43,7 +43,7 @@ public class ImageConverterService {
         } else {
             if (!successfullyConverted) {
                 throw new UnableToConvertImageToOutputFormatException(
-                                 "Could not convert an image "
+                        "Could not convert an image "
                                 + imageType
                                 + " for format "
                                 + outputFormat
@@ -55,7 +55,6 @@ public class ImageConverterService {
                 return convertedImageBytes;
             }
         }
-
     }
 	
 }
