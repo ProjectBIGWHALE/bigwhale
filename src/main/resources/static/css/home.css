@@ -15,7 +15,14 @@ body {
 .nav {
   display: flex;
   justify-content: end;
-  margin-right: 3em;
+}
+
+#navfirst {
+  border-radius: 0 0 0 15px;
+}
+
+#navlast {
+  border-radius: 0 0 15px 0;
 }
 
 .nav li a {
@@ -23,7 +30,6 @@ body {
   padding: 9px 28px;
   color: #000;
   font-size: 18px;
-  border-radius: 0px 0px 15px 15px;
   background: #91f2a0;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   font-weight: bold;
@@ -34,14 +40,13 @@ body {
   background-color: #50c878;
 }
 
-#logo {
-  width: 60%;
-  margin-top: 1em;
-  margin-left: 5em;
+
+header {
+  text-align: center;
+  margin-top: 3em;
 }
 
 #descricao {
-  text-align: center;
   font-size: 22px;
   font-weight: 300;
   padding: 10px 0 80px 0;
@@ -275,10 +280,24 @@ footer p {
   padding: 0;
 }
 
+/*Responsividade*/
+@media screen and (max-width: 1000px) {
+  .container {
+    margin: 15px 15px;
+  }
 
+  .carrossel-item {
+    width: 20em;
+  }
 
+  #logo {
+    width: 75%;
+    margin-top: 1em;
+    margin-left: 5em;
+  }
+}
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 861px) {
   .nav {
     justify-content: center;
     margin-right: 0;
@@ -309,28 +328,26 @@ footer p {
     margin: 0 22px;
   }
 
+  #sobre p{
+    margin-bottom: 22px;
+  }
+
+
+  .colaboradores {
+    height: 7em;
+  }
+
+  .colaboradores img {
+    width: 95px;
+    height: 95px;
+    margin-right: 10px;
+  }
 
   footer {
     padding: 56px 55px;
   }
 }
 
-@media screen and (max-width: 1000px) {
-  .container {
-    margin: 15px 15px;
-  }
-
-  .carrossel-item {
-    width: 20em;
-  }
-
-
-  #logo {
-    width: 75%;
-    margin-top: 1em;
-    margin-left: 5em;
-  }
-}
 
 @media screen and (max-width: 500px) {
 
@@ -357,7 +374,7 @@ footer p {
     width: 87%;
     margin-top: 1em;
     margin-left: 0;
-     
+
   }
 
   #descricao {
@@ -375,10 +392,10 @@ footer p {
   }
 
   .carrossel-item h4 {
-      
+
     padding: 0 2px;
   }
-  
+
   .carrossel-item p {
     padding: 7px;
     font-size: 18px;
