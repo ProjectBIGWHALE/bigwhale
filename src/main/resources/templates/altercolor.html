@@ -270,7 +270,7 @@
 
 			<div align="center">
 				<div id="preview" onclick="pickColor2(event)" style="cursor: crosshair;">
-					<img src="/colors/images/rodadecores.jpg" alt="Pré-visualização da imagem">
+					<img src="/images/rodadecores.jpg" alt="Pré-visualização da imagem">
 				</div>
 				<div class="input-group-append">
 					<button class="btn btn-outline" type="button" id="color-marker"
@@ -319,16 +319,16 @@
 				<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Margem de
 						Alteração (%)</b></p>
 				<input th:field="*{margin}" type="number"
-					style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control" />
+					style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control"></input>
 				<span th:errors="*{margin}" class="text-danger"></span>
 			</div>
 
 			<div align="center">
 				<br>
 				<button class="btn btn-outline-success rounded-circle robotomono" type="submit"
-					style="width: 50; height: 50;"></button>
+					style="width: 50; height: 50;"><b>V</b></button>
 				<a href="/"><text class="btn btn-outline-danger rounded-circle robotomono" type="submit"
-						style="width: 50; height: 50;"></text></a>
+						style="width: 50; height: 50;"><b>X</b></text></a>
 			</div>
 		</div>
 
