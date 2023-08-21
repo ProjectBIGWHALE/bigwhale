@@ -25,9 +25,35 @@ p {
 }
 
 .input-file{
-    border: 1px solid red;
     margin: 0 31%;
+    padding: 3px;
+    border-radius: 4px;
+    text-align: left;
+    background: #f2f2f2;
 }
+
+.input-file input[type="file"] {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.input-file label {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #25BFBF;
+    background-color: #f2f2f2;
+    color: #333;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.input-file label:hover {
+    background-color: #25BFBF;
+    color: #fff;
+}
+
 
 .type-conversion {
     display: flex;
@@ -36,6 +62,7 @@ p {
 }
 
 .form-select {
+    background: #f2f2f2;
     border-radius: 4px;
     margin-left: 8px;
     font-size: 20px;
@@ -184,13 +211,4 @@ button:hover {
     border-bottom: 2px dotted black;
     bottom: 38px;
     right: 38px;
-}
-
-/* Estilos para telas maiores */
-@media (min-width: 894px) {
-    .title {
-        margin: 90px 30px 10px 105px;
-    }
-
-
 }
