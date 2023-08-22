@@ -214,26 +214,57 @@ header {
 .colaboradores {
   display: flex;
   justify-content: center;
-  height: 13em;
+  margin-top: 2em;
+  flex-wrap: wrap; /* quebra a linha de acordo com o tamanho da tela */
+  margin-bottom: 2em;
 }
+
+.colaboradores a {
+  display: flex;
+  text-decoration: none;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  margin: 1.5em 1em;
+
+}
+
 
 .colaboradores img {
   width: 150px;
   height: 150px;
   border-radius: 100%;
-  margin-right: 38px;
   transition: 0.2s;
 }
 
 .colaboradores img:hover {
   transform: scale(1.05);
 }
-
-.colaboradores a {
-  display: flex;
-  text-decoration: none;
-  align-items: center;
+.nomeColoborador {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  transform: translateX(-50%);
+  border-radius: 5px;
+ 
+  top: 103%;
+  left: 50%;
+  
 }
+
+
+.colaboradores img:hover + .nomeColoborador {
+  display: block;
+}
+
+
+
+
+
+
+
 
 /*BOTÃO DE AJUDA*/
 #button {
@@ -321,7 +352,7 @@ footer p {
   }
 
   .carrossel-item {
-    margin: 0;
+    margin: 1em;
   }
 
   #sobre {
@@ -333,15 +364,7 @@ footer p {
   }
 
 
-  .colaboradores {
-    height: 7em;
-  }
 
-  .colaboradores img {
-    width: 95px;
-    height: 95px;
-    margin-right: 10px;
-  }
 
   footer {
     padding: 56px 55px;
