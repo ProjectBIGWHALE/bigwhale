@@ -259,7 +259,7 @@ p {
 @media (max-width: 480px) {
     header h1 {
         font-size: 20px;
-        padding-top: 135px;
+        padding: 135px 85px 0 85px;
     }
 
     header h3 {

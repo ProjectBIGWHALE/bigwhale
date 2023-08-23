@@ -10,22 +10,22 @@ body {
     text-align: center;
 }
 
-h1 {
+header h1 {
+    padding: 126px 0 16px 0;
     font-size: 32px;
     font-weight: 700;
-    margin: 96px 0 18px 0;
 }
 
-p {
+main p {
     font-size: 20px;
 }
 
-.choose-file p{
+.choose-file p {
     padding: 8px;
 }
 
-.input-file{
-    margin: 0 31%;
+.input-file {
+    margin: 1% 31%;
     padding: 3px;
     border-radius: 4px;
     text-align: left;
@@ -58,7 +58,9 @@ p {
 .type-conversion {
     display: flex;
     justify-content: center;
-    margin: 8px 0;
+    margin: 1% 31%;
+    background: #f2f2f2;
+    border-radius: 4px;
 }
 
 .form-select {
@@ -211,4 +213,71 @@ button:hover {
     border-bottom: 2px dotted black;
     bottom: 38px;
     right: 38px;
+}
+
+@media screen and (max-width: 768px) {
+    header h1 {
+        padding: 135px 85px 15px 85px;
+        font-size: 26px;
+    }
+
+    p {
+        font-size: 20px;
+    }
+
+    .input-file {
+        margin: 30px 21% 2% 21%;
+        border-radius: 4px;
+    }
+
+    .type-conversion {
+        margin: 1% 21%;
+        padding: 0 4px;
+        align-items: center;
+    }
+
+    .form-select {
+        padding: 4px 0;
+        margin-left: 8px;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    button{
+        margin-top: 125px;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+    header h1 {
+        padding: 135px 85px 15px 85px;
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+    .input-file {
+        margin: 30px 21% 2% 21%;
+        border-radius: 4px;
+    }
+
+    .type-conversion {
+        margin: 1% 21%;
+        padding: 0 4px;
+        align-items: center;
+    }
+
+    .form-select {
+        padding: 40px 0;
+        margin-left: 8px;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    button{
+        margin-top: 125px;
+    }
 }
