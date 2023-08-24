@@ -21,9 +21,27 @@ public class HomeControllerTest {
 	private MockMvc mockMvc;
 	
 	@Test
-	public void shouldReturnTheHTMLForm() throws Exception {
+	public void shouldReturnTheHTMLHome() throws Exception {
 		
 		URI uri = new URI("/");
+		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
+				MockMvcResultMatchers.status().is(200));
+		
+	}
+	
+	@Test
+	public void shouldReturnTheHTMLHelp() throws Exception {
+		
+		URI uri = new URI("/help");
+		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
+				MockMvcResultMatchers.status().is(200));
+		
+	}
+	
+	@Test
+	public void shouldReturnTheHTMLSupportUs() throws Exception {
+		
+		URI uri = new URI("/supportus");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
 				MockMvcResultMatchers.status().is(200));
 		

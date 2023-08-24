@@ -1,0 +1,279 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #D3D3D3;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-align: center;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 96px 0 18px 0;
+}
+
+p {
+    padding: 0 175px;
+    margin-bottom: 39px;
+}
+
+.form-group {
+    margin-top: 35px;
+}
+
+.input-file {
+    margin: 0 31%;
+    padding: 3px;
+    border-radius: 4px;
+    text-align: left;
+    background: #f2f2f2;
+}
+
+.custom-file-label {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: #25BFBF;
+    font-family: 'Roboto Condensed', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.custom-file-label:hover {
+    background-color: #25BFBF;
+    color: #fff;
+}
+
+.input-password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 31%;
+    padding: 4px;
+    border-radius: 4px;
+    background: #f2f2f2;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#checkbox-password {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#checkbox-password .checkbox-label {
+    display: flex;
+    align-items: center;
+}
+
+#checkbox-password .checkbox-icon {
+    cursor: pointer;
+    font-size: 22px;
+    margin-left: 8px;
+    padding: 4px;
+    border-radius: 100%;
+    transition: 0.2s;
+}
+
+#checkbox-password .checkbox-icon:hover {
+    background: rgba(13, 13, 13, 0.20);
+}
+
+.password-checkbox {
+    display: none;
+}
+
+.input-choice {
+    margin: 35px 0 58px 0;
+}
+
+/*BOTÃO DONWLOAD*/
+button {
+    border-radius: 50px;
+    background: #25BFBF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 22px;
+    width: 200px;
+    height: 63px;
+    margin-top: 20px;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #158E8E;
+}
+
+/*BOTÃO DE HOME E AJUDA*/
+#button-home {
+    position: fixed;
+    right: 47px;
+    top: 47px;
+    background: #50c878;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    text-align: center;
+    transition: width 0.2s, height 0.2s, font-size 0.2s;
+}
+
+#button-home:hover {
+    width: 55px;
+    height: 55px;
+}
+
+#button-home ion-icon {
+    padding: 7px;
+    color: #0d0d0d;
+    font-size: 30px;
+    transition: font-size 0.2s;
+}
+
+#button-home:hover ion-icon {
+    font-size: 40px;
+}
+
+#button-help {
+    text-align: right;
+    transition: 0.2s;
+    position: fixed;
+    right: 47px;
+    bottom: 47px;
+    background: #50c878;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    transition: 0.2s;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+#button-help:hover {
+    width: 55px;
+    height: 55px;
+}
+
+#button-help ion-icon {
+    padding: 7px;
+    color: #0d0d0d;
+    font-size: 30px;
+    transition: font-size 0.2s;
+}
+
+#button-help ion-icon:hover {
+    font-size: 40px;
+}
+
+/*LINHAS*/
+
+.linhas-esquerda,
+.linhas-direita {
+    display: block;
+    position: absolute;
+    height: 100%;
+    z-index: -1;
+}
+
+.linhas-esquerda {
+    left: 0;
+    right: 50%;
+    top: 0;
+}
+
+.linhas-direita {
+    left: 50%;
+    right: 0;
+    bottom: 0;
+}
+
+.vertical-esq,
+.vertical-dir {
+    position: absolute;
+    border-left: 2px solid black;
+    height: 50%;
+}
+
+.vertical-esq {
+    margin-left: 38px;
+    top: 38px;
+}
+
+.vertical-dir {
+    margin-right: 38px;
+    bottom: 38px;
+    right: 0;
+}
+
+.horizontal-esq,
+.horizontal-dir {
+    position: absolute;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.horizontal-esq {
+    border-top: 2px dotted black;
+    top: 38px;
+    left: 38px;
+}
+
+.horizontal-dir {
+    border-bottom: 2px dotted black;
+    bottom: 38px;
+    right: 38px;
+}
+
+@media (max-width: 816px) {
+    h1 {
+        font-size: 24px;
+        margin: 18% 0 3% 0;
+    }
+    
+    p {
+        padding: 3% 15%;
+    }
+    
+    .input-file,
+    .input-password {
+        margin: 3% 15%;
+    }
+    
+    button {
+        width: 40%;
+    }
+    
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+        margin: 30% 0 3% 0;
+    }
+    
+    p {
+        padding: 3% 13%;
+    }
+    
+    .input-file,
+    .input-password {
+        margin: 5% 16%;
+    }
+    
+    button {
+        width: 50%;
+    }
+    
+}

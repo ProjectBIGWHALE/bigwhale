@@ -1,61 +1,91 @@
-<html>
-	<head>
-		<title>WHALE - Cores</title>
-		<meta charset="UTF-8"/>
-		<meta charset="UTF-8"/>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@900&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@700&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
-		<script src="https://unpkg.com/cursorzoom/dist/cursorzoom.min.js"></script>
-		<style>
-		</style>
+<!DOCTYPE html>
+<html lang="pt-br">
 
-			<!-- Google tag (gtag.js) -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-BVGCNK1G97"></script>
-		<script>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>My big Whale - Paleta de Coresa partir de Imagens</title>
+	<link rel="stylesheet" type="text/css" href="/css/colorspalette.css">
+	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-BVGCNK1G97"></script>
+	<script>
 		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
+		function gtag() { dataLayer.push(arguments); }
 		gtag('js', new Date());
 
 		gtag('config', 'G-BVGCNK1G97');
-		</script>
-	</head>
+	</script>
+</head>
 
+<body>
 
+	<header>
+		<h1>Paleta de Cores a partir de imagens</h1>
+		<h3>Para extrair automaticamente as cores principais da sua imagem e obter inspiração para os seus projetos de
+			design.</h3>
+	</header>
 
-	
-	<body style="background-color:#FFFFFF;">
-		<div><br><br><br><br></div>
-		
-		<div align="center" id="preview"></div>
-		
-		<form th:action="@{/colors/createpalette}"
-		      class="card-body d-flex justify-content-center p-5" method="POST"
-		      enctype="multipart/form-data" th:object="${form}">
-		      
-		      <div class="form-row">
-		      
-		      	<div class="form-group mb-3 col-md-12">
-			        <p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Imagem (JPG, PNG)</b></p>
-			        <input type="file" th:field="*{image}"
-			               style="border-radius: 10px; padding: 10px 72px; text-align: center;"
-			               class="form-control" id="image-input" onchange="previewImage(event)"/>
-			        <span th:errors="*{image}" class="text-danger"></span>
-			        
-			    </div>
-			    
-			    <div align="center">
-					<br>
-					<button class="btn btn-outline-success rounded-circle robotomono" type="submit" style="width: 50; height: 50;"></button>
-					 <a href="/"><text class="btn btn-outline-danger rounded-circle robotomono" type="submit" style="width: 50; height: 50;"></text></a>
+	<main>
+
+		<form id="uploadForm" th:action="@{/design/colorspalette}" method="POST" enctype="multipart/form-data"
+			th:object="${form}">
+			<div class="form-group">
+				<label for="image" class="custom-button">
+					Selecionar Imagem
+				</label>
+				<input type="file" id="image" th:field="*{image}" onchange="submitForm()" style="display: none;" />
+			</div>
+
+			<p>Ou arraste e solte o arquivo aqui</p>
+
+			<img id="uploadedImage" th:if="${imageBase64}" th:data-image-base64="${imageBase64}" style="display: none;">
+
+			<div class="content">
+				<div id="drop-area" class="drop-area">
 				</div>
-			    
-			    
-			 </div>
+				<div class="form-action">
+					<button type="submit" style="display: none;"></button>
+				</div>
+			</div>
 		</form>
-	</body>
+
+		<img class="image-logo" src="/images/logo.png" alt="logo 50% transparente">
+
+	</main>
+
+	<!--BOTÕES HOME E AJUDA-->
+
+	<div id="button-home">
+		<a href="/#design">
+			<ion-icon name="return-down-back-outline"></ion-icon>
+		</a>
+	</div>
+
+	<div id="button-help">
+		<a href="/help">
+			<ion-icon name="help-outline"></ion-icon>
+		</a>
+	</div>
+
+	<!--Linhas superiores-->
+	<div class="linhas-esquerda">
+		<hr class="vertical-esq">
+		<hr class="horizontal-esq">
+	</div>
+	<!--Linhas inferiores-->
+	<div class="linhas-direita">
+		<hr class="vertical-dir">
+		<hr class="horizontal-dir">
+	</div>
+
+	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+	<script src="/js/colorspalette.js"></script>
+
+	<input type="hidden" id="imageBase64" th:if="${imageBase64}" th:value="${imageBase64}" />
+
+</body>
+
 </html>
