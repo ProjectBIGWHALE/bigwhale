@@ -164,7 +164,7 @@ public class DocumentsController {
 											new ImageFormatsForm(5L, "png"),
 											new ImageFormatsForm(6L, "tiff"),
 											new ImageFormatsForm(7L, "raw"));
-											;
+
 
 		model.addAttribute("list", list);
 		model.addAttribute("form", imageConversionForm);
@@ -173,7 +173,7 @@ public class DocumentsController {
 
 
 	@PostMapping("/imageconverter")
-	public ResponseEntity<String> imageConverter(@ModelAttribute("form") ImageConversionForm imageConversionForm, HttpServletResponse response) {
+	public String imageConverter(@ModelAttribute("form") ImageConversionForm imageConversionForm, HttpServletResponse response) {
 		try {
 			byte[] formattedImage = imageConverterService.convertImageFormat(imageConversionForm.getOutputFormat(), imageConversionForm.getImage());
 
@@ -187,19 +187,15 @@ public class DocumentsController {
 			OutputStream os = response.getOutputStream();
 				os.write(formattedImage);
 				os.flush();
-			return ResponseEntity.ok().build();
 
-		} catch (UnexpectedFileFormatException | InvalidUploadedFileException ex) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
 
-		} catch (UnableToConvertImageToOutputFormatException ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
-
-		} catch (IOException ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Um erro ocorreu:" + Arrays.toString(ex.getStackTrace()));
+		} catch (Exception ex){
+			return "redirect:/documents/imageconverter";
 		}
+
+		return null;
 	}
-	
+
 	@GetMapping(value="/qrcodegenerator")
 	public String qrCodeGenerator(Model model) {
 		
