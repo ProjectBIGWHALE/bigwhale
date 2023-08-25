@@ -141,8 +141,7 @@ public class DocumentsController {
                 response.setContentType("application/octet-stream");
                 response.setHeader("Cache-Control", "no-cache");
 
-                try (OutputStream outputStream = response.getOutputStream()) {
-	                OutputStream os = response.getOutputStream();
+	            try (OutputStream os = response.getOutputStream()) {
 	                os.write(bytes);
 	                os.flush();
                 } catch(Exception e) {
@@ -160,11 +159,7 @@ public class DocumentsController {
 		List<ImageFormatsForm> list = Arrays.asList(	new ImageFormatsForm(1L, "bmp"),
 											new ImageFormatsForm(2L, "jpg"),
 											new ImageFormatsForm(3L, "jpeg"),
-											new ImageFormatsForm(4L, "gif"),
-											new ImageFormatsForm(5L, "png"),
-											new ImageFormatsForm(6L, "tiff"),
-											new ImageFormatsForm(7L, "raw"));
-
+											new ImageFormatsForm(4L, "gif"));
 
 		model.addAttribute("list", list);
 		model.addAttribute("form", imageConversionForm);
@@ -184,10 +179,12 @@ public class DocumentsController {
 			response.setHeader("Content-Disposition", "attachment; filename=" + convertedFileName);
 			response.setHeader("Cache-Control", "no-cache");
 
-			OutputStream os = response.getOutputStream();
+			try (OutputStream os = response.getOutputStream()) {
 				os.write(formattedImage);
 				os.flush();
-
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 
 		} catch (Exception ex){
 			return "redirect:/documents/imageconverter";

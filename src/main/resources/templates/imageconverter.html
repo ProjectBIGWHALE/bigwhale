@@ -87,43 +87,44 @@
     </script>
 
     <script>
-        // Impõe limite de 50mB para upload com mensagem personalizada
-
-        document.addEventListener("DOMContentLoaded", function () {
-            // Obtém o elemento de input de arquivo com o ID "image"
-            const fileInput = document.getElementById("image");
-
-            // Adiciona um ouvinte de evento de mudança ao campo de arquivo
+        // "Limits image upload to a maximum of 50MB."
+        document.addEventListener("DOMContentLoaded", function () {            
+            const fileInput = document.getElementById("image");            
             fileInput.addEventListener("change", function (event) {
-                const selectedFile = event.target.files[0]; // Obtém o arquivo selecionado
-
-                // Verifica se o arquivo selecionado excede o limite de 50MB (em bytes)
-                const maxSizeInBytes = 50 * 1024 * 1024; // 50MB em bytes
+                const selectedFile = event.target.files[0];                 
+                const maxSizeInBytes = 50 * 1024 * 1024; 
                 if (selectedFile.size > maxSizeInBytes) {
-                    alert("Aviso! O arquivo excede o tamanho máximo permitido de 50MB.");
-                    fileInput.value = ""; // Limpa o valor do input para evitar o envio do arquivo
+                    alert("Warning! The file exceeds the maximum allowed size of 50MB.");
+                    fileInput.value = ""; 
                 }
             });
         });
 
+        // "Limits image upload to BMP, JPG, JPEG, or GIF formats."
+        document.addEventListener("DOMContentLoaded", function () {            
+            const fileInput = document.getElementById("image");
+            const formatErrorDiv = document.getElementById("formatError");
+            fileInput.addEventListener("change", function (event) {
+                const selectedFile = event.target.files[0];
+                const allowedFormats = [".bmp", ".jpg", ".jpeg", ".gif"];
 
-        // Alert para escolher enviar formulário somente se antes fazer upload da imagem
+                const fileExtension = selectedFile.name.slice(selectedFile.name.lastIndexOf(".")).toLowerCase();
+                if (!allowedFormats.includes(fileExtension)) {
+                    alert("Unsupported file format. Please choose a BMP, JPG, JPEG or GIF file.");
+                    fileInput.value = ""; 
+                }
+            });
+        });
 
-        document.addEventListener("DOMContentLoaded", function () {
-            // Captura o botão de conversão
-            const convertButton = document.getElementById("convertButton");
+        // Alert to choose to submit the form only after uploading the image
+        document.addEventListener("DOMContentLoaded", function () {   
+            const convertButton = document.getElementById("convertButton");  
 
-            // Adiciona um evento de clique ao botão de conversão
-            convertButton.addEventListener("click", function () {
-                // Captura o campo de upload de arquivo
-                const imageInput = document.getElementById("image");
-
-                // Verifica se o campo de upload de arquivo está vazio
-                if (imageInput.files.length === 0) {
-                    // Exibe o alerta se o campo estiver vazio
-                    alert("Você precisa escolher uma imagem antes.");
-                } else {
-                    // Se o campo de upload de arquivo não estiver vazio, envia o formulário
+            convertButton.addEventListener("click", function () {                
+                const imageInput = document.getElementById("image");               
+                if (imageInput.files.length === 0) {                   
+                    alert("You need to choose an image first.");
+                } else {                    
                     const imageForm = document.getElementById("imageForm");
                     imageForm.submit();
                 }
@@ -137,13 +138,13 @@
 
 <body>
     <h2>Conversor online de imagens</h2>
-    <h3>Formatos suportados: (JPG, JPEG, BMP, GIF, TIFF, PNG e RAM)</h3>
+    <h3>Formatos suportados: (JPG, JPEG, BMP, GIF)</h3>
     <form th:action="@{/documents/imageconverter}" method="POST" enctype="multipart/form-data" th:object="${form}"
         id="imageForm">
         <div>
             <label for="image">Escolha uma imagem:</label>
             <!--Permite que o cliente selecione apenas arquivos de imagens ao fazer upload-->
-            <input type="file" th:field="*{image}" name="image" id="image" accept="image/*" required />
+            <input type="file" th:field="*{image}" name="image" id="image" accept=".bmp, .jpg, .jpeg, .gif" required />
             <span class="error-message" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
         </div>
         <div>
@@ -159,5 +160,4 @@
         </div>
     </form>
 </body>
-
 </html>
