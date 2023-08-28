@@ -1,46 +1,100 @@
 package com.whale.web.documents.certificategenerator.model;
 
+import com.whale.web.documents.certificategenerator.model.enums.CertificateTypeEnum;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDateTime;
 
 @Component
 public class Certificate {
 	
-	private MultipartFile imageLayout;
-	private String personName;
-	private Integer x;
-	private Integer y;
-	private Integer fontSize;
-	
-	public MultipartFile getimageLayout() {
-		return imageLayout;
-	}
-	public void setImageLayout(MultipartFile imageLayout) {
-		this.imageLayout = imageLayout;
-	}
-	public String getPersonName() {
-		return personName;
-	}
-	public void setPersonName(String personName) {
-		this.personName = personName;
-	}
-	public Integer getX() {
-		return x;
-	}
-	public void setX(Integer x) {
-		this.x = x;
-	}
-	public Integer getY() {
-		return y;
-	}
-	public void setY(Integer y) {
-		this.y = y;
-	}
-	public Integer getFontSize() {
-		return fontSize;
-	}
-	public void setFontSize(Integer fontSize) {
-		this.fontSize = fontSize;
-	}
-	
+    private CertificateTypeEnum certificateTypeEnum;
+    private String eventName;
+    private String speakerName;
+    private String speakerRole;
+    private String eventWorkLoad;
+    private String eventDate;
+    private LocalDateTime dateOfEmission;
+    private String eventLocale;
+    private Long certificateModelId;
+    private String textOfCertificate;
+
+    public CertificateTypeEnum getCertificateTypeEnum() {
+        return certificateTypeEnum;
+    }
+
+    public void setCertificateTypeEnum(CertificateTypeEnum certificateTypeEnum) {
+        this.certificateTypeEnum = certificateTypeEnum;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public String getSpeakerRole() {
+        return speakerRole;
+    }
+
+    public void setSpeakerRole(String speakerRole) {
+        this.speakerRole = speakerRole;
+    }
+
+    public String getEventWorkLoad() {
+        return eventWorkLoad;
+    }
+
+    public void setEventWorkLoad(String eventWorkLoad) {
+        this.eventWorkLoad = eventWorkLoad;
+    }
+
+    public String getSpeakerName() {
+        return speakerName;
+    }
+
+    public void setSpeakerName(String speakerName) {
+        this.speakerName = speakerName;
+    }
+
+    public String getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(String eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public LocalDateTime getDateOfEmission() {
+        return dateOfEmission;
+    }
+
+    public void setDateOfEmission(LocalDateTime dateOfEmission) {
+        this.dateOfEmission = dateOfEmission;
+    }
+
+    public String getEventLocale() {
+        return eventLocale;
+    }
+
+    public void setEventLocale(String eventLocale) {
+        this.eventLocale = eventLocale;
+    }
+    public String getTextOfCertificate() {
+        return textOfCertificate;
+    }
+
+    public void setTextOfCertificate(String textOfCertificate) {
+        this.textOfCertificate = textOfCertificate;
+    }
+
+    public Long getCertificateModelId() {
+        return certificateModelId;
+    }
+
+    public void setCertificateModelId(Long certificateModelId) {
+        this.certificateModelId = certificateModelId;
+    }
 }

@@ -104,8 +104,7 @@
 		<br><br><br>
 		<div align="center">
 			<div id="canvas">
-				<img id="backgroundImage" src="" alt="Imagem de fundo">
-				<div id="textElement" class="text"></div>
+				<h2>Gerador de certificados </h2>
 			</div>
 		</div>
 		<form th:action="@{/documents/certificategenerator}" class="card-body d-flex justify-content-center p-5"
@@ -116,40 +115,59 @@
 					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Lista de
 							Nomes (CSV)</b></p>
 					<input type="file" th:field="*{worksheet.worksheet}"
-						style="border-radius: 10px; padding: 10px 72px; text-align: center;" class="form-control" />
+						style="border-radius: 10px; padding: 10px 72px; text-align: center;" class="form-control" required/>
 					<span th:errors="*{worksheet.worksheet}" class="text-danger"></span>
 				</div>
-				<div class="form-group mb-3 col-md-12">
-					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada X
-							(px)</b></p>
-					<input th:field="*{certificate.x}" type="number"
-						style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control"
-						id="x" />
-					<span th:errors="*{certificate.x}" class="text-danger"></span>
+				<div class="input-group">
+					<label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-search"></i></label>
+					<select th:field="*{certificate.certificateModelId}" class="form-select" id="inputGroupSelect01" required>
+						<option value="" hidden>Selecione uma opção</option>
+						<option class="options" value="1">Modelo 1</option>
+						<option class="options" value="2">Modelo 2</option>
+					</select>
+					<span th:errors="*{certificate.certificateModelId}" class="text-danger"></span>
 				</div>
 				<div class="form-group mb-3 col-md-12">
-					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Coordenada Y
-							(px)</b></p>
-					<input th:field="*{certificate.y}" type="number"
-						style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control"
-						id="y" />
-					<span th:errors="*{certificate.y}" class="text-danger"></span>
+					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Nome do evento</b></p>
+					<input th:field="*{certificate.eventName}" type="text"
+						   style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control"
+						   id="eventName" required/>
+					<span th:errors="*{certificate.eventName}" class="text-danger"></span>
 				</div>
 				<div class="form-group mb-3 col-md-12">
-					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Tamanho da
-							Fonte (px)</b></p>
-					<input th:field="*{certificate.fontSize}" type="number"
-						style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control"
-						id="fontSize" />
-					<span th:errors="*{certificate.fontSize}" class="text-danger"></span>
+					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Nome do organizador</b></p>
+					<input th:field="*{certificate.speakerName}" type="text"
+						   style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control"
+						   id="speakerRole" required/>
+					<span th:errors="*{certificate.speakerRole}" class="text-danger"></span>
 				</div>
 				<div class="form-group mb-3 col-md-12">
-					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Modelo de
-							Certificado (JPG, PNG)</b></p>
-					<input type="file" th:field="*{certificate.imageLayout}"
-						style="border-radius: 10px; padding: 10px 72px; text-align: center;" class="form-control"
-						id="image" />
-					<span th:errors="*{certificate.imageLayout}" class="text-danger"></span>
+					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Cargo do organizador</b></p>
+					<input th:field="*{certificate.speakerRole}" type="text"
+						style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control"
+						id="speakerName" required/>
+					<span th:errors="*{certificate.speakerName}" class="text-danger"></span>
+				</div>
+				<div class="form-group mb-3 col-md-12">
+					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Carga horária(em horas)</b></p>
+					<input th:field="*{certificate.eventWorkLoad}" type="number"
+						   style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control"
+						   id="eventWorkLoad" required/>
+					<span th:errors="*{certificate.eventWorkLoad}" class="text-danger"></span>
+				</div>
+				<div class="form-group mb-3 col-md-12">
+					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Data do evento</b></p>
+					<input th:field="*{certificate.eventDate}" type="date"
+						   style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control"
+						   id="eventDate" required/>
+					<span th:errors="*{certificate.eventDate}" class="text-danger"></span>
+				</div>
+				<div class="form-group mb-3 col-md-12">
+					<p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Local do evento</b></p>
+					<input th:field="*{certificate.eventLocale}" type="text"
+						   style="border-radius: 10px; padding: 10px 172px; text-align: center;" class="form-control"
+						   id="eventLocale" required/>
+					<span th:errors="*{certificate.eventLocale}" class="text-danger"></span>
 				</div>
 				<div align="center">
 					<br>

@@ -242,10 +242,10 @@ public class DocumentsController {
 		
 	}
 	
-	@RequestMapping(value = "/certificategenerator", method = RequestMethod.POST)
+	@PostMapping(value = "/certificategenerator")
 	public String certificateGenerator(CertificateGeneratorForm certificateGeneratorForm, HttpServletResponse response) throws Exception {
 		try {
-		    List<String> names = processWorksheetService.savingNamesInAList(certificateGeneratorForm.getWorksheet().getWorksheet(), certificateGeneratorForm.getCertificate());
+		    List<String> names = processWorksheetService.savingNamesInAList(certificateGeneratorForm.getWorksheet().getWorksheet());
 		    byte[] zipFile = createCertificateService.createCertificates(certificateGeneratorForm.getCertificate(), names);
 
 		        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
@@ -255,11 +255,11 @@ public class DocumentsController {
 			        outputStream.write(zipFile);
 			        outputStream.flush();
 			    }catch(Exception e) {
-					throw new RuntimeException("Error generating encrypted file", e);
+					return "redirect:/documents/certificategenerator";
 				}
 
 	    } catch (Exception e) {
-	    	return "redirect:/documents/certificategenerator";
+			return "redirect:/documents/certificategenerator";
 	    }
 
 	    return null;
