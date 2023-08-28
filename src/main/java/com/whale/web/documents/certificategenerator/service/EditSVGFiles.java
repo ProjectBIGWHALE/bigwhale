@@ -3,6 +3,7 @@ package com.whale.web.documents.certificategenerator.service;
 import java.io.*;
 import java.util.*;
 
+import com.whale.web.configurations.utils.FormatDataUtil;
 import com.whale.web.documents.certificategenerator.model.Certificate;
 import com.whale.web.documents.certificategenerator.model.enums.CertificateBasicInfosEnum;
 import com.whale.web.documents.certificategenerator.model.enums.PersonBasicInfosEnum;
@@ -73,7 +74,8 @@ public class EditSVGFiles {
 						case EVENT_NAME, EVENT_NAME_BODY -> textElement.setTextContent(certificate.getEventName());
 						case SPEAKER_NAME -> textElement.setTextContent(certificate.getSpeakerName());
 						case SPEAKER_ROLE -> textElement.setTextContent(certificate.getSpeakerRole());
-						case EVENT_DATE, EVENT_DATE_BODY -> textElement.setTextContent(certificate.getEventDate());
+						case EVENT_DATE, EVENT_DATE_BODY -> textElement.setTextContent(FormatDataUtil.formatData(
+								certificate.getEventDate()));
 						case WORKLOAD -> textElement.setTextContent(certificate.getEventWorkLoad());
 						case EVENT_LOCALE -> textElement.setTextContent(certificate.getEventLocale());
 					}
