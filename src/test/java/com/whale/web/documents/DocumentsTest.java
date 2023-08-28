@@ -330,75 +330,49 @@ public class DocumentsTest {
 
 
 	@Test
-	void testInvalidImageFormatForConversion() throws Exception {
+	void testUnableToConvertImageToOutputFormatException() throws Exception {
 
-		String inputType = "jpeg";
-		MockMultipartFile file = this.createTestImage(inputType);
-
-		String outputType = "teste";
-		try {
-			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
-							.file(file)
-							.param("outputFormat", outputType))
-							.andExpect(status().isInternalServerError());
-
-		} catch (NestedServletException ex) {
-			assertTrue(ex.getCause() instanceof UnableToConvertImageToOutputFormatException);
-			String expectedErrorMessage = "Could not convert an image jpeg for format teste. " +
-											"Please try again or choose another output format.";
-			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
-		}
+		MockMultipartFile imageFile = createTestImage("png");
+		String invalidOutputFormat = "teste";
+		mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
+						.file(imageFile)
+						.param("outputFormat", invalidOutputFormat))
+						.andExpect(MockMvcResultMatchers.status().isFound());
 	}
 
 
 	@Test
-	void testInvalidFileTypeForConversion() throws Exception {
-		byte[] fileContent = "Este é um arquivo de texto".getBytes();
+	void testUnexpectedFileFormatException() throws Exception {
+		// Preparação
 		MockMultipartFile file = new MockMultipartFile(
 				"image",
 				"test.txt",
-				"text/plain",
-				fileContent
+				"text/txt",
+				"Este é um arquivo de texto".getBytes()
 		);
 
-		String outputFormat = "jpeg";
-		try {
-			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
-							.file(file)
-							.param("outputFormat", outputFormat))
-							.andExpect(status().isBadRequest());
-
-		} catch (NestedServletException ex) {
-			assertTrue(ex.getCause() instanceof UnexpectedFileFormatException);
-			String expectedErrorMessage = "Invalid file type. Only images are allowed.";
-			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
-		}
+		mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
+						.file(file)
+						.param("outputFormat", "png"))
+						.andExpect(MockMvcResultMatchers.status().isFound());
 	}
-
 
 	@Test
 	void testConvertImageFormatWithNullImage() throws Exception {
-		InputStream emptyInputStream = new ByteArrayInputStream(new byte[0]);
-		MockMultipartFile imageFile = new MockMultipartFile(
+		MockMultipartFile file = new MockMultipartFile(
 				"image",
-				"test-image.jpg",
-				"image/jpeg",
-				emptyInputStream
+				"test.png",
+				null,
+				new byte[0]
 		);
 
-		String outputType = "jpeg";
-		try {
-			mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
-					.file(imageFile)
-					.param("outputFormat", outputType))
-					.andExpect(status().isBadRequest());;
-
-		} catch (NestedServletException ex) {
-			assertTrue(ex.getCause() instanceof InvalidUploadedFileException);
-			String expectedErrorMessage = "An invalid file was sent";
-			assertEquals(expectedErrorMessage, ex.getCause().getMessage());
-		}
+		mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/imageconverter")
+						.file(file)
+						.param("outputFormat", "png"))
+						.andExpect(MockMvcResultMatchers.status().isFound());
 
 	}
+
+
     
 }

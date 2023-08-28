@@ -8,49 +8,91 @@ body {
     background: #D3D3D3;
     font-family: 'Roboto Condensed', sans-serif;
     text-align: center;
-    flex-direction: column;
-    
-}
-.title{
-    z-index: -1;
-}
-.title h1 {
-    font-size: 24px;
-    font-weight: bold;
-}
-.title .icon-home {
-    float: right;
-    margin-right: 20px;
-    margin-left: -20px;
-}
-form .text {
-    margin: 0 auto;
-    width: 803px;
-    font-size: 20px;
-}
-form .form-row {
-    margin-right: -40px;
-    text-align: center;
-}
-form .form-row .form-group{
-    text-align: center;
-    margin: 0 auto;
-}
-form .form-row .form-group .input-group{
-    text-align: center;
-    margin: 0 auto;
-    padding-top: 20px;
-    width: 480px;
-}
-.input-group .choice{
-    text-align: center;
-    margin: auto;
-}
-.form-group .input-group #chk {
-    width: 30px;
-    height: 20px;
 }
 
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 96px 0 18px 0;
+}
+
+p {
+    padding: 0 175px;
+    margin-bottom: 39px;
+}
+
+.form-group {
+    margin-top: 35px;
+}
+
+.input-file {
+    margin: 0 31%;
+    padding: 3px;
+    border-radius: 4px;
+    text-align: left;
+    background: #f2f2f2;
+}
+
+.custom-file-label {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: #25BFBF;
+    font-family: 'Roboto Condensed', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.custom-file-label:hover {
+    background-color: #25BFBF;
+    color: #fff;
+}
+
+.input-password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 31%;
+    padding: 4px;
+    border-radius: 4px;
+    background: #f2f2f2;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#checkbox-password {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#checkbox-password .checkbox-label {
+    display: flex;
+    align-items: center;
+}
+
+#checkbox-password .checkbox-icon {
+    cursor: pointer;
+    font-size: 22px;
+    margin-left: 8px;
+    padding: 4px;
+    border-radius: 100%;
+    transition: 0.2s;
+}
+
+#checkbox-password .checkbox-icon:hover {
+    background: rgba(13, 13, 13, 0.20);
+}
+
+.password-checkbox {
+    display: none;
+}
+
+.input-choice {
+    margin: 35px 0 58px 0;
+}
+
+/*BOTÃO DONWLOAD*/
 button {
     border-radius: 50px;
     background: #25BFBF;
@@ -63,130 +105,175 @@ button {
     text-decoration: none;
     font-size: 22px;
     width: 200px;
-    height: 73px;
+    height: 63px;
     margin-top: 20px;
+    transition: 0.2s;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #158E8E;
 }
 
-/* Estilos para telas maiores */
-@media (min-width: 894px) {
-    .title {
-        margin-top: 105px;
-        
-    }
+/*BOTÃO DE HOME E AJUDA*/
+#button-home {
+    position: fixed;
+    right: 47px;
+    top: 47px;
+    background: #50c878;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    text-align: center;
+    transition: width 0.2s, height 0.2s, font-size 0.2s;
+}
 
-    .linhas-esquerda,
-    .linhas-direita {
-        display: block;
-        position: absolute;
-        height: 100%;
-        z-index: -1;
-    }
+#button-home:hover {
+    width: 55px;
+    height: 55px;
+}
 
-    .linhas-esquerda {
-        left: 0;
-        right: 50%;
-        top: 0;
-    }
+#button-home ion-icon {
+    padding: 7px;
+    color: #0d0d0d;
+    font-size: 30px;
+    transition: font-size 0.2s;
+}
 
-    .linhas-direita {
-        left: 50%;
-        right: 0;
-        bottom: 0;
-    }
+#button-home:hover ion-icon {
+    font-size: 40px;
+}
 
-    .vertical-esq,
-    .vertical-dir {
-        position: absolute;
-        border-left: 2px solid black;
-        height: 50%;
-    }
+#button-help {
+    text-align: right;
+    transition: 0.2s;
+    position: fixed;
+    right: 47px;
+    bottom: 47px;
+    background: #50c878;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    transition: 0.2s;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
 
-    .vertical-esq {
-        margin-left: 38px;
-        top: 38px;
-    }
+#button-help:hover {
+    width: 55px;
+    height: 55px;
+}
 
-    .vertical-dir {
-        margin-right: 38px;
-        bottom: 38px;
-        right: 0;
-    }
+#button-help ion-icon {
+    padding: 7px;
+    color: #0d0d0d;
+    font-size: 30px;
+    transition: font-size 0.2s;
+}
 
-    .horizontal-esq,
-    .horizontal-dir {
-        position: absolute;
+#button-help ion-icon:hover {
+    font-size: 40px;
+}
+
+/*LINHAS*/
+
+.linhas-esquerda,
+.linhas-direita {
+    display: block;
+    position: absolute;
+    height: 100%;
+    z-index: -1;
+}
+
+.linhas-esquerda {
+    left: 0;
+    right: 50%;
+    top: 0;
+}
+
+.linhas-direita {
+    left: 50%;
+    right: 0;
+    bottom: 0;
+}
+
+.vertical-esq,
+.vertical-dir {
+    position: absolute;
+    border-left: 2px solid black;
+    height: 50%;
+}
+
+.vertical-esq {
+    margin-left: 38px;
+    top: 38px;
+}
+
+.vertical-dir {
+    margin-right: 38px;
+    bottom: 38px;
+    right: 0;
+}
+
+.horizontal-esq,
+.horizontal-dir {
+    position: absolute;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.horizontal-esq {
+    border-top: 2px dotted black;
+    top: 38px;
+    left: 38px;
+}
+
+.horizontal-dir {
+    border-bottom: 2px dotted black;
+    bottom: 38px;
+    right: 38px;
+}
+
+@media (max-width: 816px) {
+    h1 {
+        font-size: 24px;
+        margin: 18% 0 3% 0;
+    }
+    
+    p {
+        padding: 3% 15%;
+    }
+    
+    .input-file,
+    .input-password {
+        margin: 3% 15%;
+    }
+    
+    button {
+        width: 40%;
+    }
+    
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+        margin: 30% 0 3% 0;
+    }
+    
+    p {
+        padding: 3% 13%;
+    }
+    
+    .input-file,
+    .input-password {
+        margin: 5% 16%;
+    }
+    
+    button {
         width: 50%;
-        margin-left: auto;
-        margin-right: auto;
     }
-
-    .horizontal-esq {
-        border-top: 2px dotted black;
-        top: 38px;
-        left: 38px;
-    }
-
-    .horizontal-dir {
-        border-bottom: 2px dotted black;
-        bottom: 38px;
-        right: 38px;
-    }
-}
-
-/* Estilos para telas menores que 894px (responsividade para dispositivos móveis) */
-@media (max-width: 893px) {
-
-    .linhas-esquerda,
-    .linhas-direita {
-        display: none;
-    }
-
-    form .icon-home {
-        width: 50px;
-    }
-
-    .title {
-        width: auto;
-    }
-
-    form .text {
-        font-size: 15px;
-        width: auto;
-    }
-
-    .col #row .select-file label {
-        display: flex;
-        justify-content: center;
-        font-size: 15px;
-        width: 300px;
-        margin: 10px;
-    }
-
-    .col #row .select-file input {
-        display: flex;
-        justify-content: center;
-        font-size: 15px;
-        width: 300px;
-        margin: 10px;
-    }
-
-    .col #row .password label {
-        display: flex;
-        justify-content: center;
-        font-size: 15px;
-        width: 300px;
-        margin: 10px;
-    }
-
-    .col #row .password input {
-        display: flex;
-        justify-content: center;
-        font-size: 15px;
-        width: 300px;
-        margin: 10px;
-    }
+    
 }

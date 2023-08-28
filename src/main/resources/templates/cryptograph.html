@@ -20,6 +20,86 @@
 </head>
 
 <body>
+
+    <header>
+        <h1>Criptografar ou Descriptografar</h1>
+    </header>
+
+    <main>
+        <form th:action="@{/security/cryptograph}" method="POST" enctype="multipart/form-data" th:object="${form}">
+
+            <p>
+                Aumente a segurança de seus arquivos e utilize uma chave de criptografia forte para proteger
+                o seu documento ou se você quiser descriptografar o documento,
+                utilize a chave correta que foi gerada no nosso site para acessar o seu conteúdo
+                original com maior segurança.
+            </p>
+
+            <div class="form-group">
+
+                <div class="form-group">
+
+                    <div class="input-file">
+                        <label for="arquivo" class="custom-file-label">
+                            <ion-icon name="cloud-upload-outline"></ion-icon> Escolher arquivo
+                        </label>
+                        <input id="arquivo" class="form-control" name="arquivo" type="file" th:field="*{file}" multiple style="display: none;">
+                    </div>
+
+                </div>
+                
+            </div>
+
+            <div class="input-password">
+                <label for="inputGroupSelect01">Insira a senha: </label>
+                <input th:field="*{key}" type="password" id="pwd" class="form-control">
+
+                <div id="checkbox-password">
+                    <input type="checkbox" id="chk" class="password-checkbox">
+                    <label for="chk" class="checkbox-label">
+                        <ion-icon name="eye-outline" class="checkbox-icon show-password"></ion-icon>
+                        <ion-icon name="eye-off-outline" class="checkbox-icon hide-password"></ion-icon>
+                    </label>
+                </div>
+            </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="input-choice">
+                    <label class="choice">
+                        <input type="radio" th:field="*{action}" value="true" id="criptografar"> Criptografar
+                    </label>
+                    <label class="choice">
+                        <input type="radio" th:field="*{action}" value="false" id="descriptografar"> Descriptografar
+                    </label>
+                </div>
+
+                <span th:errors="*{action}" class="text-danger"></span>
+
+            </div>
+
+            <!--BOTÃO DE DOWNLOAD-->
+            <button type="submit" id="download">Download</button>
+
+        </form>
+    </main>
+
+    <!--BOTÕES HOME E AJUDA-->
+
+    <div id="button-home">
+        <a href="/#seguranca">
+            <ion-icon name="return-down-back-outline"></ion-icon>
+        </a>
+    </div>
+
+    <div id="button-help">
+        <a href="/help">
+            <ion-icon name="help-outline"></ion-icon>
+        </a>
+    </div>
+
     <!--Linhas superiores-->
     <div class="linhas-esquerda">
         <hr class="vertical-esq">
@@ -31,82 +111,8 @@
         <hr class="horizontal-dir">
     </div>
 
-    <div class="title">
-        <h1>Criptografar ou Descriptografar</h1>
-
-        <div class="icon-home" type="button">
-            <a href="/">
-                <svg width="53" height="53" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g filter="url(#filter0_d_0_1)">
-                        <circle cx="26.5" cy="22.5" r="22.5" fill="#50C878" />
-                    </g>
-                    <g clip-path="url(#clip0_0_1)">
-                        <path
-                            d="M14.4688 19.4922V35.625C14.4688 35.9151 14.584 36.1933 14.7891 36.3984C14.9942 36.6035 15.2724 36.7188 15.5625 36.7188H22.125V27.4219C22.125 26.9868 22.2979 26.5695 22.6055 26.2618C22.9132 25.9541 23.3305 25.7812 23.7656 25.7812H29.2344C29.6695 25.7812 30.0868 25.9541 30.3945 26.2618C30.7021 26.5695 30.875 26.9868 30.875 27.4219V36.7188H37.4375C37.7276 36.7188 38.0058 36.6035 38.2109 36.3984C38.416 36.1933 38.5312 35.9151 38.5312 35.625V19.4922"
-                            stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
-                            d="M41.8125 22.5L27.2444 8.55471C26.9026 8.19378 26.1035 8.18968 25.7556 8.55471L11.1875 22.5M36.3438 17.2364V9.37503H33.0625V14.0918"
-                            stroke="black" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-                    </g>
-                    <defs>
-                        <filter id="filter0_d_0_1" x="0" y="0" width="53" height="53" filterUnits="userSpaceOnUse"
-                            color-interpolation-filters="sRGB">
-                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                            <feColorMatrix in="SourceAlpha" type="matrix"
-                                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                            <feOffset dy="4" />
-                            <feGaussianBlur stdDeviation="2" />
-                            <feComposite in2="hardAlpha" operator="out" />
-                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_1" />
-                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_1" result="shape" />
-                        </filter>
-                        <clipPath id="clip0_0_1">
-                            <rect width="35" height="35" fill="white" transform="translate(9 5)" />
-                        </clipPath>
-                    </defs>
-                </svg></a>
-        </div>
-    </div>
-
-    <form th:action="@{/security/cryptograph}" method="POST" class="card-body d-flex justify-content-center"
-        enctype="multipart/form-data" th:object="${form}">
-        <div class="form-row">
-            <p class="text">
-                Aumente a segurança de seus arquivos e utilize uma chave de criptografia forte para proteger
-                o seu documento ou se você quiser descriptografar o documento,
-                utilize a chave correta que foi gerada no nosso site para acessar o seu conteúdo
-                original com maior segurança.
-            </p>
-            <div class="form-group">
-                <div class="input-group">
-                    <input for="arquivo" class="form-control" name="arquivo" type="file" th:field="*{file}" multiple>
-                </div>
-
-                <div class="input-group">
-                    <label class="input-group-text" for="inputGroupSelect01">Insira a senha:</label>
-                    <input th:field="*{key}" type="password" id="pwd" class="form-control">
-                </div>
-                <input type="checkbox" id="chk">Mostrar senha
-            </div>
-
-            <div class="form-group">
-                <div class="input-group">
-                    <label class="choice">
-                        <input type="radio" th:field="*{action}" value="true" id="criptografar"> Criptografar
-                    </label>
-                    <label class="choice">
-                        <input type="radio" th:field="*{action}" value="false" id="descriptografar"> Descriptografar
-                    </label>
-                </div>
-                <span th:errors="*{action}" class="text-danger"></span>
-
-
-
-                <button type="submit" id="download">Download</button>
-            </div>
-        </div>
-    </form>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="/js/cryptograph.js"></script>
 </body>
 

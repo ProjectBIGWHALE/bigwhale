@@ -8,10 +8,7 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.whale.web.documents.imageconverter.exception.InvalidUploadedFileException;
-import com.whale.web.documents.imageconverter.exception.UnableToConvertImageToOutputFormatException;
-import com.whale.web.documents.imageconverter.exception.UnableToReadImageFormatException;
-import com.whale.web.documents.imageconverter.exception.UnexpectedFileFormatException;
+import com.whale.web.documents.imageconverter.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -144,8 +141,7 @@ public class DocumentsController {
                 response.setContentType("application/octet-stream");
                 response.setHeader("Cache-Control", "no-cache");
 
-                try (OutputStream outputStream = response.getOutputStream()) {
-	                OutputStream os = response.getOutputStream();
+	            try (OutputStream os = response.getOutputStream()) {
 	                os.write(bytes);
 	                os.flush();
                 } catch(Exception e) {
@@ -163,10 +159,7 @@ public class DocumentsController {
 		List<ImageFormatsForm> list = Arrays.asList(	new ImageFormatsForm(1L, "bmp"),
 											new ImageFormatsForm(2L, "jpg"),
 											new ImageFormatsForm(3L, "jpeg"),
-											new ImageFormatsForm(4L, "gif"),
-											new ImageFormatsForm(6L, "png"),
-											new ImageFormatsForm(6L, "tiff"),
-											new ImageFormatsForm(7L, "tif"));
+											new ImageFormatsForm(4L, "gif"));
 
 		model.addAttribute("list", list);
 		model.addAttribute("form", imageConversionForm);
@@ -175,7 +168,7 @@ public class DocumentsController {
 
 
 	@PostMapping("/imageconverter")
-	public ResponseEntity<String> imageConverter(@ModelAttribute("form") ImageConversionForm imageConversionForm, HttpServletResponse response) {
+	public String imageConverter(@ModelAttribute("form") ImageConversionForm imageConversionForm, HttpServletResponse response) {
 		try {
 			byte[] formattedImage = imageConverterService.convertImageFormat(imageConversionForm.getOutputFormat(), imageConversionForm.getImage());
 
@@ -186,22 +179,20 @@ public class DocumentsController {
 			response.setHeader("Content-Disposition", "attachment; filename=" + convertedFileName);
 			response.setHeader("Cache-Control", "no-cache");
 
-			OutputStream os = response.getOutputStream();
+			try (OutputStream os = response.getOutputStream()) {
 				os.write(formattedImage);
 				os.flush();
-			return ResponseEntity.ok().build();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 
-		} catch (UnexpectedFileFormatException | InvalidUploadedFileException ex) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-
-		} catch (UnableToConvertImageToOutputFormatException | UnableToReadImageFormatException ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
-
-		} catch (IOException ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Um erro ocorreu:" + Arrays.toString(ex.getStackTrace()));
+		} catch (Exception ex){
+			return "redirect:/documents/imageconverter";
 		}
+
+		return null;
 	}
-	
+
 	@GetMapping(value="/qrcodegenerator")
 	public String qrCodeGenerator(Model model) {
 		

@@ -4,9 +4,7 @@
 <head>
 	<title>My big Whale - Conversor de Arquivos</title>
 	<meta charset="UTF-8" />
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="/css/compactconverter.css">
 	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 
@@ -23,75 +21,66 @@
 
 <body>
 
-	<div class="title">
+	<header>
 		<h1>Conversor de arquivo</h1>
+	</header>
 
-		<div class="icon-home" type="button">
-			<a href="/">
-				<svg width="53" height="53" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<g filter="url(#filter0_d_0_1)">
-						<circle cx="26.5" cy="22.5" r="22.5" fill="#50C878" />
-					</g>
-					<g clip-path="url(#clip0_0_1)">
-						<path
-							d="M14.4688 19.4922V35.625C14.4688 35.9151 14.584 36.1933 14.7891 36.3984C14.9942 36.6035 15.2724 36.7188 15.5625 36.7188H22.125V27.4219C22.125 26.9868 22.2979 26.5695 22.6055 26.2618C22.9132 25.9541 23.3305 25.7812 23.7656 25.7812H29.2344C29.6695 25.7812 30.0868 25.9541 30.3945 26.2618C30.7021 26.5695 30.875 26.9868 30.875 27.4219V36.7188H37.4375C37.7276 36.7188 38.0058 36.6035 38.2109 36.3984C38.416 36.1933 38.5312 35.9151 38.5312 35.625V19.4922"
-							stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-						<path
-							d="M41.8125 22.5L27.2444 8.55471C26.9026 8.19378 26.1035 8.18968 25.7556 8.55471L11.1875 22.5M36.3438 17.2364V9.37503H33.0625V14.0918"
-							stroke="black" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-					</g>
-					<defs>
-						<filter id="filter0_d_0_1" x="0" y="0" width="53" height="53" filterUnits="userSpaceOnUse"
-							color-interpolation-filters="sRGB">
-							<feFlood flood-opacity="0" result="BackgroundImageFix" />
-							<feColorMatrix in="SourceAlpha" type="matrix"
-								values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-							<feOffset dy="4" />
-							<feGaussianBlur stdDeviation="2" />
-							<feComposite in2="hardAlpha" operator="out" />
-							<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-							<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_1" />
-							<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_1" result="shape" />
-						</filter>
-						<clipPath id="clip0_0_1">
-							<rect width="35" height="35" fill="white" transform="translate(9 5)" />
-						</clipPath>
-					</defs>
-				</svg></a>
-		</div>
-	</div>
+	<main>
+		<form th:action="@{/documents/compactconverter}" class="card-body d-flex justify-content-center" method="POST"
+			enctype="multipart/form-data" th:object="${form}">
 
-	<form th:action="@{/documents/compactconverter}" class="card-body d-flex justify-content-center" method="POST"
-		enctype="multipart/form-data" th:object="${form}">
+			<div class="choose-file">
 
-		<div class="form-row">
-			<div class="form-group">
-				<p>Anexe um arquivo</p>
+				<p>Escolha um arquivo</p>
+
+				<div class="input-file">
+					<input type="file" th:field="*{file}" />
+				</div>
+
+				<span th:errors="*{file}" class="text-danger"></span>
+
+			</div>
+
+			<div class="type-conversion">
+
+				<p>Selecione o tipo da conversão desejada:</p>
 
 				<div class="input-group">
-					<input type="file" th:field="*{file}" class="form-control" />
+					<label class="input-group-text" for="inputGroupSelect01">
+						<i class="bi bi-search"></i>
+					</label>
+
+					<select th:field="*{action}" class="form-select" id="inputGroupSelect01">
+						<option class="options" value=".zip">.zip</option>
+						<option class="options" value=".tar.gz">.tar.gz</option>
+						<option class="options" value=".tar">.tar</option>
+						<option class="options" value=".7z">.7z</option>
+					</select>
+
+					<span th:errors="*{action}" class="text-danger"></span>
+
 				</div>
-				<span th:errors="*{file}" class="text-danger"></span>
 			</div>
 
-			<p>Escolha o tipo da extensão que deseja:</p>
+			<!--BOTÃO DE DOWNLOAD-->
+			<button type="submit" id="download">Download</button>
 
-			<div class="input-group">
-				<label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-search"></i></label>
-				<select th:field="*{action}" class="form-select" id="inputGroupSelect01">
-					<option class="options" value=".zip">.zip</option>
-					<option class="options" value=".tar.gz">.tar.gz</option>
-					<option class="options" value=".tar">.tar</option>
-					<option class="options" value=".7z">.7z</option>
-				</select>
-				<span th:errors="*{action}" class="text-danger"></span>
-			</div>
+		</form>
+	</main>
 
-			<div>
-				<button type="submit" id="download">Download</button>
-			</div>
-		</div>
-	</form>
+	<!--BOTÕES HOME E AJUDA-->
+
+	<div id="button-home">
+		<a href="/#documentos">
+			<ion-icon name="return-down-back-outline"></ion-icon>
+		</a>
+	</div>
+
+	<div id="button-help">
+		<a href="/help">
+			<ion-icon name="help-outline"></ion-icon>
+		</a>
+	</div>
 
 	<!--Linhas superiores-->
 	<div class="linhas-esquerda">
@@ -103,6 +92,9 @@
 		<hr class="vertical-dir">
 		<hr class="horizontal-dir">
 	</div>
+
+	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 </body>
 

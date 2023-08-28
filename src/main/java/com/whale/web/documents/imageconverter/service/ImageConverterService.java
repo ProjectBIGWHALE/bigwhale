@@ -4,56 +4,57 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
 
 import javax.imageio.ImageIO;
 
-import com.whale.web.documents.imageconverter.exception.InvalidUploadedFileException;
-import com.whale.web.documents.imageconverter.exception.UnableToConvertImageToOutputFormatException;
-import com.whale.web.documents.imageconverter.exception.UnableToReadImageFormatException;
-import com.whale.web.documents.imageconverter.exception.UnexpectedFileFormatException;
+import com.whale.web.documents.imageconverter.exception.*;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ImageConverterService {
 	
-    public byte[] convertImageFormat(String outputFormat, MultipartFile imageFile) throws IOException {
+    public byte[] convertImageFormat(String outputFormat, MultipartFile imageFile) throws Exception {
 
+        String message = "Uploaded image file is null, empty or image format is not supported";
         if (imageFile == null || imageFile.isEmpty()) {
-            throw new InvalidUploadedFileException("An invalid file was sent");
+            throw new InvalidUploadedFileException(message);
         }
 
-        String contentType = imageFile.getContentType();
-        if (contentType == null || !contentType.startsWith("image/")) {
-            throw new UnexpectedFileFormatException("Invalid file type. Only images are allowed.");
+        String[] allowedFormats = { "bmp", "jpg", "jpeg", "gif" };
+        String fileExtension = FilenameUtils.getExtension(imageFile.getOriginalFilename());
+
+        assert fileExtension != null;
+        if (!Arrays.asList(allowedFormats).contains(fileExtension.toLowerCase())) {
+            throw new InvalidFileFormatException("Unsupported file format. Please choose a BMP, JPG, JPEG or GIF file.");
         }
 
-        byte[] bytes = imageFile.getBytes();
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
-        BufferedImage image = ImageIO.read(inputStream);
+        BufferedImage image = ImageIO.read(imageFile.getInputStream());
+        if (image == null) {
+            throw new InvalidUploadedFileException(message);
+        }
 
         ByteArrayOutputStream convertedImage = new ByteArrayOutputStream();
-
         boolean successfullyConverted = ImageIO.write(image, outputFormat, convertedImage);
         convertedImage.flush();
 
-        String imageType = contentType.substring(6);
-        if (imageType.isEmpty()) {
-            throw new UnableToReadImageFormatException("Unable to verify the format of the attached image.");
-        } else {
-            if (!successfullyConverted) {
-                throw new UnableToConvertImageToOutputFormatException(
-                                 "Could not convert an image "
-                                + imageType
-                                + " for format "
-                                + outputFormat
-                                + ". Please try again or choose another output format.");
+        String imageType = Objects.requireNonNull(imageFile.getContentType()).substring(6);
 
-            } else {
-                byte[] convertedImageBytes = convertedImage.toByteArray();
-                convertedImage.close();
-                return convertedImageBytes;
-            }
+        if (!successfullyConverted) {
+            throw new UnableToConvertImageToOutputFormatException(
+                    "Could not convert an image "
+                            + imageType
+                            + " for format "
+                            + outputFormat
+                            + ". Please try again or choose another output format.");
+
+        } else {
+            byte[] convertedImageBytes = convertedImage.toByteArray();
+            convertedImage.close();
+            return convertedImageBytes;
         }
 
     }
