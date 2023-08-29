@@ -1,4 +1,4 @@
-package com.whale.web.documents.filecompressor.service;
+package com.whale.web.documents.filecompressor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

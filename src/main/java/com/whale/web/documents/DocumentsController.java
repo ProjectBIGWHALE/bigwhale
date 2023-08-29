@@ -8,11 +8,8 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.whale.web.documents.imageconverter.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,13 +25,13 @@ import com.whale.web.documents.certificategenerator.service.CreateCertificateSer
 import com.whale.web.documents.certificategenerator.service.ProcessWorksheetService;
 import com.whale.web.documents.compactconverter.model.CompactConverterForm;
 import com.whale.web.documents.compactconverter.service.CompactConverterService;
-import com.whale.web.documents.filecompressor.service.FileCompressorService;
+import com.whale.web.documents.filecompressor.FileCompressorService;
 import com.whale.web.documents.imageconverter.model.ImageFormatsForm;
 import com.whale.web.documents.imageconverter.model.ImageConversionForm;
 import com.whale.web.documents.imageconverter.service.ImageConverterService;
 import com.whale.web.documents.qrcodegenerator.model.QRCodeGeneratorForm;
 import com.whale.web.documents.qrcodegenerator.service.QRCodeGeneratorService;
-import com.whale.web.documents.textextract.service.TextExtractService;
+import com.whale.web.documents.textextract.TextExtractService;
 
 @Controller
 @RequestMapping("/documents")

@@ -15,7 +15,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.zip.ZipEntry;
@@ -24,9 +23,6 @@ import java.util.zip.ZipOutputStream;
 import javax.imageio.ImageIO;
 
 import com.whale.web.documents.certificategenerator.model.enums.CertificateTypeEnum;
-import com.whale.web.documents.imageconverter.exception.InvalidUploadedFileException;
-import com.whale.web.documents.imageconverter.exception.UnableToConvertImageToOutputFormatException;
-import com.whale.web.documents.imageconverter.exception.UnexpectedFileFormatException;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -42,14 +38,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.util.NestedServletException;
 
 import com.whale.web.documents.certificategenerator.model.Certificate;
 import com.whale.web.documents.certificategenerator.model.CertificateGeneratorForm;
 import com.whale.web.documents.certificategenerator.model.Worksheet;
-import com.whale.web.documents.filecompressor.service.FileCompressorService;
+import com.whale.web.documents.filecompressor.FileCompressorService;
 import com.whale.web.documents.qrcodegenerator.model.QRCodeGeneratorForm;
-import com.whale.web.documents.textextract.service.TextExtractService;
+import com.whale.web.documents.textextract.TextExtractService;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
