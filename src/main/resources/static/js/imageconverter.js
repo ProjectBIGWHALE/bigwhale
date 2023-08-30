@@ -41,3 +41,44 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+//Loading documents
+document.getElementById('convertButton').addEventListener('click', function() {
+    // Mostra o loading spinner
+    document.querySelector('.loadingio-spinner-dual-ball-dbuc2dc03wn').style.display = 'block';
+
+    // Desabilita o botão de download
+    this.disabled = true;
+
+    // Submete o formulário
+    document.getElementById('imageForm').submit();
+});
+
+// Simule o processamento completo aqui
+function processamentoCompleto() {
+    // Esconde o loading spinner
+    document.querySelector('.loadingio-spinner-dual-ball-dbuc2dc03wn').style.display = 'none';
+
+    // Habilita o botão de download
+    document.getElementById('convertButton').disabled = false;
+}
+
+document.getElementById('convertButton').addEventListener('click', function() {
+    // Mostra a overlay de loading
+    document.getElementById('loadingOverlay').style.display = 'flex';
+
+    // Desabilita o botão de download
+    this.disabled = true;
+
+    // Simule o processamento completo
+    setTimeout(processamentoCompleto, 3000);
+});
+
+function processamentoCompleto() {
+    // Esconde a overlay de loading
+    document.getElementById('loadingOverlay').style.display = 'none';
+
+    // Habilita o botão de download
+    document.getElementById('convertButton').disabled = false;
+}
