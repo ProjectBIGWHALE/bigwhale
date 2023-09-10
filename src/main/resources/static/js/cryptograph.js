@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordElement = document.querySelector("label[for='pwd']");
     const arquivoElement = document.querySelector("#arquivo");
     const criptografarRadio = document.getElementById("criptografar");
+    const descriptografarRadio = document.getElementById("descriptografar");
+
     const pwd = document.getElementById("pwd");
     const chk = document.getElementById("chk");
     const showPasswordIcon = document.querySelector('.show-password');
@@ -25,16 +27,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     criptografarRadio.addEventListener("change", function () {
+        console.log(criptografarRadio);
         if (this.checked) {
             h1Element.textContent = "Criptografando Arquivos";
             arquivoElement.textContent = "Escolha um arquivo compactado:";
             passwordElement.textContent = "Escolha a senha: ";
         }
     });
-
-    const descriptografarRadio = document.getElementById("descriptografar");
-
+    
     descriptografarRadio.addEventListener("change", function () {
+        console.log(descriptografarRadio);
         if (this.checked) {
             h1Element.textContent = "Descriptografando Arquivos";
             arquivoElement.textContent = "Escolha um arquivo criptografado:";
