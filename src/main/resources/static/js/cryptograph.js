@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const h1Element = document.querySelector("h1");
-    const arquivoElement = document.querySelector("label[for='arquivo']");
-    const passwordElement = document.querySelector("label[for='senha']");
+    const passwordElement = document.querySelector("label[for='pwd']");
+    const arquivoElement = document.querySelector("#arquivo");
     const criptografarRadio = document.getElementById("criptografar");
     const pwd = document.getElementById("pwd");
     const chk = document.getElementById("chk");
@@ -41,4 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
             passwordElement.textContent = "Digite a senha: ";
         }
     });
+
+    //file-name é um span para adicionar o nome do arquivo
+    const fileName = document.getElementById('file-name');
+    
+    //Função para exibir o nome do arquivo selecionado
+    arquivoElement.addEventListener("change", () =>{
+        const name = arquivoElement.files[0].name;
+        return fileName.innerText = `Arquivo: ${name}`;
+    })
 });
