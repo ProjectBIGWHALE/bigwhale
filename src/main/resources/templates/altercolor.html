@@ -31,14 +31,17 @@
 	<form th:action="@{/design/altercolor}" method="POST" enctype="multipart/form-data" th:object="${form}">
 		<div class="container">
 			<div class="row image_row">
-				<div class="col img_user">
-					<div id="preview" onclick="pickColor(event)">
-						<label class="picture" for="picture_input" tabindex="0"></label>
+				<div class="col">
+					<div class="img_user">
+						<div id="preview" onclick="pickColor(event)">
+							<label class="picture" for="picture_input" tabindex="0"></label>
+						</div>
+						<input type="file" th:field="*{image}" accept="image/*" id="picture_input"
+								onchange="previewImage(event)">
+						<span th:errors="*{image}" class="text-danger"></span>
 					</div>
-					<input type="file" th:field="*{image}" accept="image/*" id="picture_input"
-							onchange="previewImage(event)">
-					<span th:errors="*{image}" class="text-danger"></span>
 				</div>
+					
 
 				<div class="col">
 					<div class="input_colors">
