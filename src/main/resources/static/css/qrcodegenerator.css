@@ -1,0 +1,199 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+}
+
+body {
+    font-family: 'Roboto Mono', monospace;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #000000;
+    background-color: #D3D3D3;
+    font-size: 16px;
+    padding: 15px;
+    margin: 22px 15px;
+}
+
+:is(.qr-code__header, .qr-code__footer) {
+    display: flex;
+    justify-content: flex-end;
+    margin: 22px 15px;
+    height: 64px;
+}
+
+.btn__home-help {
+    background: #50c878;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    transition: width 0.2s, height 0.2s, font-size 0.2s;
+}
+
+.btn__home-help:hover {
+    width: 55px;
+    height: 55px;
+}
+
+.btn__home-help ion-icon {
+    padding: 7px;
+    color: #0d0d0d;
+    font-size: 30px;
+    transition: font-size 0.2s;
+}
+
+.btn__home-help:hover ion-icon {
+    font-size: 40px;
+}
+
+.qr-code__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+}
+
+.container__title {
+    margin-bottom: 2.25rem;
+}
+
+.form {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 26px;
+    justify-items: center;
+}
+
+.form .form-group {
+    width: 100%;
+    padding: 0 24px;
+    margin: 0 12px;
+}
+
+.form-group .form-group__list {
+    font-weight: 700;
+    width: 100%;
+}
+
+.form-group__list .list__title {
+    font-size: 1.25rem;
+}
+
+.list__items {
+    list-style: none;
+    display: flex;
+    margin: 12px 0;
+}
+
+.list__items .items__group {
+    margin: 0 12px;
+    font-weight: 400;
+}
+
+.form-group .list-url__content {
+    margin-bottom: 16px;
+}
+
+:is(.link__field, .field__input-color) {
+    width: 100%;
+    height: 2rem;
+    padding: .5rem .75rem;
+    border-radius: 4px;
+    margin-top: .5rem;
+    font-size: 1.1rem;
+}
+
+.content__img {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.content__img .chromatic-circle {
+    width: 60px;
+    cursor: crosshair;
+}
+
+.content__img .get-color__field {
+    text-align: center;
+}
+
+.color-select__content {
+    display: none;
+}
+
+.qr-code__preview{
+    width: 80%;
+    height: 100%;
+}
+
+.qr-code__preview .preview__text{
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed darkblue;
+}
+
+
+/*BOTÃO DONWLOAD*/
+.btn {
+    border-radius: 50px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 22px;
+    width: 200px;
+    height: 63px;
+    margin-top: 20px;
+}
+
+.btn-download {
+    background: #25BFBF;
+    color: #fff;
+    transition: 0.2s;
+}
+
+.btn-download:hover {
+    background-color: #158E8E;
+}
+
+.btn.disabledBtnDownload {
+    background-color: #327070;
+    color: #c0b9b9;
+    cursor: unset;
+}
+
+/* Definindo tamanho espessura e posição das linhas */
+.line {
+    width: 50vw;
+    height: 50vh;
+    border: 3px #000;
+    position: absolute;
+    z-index: -1;
+}
+
+/* exibir a linha superior esquerdo */
+.line__left-top {
+    border-left-style: solid;
+    border-top-style: dashed;
+    right: calc(50vw - 30px);
+    bottom: calc(50vh - 37px);
+}
+
+/* exibir a linha inferior direito */
+.line__right-bottom {
+    border-bottom-style: dashed;
+    border-right-style: solid;
+    left: calc(50vw - 30px);
+    top: calc(50vh - 37px);
+}
+
+/* Esse calc são feitos de acordo com a padding e margin do body */
