@@ -13,11 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.whale.web.documents.certificategenerator.model.CertificateGeneratorForm;
@@ -221,14 +217,14 @@ public class DocumentsController {
 		return null;
 	}
 	
-	@GetMapping(value="/certificategenerator")
+	@GetMapping("/certificategenerator")
 	public String certificateGenerator(Model model) {
 		
 		model.addAttribute("certificateGeneratorForm", certificateGeneratorForm);
 		return "certificategenerator";
 		
 	}
-	
+
 	@PostMapping(value = "/certificategenerator")
 	public String certificateGenerator(CertificateGeneratorForm certificateGeneratorForm, HttpServletResponse response) throws Exception {
 		try {
@@ -242,7 +238,7 @@ public class DocumentsController {
 			        outputStream.write(zipFile);
 			        outputStream.flush();
 			    }catch(Exception e) {
-					return "redirect:/documents/certificategenerator";
+					throw new RuntimeException("Error generating encrypted file", e);
 				}
 
 	    } catch (Exception e) {
