@@ -1,116 +1,118 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>My big Whale - QRCode</title>
-		<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>My big Whale - QRCode</title>
+	<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="/css/qrcodegenerator.css">
 
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-			<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-			<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-			<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@900&display=swap" rel="stylesheet">
-			<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
-			<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@700&display=swap" rel="stylesheet">
-			<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
+	<!-- Scripts para Ion icons -->
+	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-		<style>
-			.montserrat{
-				font-family: 'Montserrat', cursive;
-				font-size: 3.0rem;
-			}
-			.nanum{
-				font-family: 'Nanum Gothic', sans-serif;
-				font-size: 2.0rem;
-			}
-			.impacto{
-				font-family: 'Urbanist', sans-serif;
-				font-size: 2.0rem;
-			}
-			.escrita{
-				font-family: 'Satisfy', cursive;
-				font-size: 2.0rem;
-			}
-			.robotomono{
-				font-family: 'Roboto Mono', monospace;
-				font-size: 0.7rem;
-				color: #000000;
-			}
-			.btn-custom {
-			  background-color: transparent;
-			  border-color: #FFFFFF;
-			  color: #ff0000;
-			}
-
-			.btn-custom:hover {
-			  background-color: #FF0022;
-			  color: #fff;
-			}
-			.btn-custom2 {
-			  background-color: transparent;
-			  border-color: transparent;
-			  color: #ff0000;
-			}
-
-			.btn-custom2:hover {
-			  background-color: #011627;
-			  border-color:#FFFFFF;
-			  color: #fff;
-			}	
-		
-	        
-		</style>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-BVGCNK1G97"></script>
 	<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
 
-	gtag('config', 'G-BVGCNK1G97');
+		gtag('config', 'G-BVGCNK1G97');
 	</script>
-	
-	</head>
-	
-	<body style="background-color:#FFFFFF;">
-		<div><br><br><br><br></div>
-		
-		<div align="center" id="preview"></div>
-		
-		<form th:action="@{/documents/qrcodegenerator}"
-		      class="card-body d-flex justify-content-center p-5" method="POST"
-		      enctype="multipart/form-data" th:object="${form}">
-		      
-				<div class="form-row">
-				    <div class="form-group mb-3 col-md-12">
-				        <p class="robotomono" style="color:#000000; font-size:0.9rem; letter-spacing: 2px;"><b>Digite uma URL (http://)</b></p>
-				        <div class="input-group">
-				            <input type="text" th:field="*{link}"
-				                   id="link"
-				                   style="border-radius: 10px; padding: 10px 72px; text-align: center;"
-				                   class="form-control" onchange="previewImage(event)" pattern="https?://.+"/>
-				        </div>
-				        <span th:errors="*{link}" class="text-danger"></span>
-				    </div>
-				    <div align="center">
-						<br>
-						<button class="btn btn-outline-success rounded-circle robotomono" type="submit" style="width: 50; height: 50;"></button>
-						 <a href="/"><text class="btn btn-outline-danger rounded-circle robotomono" type="submit" style="width: 50; height: 50;"></text></a>
-				  	</div>
-				</div>
-			    
 
-			  </div>
-			  
-			  
+</head>
+
+<body>
+	<!-- Linha superior esquerdo -->
+	<div class="line line__left-top"></div>
+
+	<header class="qr-code__header">
+		<!-- BOTÃO HOME -->
+		<div id="button-home" class="btn__home-help">
+			<a href="/" aria-label="Ir para à página inicial" role="link">
+				<ion-icon name="return-down-back-outline"></ion-icon>
+			</a>
+		</div>
+	</header>
+	<main class="qr-code__container">
+		<h1 class="container__title" role="hea" aria-level="1">Cria QR Code</h1>
+		<form th:action="@{/documents/qrcodegenerator}" class="form" method="POST" enctype="multipart/form-data"
+			th:object="${form}">
+			<ol class="form-group">
+				<li class="form-group__list">
+					<h3 class="list__title">Selecione o tipo</h3>
+					<ul class="list__items">
+						<li class="items__group">
+							<input type="checkbox" name="email" id="email">
+							<label for="email">Email</label>
+						</li>
+						<li class="items__group">
+							<input type="checkbox" name="whatsapp" id="whatsapp">
+							<label for="whatsapp">Whatsapp</label>
+						</li>
+						<li class="items__group">
+							<input type="checkbox" name="link-checked" id="link-checked">
+							<label for="link-checked">Link</label>
+						</li>
+						<li class="items__group">
+							<input type="checkbox" name="pdf" id="pdf">
+							<label for="pdf">PDF</label>
+						</li>
+					</ul>
+				</li>
+				<li class="form-group__list list-url__content">
+					<label for="link" class="link__label">
+						<h3 class="list__title">Insira a url</h3>
+					</label>
+					<input type="text" class="link__field" name="link" th:field="*{link}" id="link"
+						onchange="previewImage(event)" pattern="https?://.+">
+					<div class="msg-error">
+						<small th:errors="*{link}" class="text-danger">Insira a url</small>
+					</div>
+				</li>
+				<li class="form-group__list">
+					<div>
+						<h3 class="list__title">Escolha a cor do QR Code:</h3>
+						<div class="content__img">
+							<label for="color-select">
+								<img src="/images/circulo-cromatico.png" alt="Círculo cromático" class="chromatic-circle">
+							</label>
+							<div class="get-color__field">
+								<label for="get-color">Digite o nome ou o código da cor</label>
+								<input type="text" id="get-color" name="get-color" class="field__input-color">
+							</div>
+						</div>
+					</div>
+					<div class="color-select__content">
+						<input type="color" name="color-select" id="color-select">
+					</div>
+				</li>
+			</ol>
+			<div class="qr-code__preview">
+				<div class="preview__text">
+					<h2>PRÉ VISUALIZAÇÃO DO QR CODE</h2>
+				</div>
+				<button class="btn btn-download disabledBtnDownload" type="submit">Download</button>
+			</div>
+			</div>
 		</form>
-	</body>
-	
+	</main>
+	<footer class="qr-code__footer">
+		<!-- BOTÃO HELP -->
+		<div id="button-help" class="btn__home-help">
+			<a href="/help" aria-label="Ir para à página de ajuda" role="link">
+				<ion-icon name="help-outline"></ion-icon>
+			</a>
+		</div>
+	</footer>
+
+	<!-- Linha inferior direito -->
+	<div class="line line__right-bottom"></div>
+</body>
+
 </html>
-	
-	
-	
-	
-	
