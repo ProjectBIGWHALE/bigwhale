@@ -210,7 +210,7 @@ public class DocumentsTest {
 		certificate.setCertificateTypeEnum(CertificateTypeEnum.COURCE);
 		certificate.setTextOfCertificate("abcd");
 		certificate.setEventLocale("São Paulo");
-		certificate.setEventDate("20/10/2023");
+		certificate.setEventDate("2023-09-12");
 		certificate.setEventWorkLoad("20");
 		certificate.setSpeakerName("Ronnyscley");
 		certificate.setSpeakerRole("CTO");
@@ -219,13 +219,12 @@ public class DocumentsTest {
         certificateGeneratorForm.setCertificate(certificate);
         certificateGeneratorForm.setWorksheet(worksheet);
 
-
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/certificategenerator")
         		.file(file)
                 .flashAttr("certificateGeneratorForm", certificateGeneratorForm))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment")))
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE));
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment")));
     }
     
     @Test
