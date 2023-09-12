@@ -95,6 +95,16 @@ function hideMsgError( spanError){
 function validationField(validation, spanId){
   const error = document.getElementById(spanId);
   return (!validation) ? showMsgError(error) :  hideMsgError(error) ;
-  
-
 }
+
+const loadingOverlay = document.getElementById("loadingOverlay");
+const downloadButton = document.getElementById("download");
+
+downloadButton.addEventListener("click", function () {
+  loadingOverlay.style.display = "block";
+
+  // Ocultar o loading overlay quando o download for concluído
+  setTimeout(() => {
+    loadingOverlay.style.display = "none";
+  }, 2000);
+});
