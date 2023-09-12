@@ -42,7 +42,7 @@
 	<main class="qr-code__container">
 		<h1 class="container__title" role="hea" aria-level="1">Cria QR Code</h1>
 		<form th:action="@{/documents/qrcodegenerator}" class="form" method="POST" enctype="multipart/form-data"
-			th:object="${form}">
+			th:object="${form}" id="form">
 			<ol class="form-group">
 				<li class="form-group__list">
 					<h3 class="list__title">Selecione o tipo</h3>
@@ -70,7 +70,7 @@
 						<h3 class="list__title">Insira a url</h3>
 					</label>
 					<input type="text" class="link__field" name="link" th:field="*{link}" id="link"
-						onchange="previewImage(event)" pattern="https?://.+">
+						pattern="https?://.+" placeholder="Insira a URL aqui">
 					<div class="msg-error">
 						<small th:errors="*{link}" class="text-danger">Insira a url</small>
 					</div>
@@ -99,6 +99,7 @@
 					<div class="preview__text">
 						<h2>PRÉ VISUALIZAÇÃO DO QR CODE</h2>
 					</div>
+					<img src="${imageBytes}" alt="Qrcode gerado" class="preview__img">
 				</div>
 				<div class="btn-download__content">
 					<button class="btn btn-download disabledBtnDownload" type="submit">Download</button>
@@ -117,6 +118,8 @@
 
 	<!-- Linha inferior direito -->
 	<div class="line line__right-bottom"></div>
+
+	<script src="/js/qrcodegenerator.js"></script>
 </body>
 
 </html>
