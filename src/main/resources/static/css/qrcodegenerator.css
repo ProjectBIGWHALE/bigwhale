@@ -13,13 +13,15 @@ body {
     font-size: 16px;
     padding: 15px;
     margin: 22px 15px;
+    height: 100vh;
+
 }
 
 :is(.qr-code__header, .qr-code__footer) {
     display: flex;
     justify-content: flex-end;
-    margin: 22px 15px;
-    height: 64px;
+    margin: 15px 15px 0;
+    height: 5%;
 }
 
 .btn__home-help {
@@ -35,6 +37,7 @@ body {
 .btn__home-help:hover {
     width: 55px;
     height: 55px;
+    background-color: #25BFBF;
 }
 
 .btn__home-help ion-icon {
@@ -52,7 +55,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 70vh;
+    height: 75%;
+    padding: 22px;
 }
 
 .container__title {
@@ -61,17 +65,22 @@ body {
 
 .form {
     height: 100%;
-    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 26px;
+    gap: 26px;
     justify-items: center;
+}
+
+:is(.form-group, .qr-code__preview) {
+    align-self: start;
 }
 
 .form .form-group {
     width: 100%;
     padding: 0 24px;
     margin: 0 12px;
+    grid-row: 1;
+    grid-column: 1;
 }
 
 .form-group .form-group__list {
@@ -87,6 +96,8 @@ body {
     list-style: none;
     display: flex;
     margin: 12px 0;
+    flex-wrap: wrap;
+    justify-content: start;
 }
 
 .list__items .items__group {
@@ -116,31 +127,48 @@ body {
 .content__img .chromatic-circle {
     width: 60px;
     cursor: crosshair;
+    margin-right: 10px;
 }
 
 .content__img .get-color__field {
     text-align: center;
+    width: 100%;
 }
 
 .color-select__content {
     display: none;
 }
 
-.qr-code__preview{
-    width: 80%;
+.qr-code__preview {
+    width: 100%;
     height: 100%;
+    grid-row: 1;
+    grid-column: 2;
 }
 
-.qr-code__preview .preview__text{
-    height: 50%;
+.qr-code__preview .preview__content {
+    height: 80%;
+    width: 100%;
+    border: 1px dashed #000;
+    background-color: #f2f2f2;
+}
+
+.preview__content .preview__text {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px dashed darkblue;
+    height: 100%;
+    padding: 22px;
 }
 
 
 /*BOTÃO DONWLOAD*/
+.btn-download__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .btn {
     border-radius: 50px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -158,11 +186,11 @@ body {
 .btn-download {
     background: #25BFBF;
     color: #fff;
-    transition: 0.2s;
 }
 
 .btn-download:hover {
     background-color: #158E8E;
+    transition-duration: 0.2s;
 }
 
 .btn.disabledBtnDownload {
@@ -197,3 +225,82 @@ body {
 }
 
 /* Esse calc são feitos de acordo com a padding e margin do body */
+
+
+
+/* Responsividade | media querys */
+
+@media screen and (max-width: 480px) {
+
+    body{
+        padding: 5px;
+    }
+
+    .btn__home-help:hover {
+        width: 45px;
+        height: 45px;
+    }
+
+    .btn__home-help:hover ion-icon {
+        font-size: 30px;
+    }
+
+    .form{
+        gap: 0;
+    }
+
+    .form-group__list {
+        display: flex;
+        align-items: center;
+        margin: 15px 0;
+        flex-direction: column;
+    }
+
+    .items__group{
+        text-align: center;
+    }
+
+    .list-color__content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .content__img {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 816px) {
+    .container__title{
+        margin-bottom: .5rem;
+    }
+
+    .form {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 2fr;
+    }
+
+    .form-group__list{
+        margin: 7px 0;
+    }
+
+    .form .qr-code__preview {
+        grid-row: 2;
+        grid-column: 1;
+        margin-top: 8px;
+    }
+
+    .qr-code__preview .preview__content {
+        height: 80%;
+        width: 80%;
+        margin: auto;
+    }
+
+    .btn{
+        font-size: 1rem;
+        width: 150px;
+        height: 50px;
+        margin-top: 16px;
+    }
+}
