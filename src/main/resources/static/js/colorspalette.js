@@ -1,6 +1,8 @@
 const form = document.getElementById('uploadForm');
 const imageInput = document.getElementById('image');
 const previewImage = document.getElementById('preview');
+const uploadedImage = document.getElementById('uploadedImage');
+const imageBase64 = uploadedImage.getAttribute('data-image-base64');
 
 form.addEventListener('dragover', (event) => {
     event.preventDefault();
@@ -25,6 +27,13 @@ form.addEventListener('drop', (event) => {
 });
 
 function submitForm() {
+    //Oculta o botão de submit
+    document.querySelector(".form-action button").style.display = "none";
+
+    //Mostra o loading
+    document.querySelector("#loadingOverlay").style.display = "block";
+
+    //Envia o formulário
     form.submit();
 }
 
@@ -33,17 +42,14 @@ function displayPreviewImage(imageFile) {
 
     reader.onload = (e) => {
         previewImage.src = e.target.result;
+        if (imageBase64) {
+            var img = document.createElement('img');
+            img.src = 'data:image/png;base64,' + imageBase64;
+            img.style.maxWidth = '500px';
+            img.style.width = '100%';
+            uploadedImage.parentNode.replaceChild(img, uploadedImage);
+        }
     };
 
     reader.readAsDataURL(imageFile);
-}
-
-var uploadedImage = document.getElementById('uploadedImage');
-var imageBase64 = uploadedImage.getAttribute('data-image-base64');
-if (imageBase64) {
-    var img = document.createElement('img');
-    img.src = 'data:image/png;base64,' + imageBase64;
-    img.style.maxWidth = '500px';
-    img.style.width = '100%';
-    uploadedImage.parentNode.replaceChild(img, uploadedImage);
 }

@@ -43,69 +43,73 @@
 					<div class="stage">
 						<h4>1. Selecione o tipo de certificado:</h4>
 						<label>
-							<input type="radio" 
-							th:field="*{worksheet.worksheet}" 
-							value="true" 
-							required /> Participação
+							<input type="radio"
+								   value="true"
+								   required /> Participação
 						</label>
 						<label>
-							<input type="radio" 
-							th:field="*{worksheet.worksheet}" 
-							value="true" 
-							required /> Palestrante
+							<input type="radio"
+								   value="true"
+								   required /> Palestrante
 						</label>
 						<label>
-							<input type="radio" 
-							th:field="*{worksheet.worksheet}" 
-							value="true" 
-							required /> Curso
+							<input type="radio"
+								   value="true"
+								   required /> Curso
 						</label>
-
-						<span th:errors="*{worksheet.worksheet}" class="text-danger"></span>
 					</div>
-
-
 					<div class="stage_2">
 						<h4>2.Preencha as informações do certificado:</h4>
+<<<<<<< HEAD
 						<label class="row" data-tooltip="Importe uma planilha com os nomes (.xlsx)">Nome do(a) participante:
 							<input type="file"/>
 							<div class="instruction"></div>
+=======
+						<label class="row">
+							Lista de participantes (CSV):
+							<input type="file" th:field="*{worksheet.worksheet}" required/>
+>>>>>>> 5820dbaa92e8d224a74e9d19d0f992bd2784c9af
 						</label>
 
 
 						<label class="row">
 							Nome do evento/curso:
-							<input type="text" 
+							<input type="text"
+						    th:field="*{certificate.eventName}"
 							id="event_name"
 							/>
 						</label>
 						<label class="row">
 							Nome do(a) organizador(a) do evento:
-							<input type="text" 
+							<input type="text"
+						    th:field="*{certificate.speakerName}"
 							id="organizing_name"
 							/>
 						</label>
 						<label class="row">
 							Cargo do(a) organizador(a) do evento:
-							<input type="text" 
+							<input type="text"
+						    th:field="*{certificate.speakerRole}"
 							id="organizing_position"
 							/>
 						</label>
 						<label class="row">
 							Carga horária:
-							<input type="number" 
+							<input type="number"
+						    th:field="*{certificate.eventWorkLoad}"
 							id="workload"
 							/>
 						</label>
 						<label class="row">
 							Data do evento/curso:
-							<input type="date" 
+							<input type="date"
+						    th:field="*{certificate.eventDate}"
 							id="event_date"
 							/>
 						</label>
 						<label class="row">
 							Data de emissão do certificado:
-							<input type="date" 
+							<input type="date"
 							id="certificate_date"
 							/>
 						</label>
@@ -113,7 +117,12 @@
 							Local de emissão do certificado:
 							<input type="text" 
 							id="local_date"
+<<<<<<< HEAD
 							/>
+=======
+						    th:field="*{certificate.eventLocale}"
+							oninput="updateCertificateText()"/>
+>>>>>>> 5820dbaa92e8d224a74e9d19d0f992bd2784c9af
 						</label>
 
 						<span th:errors="*{certificate.certificateModelId}" class="text-danger"></span>
@@ -127,15 +136,13 @@
 						<h4>3. Escolha o modelo do certificado:</h4>
 						
 						<label>
-							<input type="radio" th:field="*{certificate.eventName}" value="true" required /> 
+							<input type="radio" th:field="*{certificate.certificateModelId}" th:value="1" required />
 							<img class="ex_certificado" src="/images/ex_certificado1.PNG" alt="Exemplo de certificado 1">
 						</label>
 						<label>
-							<input type="radio" th:field="*{certificate.eventName}" value="true" required /> 
+							<input type="radio" th:field="*{certificate.certificateModelId}" th:value="2" required />
 							<img class="ex_certificado" src="/images/ex_certificado2.jpg" alt="Exemplo de certificado 1">
 						</label>
-
-						<span th:errors="*{certificate.eventName}" class="text-danger"></span>
 					</div>
 
 					<div class="stage">
@@ -160,7 +167,7 @@
 	<!--BOTÕES HOME E AJUDA-->
 
 	<div id="button-home">
-		<a href="/#seguranca">
+		<a href="/#documentos">
 			<ion-icon name="return-down-back-outline"></ion-icon>
 		</a>
 	</div>
