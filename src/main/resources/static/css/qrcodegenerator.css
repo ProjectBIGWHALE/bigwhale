@@ -13,57 +13,23 @@ body {
     font-size: 16px;
     padding: 15px;
     margin: 22px 15px;
-    height: 100vh;
 
 }
-
-:is(.qr-code__header, .qr-code__footer) {
-    display: flex;
-    justify-content: flex-end;
-    margin: 15px 15px 0;
-    height: 5%;
-}
-
-.btn__home-help {
-    background: #50c878;
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    flex-shrink: 0;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    transition: width 0.2s, height 0.2s, font-size 0.2s;
-}
-
-.btn__home-help:hover {
-    width: 55px;
-    height: 55px;
-}
-
-.btn__home-help ion-icon {
-    padding: 7px;
-    color: #0d0d0d;
-    font-size: 30px;
-    transition: font-size 0.2s;
-}
-
-.btn__home-help:hover ion-icon {
-    font-size: 40px;
-}
-
 .qr-code__container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 75%;
+    margin-top: 32px;
     padding: 22px;
 }
 
 .container__title {
-    margin-bottom: 2.25rem;
+    margin-bottom: 1rem;
 }
 
 .form {
     height: 100%;
+    max-height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 26px;
@@ -145,8 +111,8 @@ body {
     grid-column: 2;
 }
 
-.qr-code__preview .preview__content {
-    height: 80%;
+.preview__content {
+    height: 500px;
     width: 100%;
     border: 1px dashed #000;
     background-color: #f2f2f2;
@@ -210,22 +176,21 @@ body {
 /* exibir a linha superior esquerdo */
 .line__left-top {
     border-left-style: solid;
-    border-top-style: dashed;
-    right: calc(50vw - 30px);
+    border-top-style: dotted;
+    border-block-start-width: 4px;
+    right: calc(50vw - 39px);
     bottom: calc(50vh - 37px);
 }
 
 /* exibir a linha inferior direito */
 .line__right-bottom {
-    border-bottom-style: dashed;
+    border-bottom-style: dotted;
     border-right-style: solid;
-    left: calc(50vw - 30px);
+    border-block-end-width: 4px;
+    left: calc(50vw - 39px);
     top: calc(50vh - 37px);
 }
-
 /* Esse calc são feitos de acordo com a padding e margin do body */
-
-
 
 /* Responsividade | media querys */
 
@@ -233,15 +198,6 @@ body {
 
     body{
         padding: 5px;
-    }
-
-    .btn__home-help:hover {
-        width: 45px;
-        height: 45px;
-    }
-
-    .btn__home-help:hover ion-icon {
-        font-size: 30px;
     }
 
     .form{
@@ -268,11 +224,15 @@ body {
     .content__img {
         flex-direction: column;
     }
+
+    .qr-code__preview .preview__content{
+        height: 60%;
+    }
 }
 
 @media screen and (max-width: 816px) {
     .container__title{
-        margin-bottom: .5rem;
+        margin-bottom: 0;
     }
 
     .form {
@@ -288,11 +248,13 @@ body {
         grid-row: 2;
         grid-column: 1;
         margin-top: 8px;
+        width: 90%;
+        height: 60%;
     }
 
-    .qr-code__preview .preview__content {
-        height: 80%;
-        width: 80%;
+    .preview__content {
+        height: 100%;
+        width: 100%;
         margin: auto;
     }
 
@@ -302,4 +264,44 @@ body {
         height: 50px;
         margin-top: 16px;
     }
+}
+
+
+/*BOTÃO DE HOME E AJUDA*/
+.btn__home-help {
+    background: #50c878;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    transition: width 0.2s, height 0.2s, font-size 0.2s;
+    position: fixed;
+    right: 47px;
+}
+
+.btn__home-help:hover {
+    width: 55px;
+    height: 55px;
+}
+
+.btn__home-help ion-icon {
+    padding: 7px;
+    color: #0d0d0d;
+    font-size: 30px;
+    transition: font-size 0.2s;
+}
+
+.btn__home-help:hover ion-icon {
+    font-size: 40px;
+}
+
+.button-home {
+    text-align: center;
+    top: 47px;
+}
+
+.button-help {
+    text-align: right;
+    bottom: 47px;
 }
