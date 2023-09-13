@@ -254,17 +254,9 @@ header {
   
 }
 
-
 .colaboradores img:hover + .nomeColoborador {
   display: block;
 }
-
-
-
-
-
-
-
 
 /*BOTÃO DE AJUDA*/
 #button {

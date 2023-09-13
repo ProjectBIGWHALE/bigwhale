@@ -67,53 +67,53 @@
 
 					<div class="stage_2">
 						<h4>2.Preencha as informações do certificado:</h4>
-						<label class="row">
-							Nome do(a) participante:
-							<input type="text" 
-							id="participant_name" 
-							oninput="updateCertificateText()" />
+						<label class="row" data-tooltip="Importe uma planilha com os nomes (.xlsx)">Nome do(a) participante:
+							<input type="file"/>
+							<div class="instruction"></div>
 						</label>
+
+
 						<label class="row">
 							Nome do evento/curso:
 							<input type="text" 
 							id="event_name"
-							oninput="updateCertificateText()"/>
+							/>
 						</label>
 						<label class="row">
 							Nome do(a) organizador(a) do evento:
 							<input type="text" 
 							id="organizing_name"
-							oninput="updateCertificateText()"/>
+							/>
 						</label>
 						<label class="row">
 							Cargo do(a) organizador(a) do evento:
 							<input type="text" 
 							id="organizing_position"
-							oninput="updateCertificateText()"/>
+							/>
 						</label>
 						<label class="row">
 							Carga horária:
 							<input type="number" 
 							id="workload"
-							oninput="updateCertificateText()"/>
+							/>
 						</label>
 						<label class="row">
 							Data do evento/curso:
 							<input type="date" 
 							id="event_date"
-							oninput="updateCertificateText()"/>
+							/>
 						</label>
 						<label class="row">
 							Data de emissão do certificado:
 							<input type="date" 
 							id="certificate_date"
-							oninput="updateCertificateText()"/>
+							/>
 						</label>
 						<label class="row">
 							Local de emissão do certificado:
 							<input type="text" 
 							id="local_date"
-							oninput="updateCertificateText()"/>
+							/>
 						</label>
 
 						<span th:errors="*{certificate.certificateModelId}" class="text-danger"></span>
@@ -139,14 +139,14 @@
 					</div>
 
 					<div class="stage">
-						<h4>4. Edite ou use o texto padrão do certificado:</h4>
-						<textarea id="text_certificado" cols="30" rows="5" required>
+						<h4>4. Texto padrão do certificado:</h4>
+						<p id="text_certificado">
 	Certificamos que [Nome do Participante] participou do evento [Nome do Evento], realizado no dia [Data do Evento], com uma carga horária total de [Carga Horária] horas.
-	Este certificado é concedido como reconhecimento pela dedicação e comprometimento de [Nome do Participante] em aprimorar suas habilidades e conhecimentos na área abordada pelo evento.
-	Local/Data: [Local de Emissão do Certificado], [Data de Emissão do Certificado].
-	Assinatura: [Nome do Organizador]
-	Cargo: [Cargo do Organizador]
-						</textarea>
+	<br>Este certificado é concedido como reconhecimento pela dedicação e comprometimento de [Nome do Participante] em aprimorar suas habilidades e conhecimentos na área abordada pelo evento.
+	<br>Local/Data: [Local de Emissão do Certificado], [Data de Emissão do Certificado].
+	<br>Assinatura: [Nome do Organizador]
+	<br>Cargo: [Cargo do Organizador]
+						</p>
 					</div>
 				</div>
 			</div>

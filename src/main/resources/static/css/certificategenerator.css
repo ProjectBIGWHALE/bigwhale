@@ -56,7 +56,25 @@ p {
     margin-bottom: 10px;
 }
 
+[data-tooltip]:after {
+    display: none;
+    position: absolute;
+    padding: 5px;
+    border-radius: 3px;
+    left: 40px;
+    top: 230px;
+    content: attr(data-tooltip);
+    white-space: nowrap;
+    background-color: #0095ff;
+    color: White;
+  }
+  
+[data-tooltip]:hover:after {
+    display: block;
+}
+
 .stage_2 input[type="text"],
+.stage_2 input[type="file"],
 .stage_2 input[type="number"],
 .stage_2 input[type="date"] {
     flex: 1;
@@ -69,6 +87,7 @@ p {
 }
 
 .stage #text_certificado{
+    padding: 0 17px;
     width: 500px;
     height: auto;
     min-height: 150px;
