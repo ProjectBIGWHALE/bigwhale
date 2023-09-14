@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.whale.web.documents.certificategenerator.utils.ValidateFiledsNullOfCertificatesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class CreateCertificateService {
 	EditSVGFiles createCerificateService;
 	
 	public byte[] createCertificates(Certificate certificate, List<String> names) throws Exception {
-
+		ValidateFiledsNullOfCertificatesUtil.validate(certificate);
 		String template = selectPatchCertificateModel(certificate.getCertificateModelId());
 		Random random = new Random();
 	    List<String> listCertificate = createCerificateService.cretateListCertificate(certificate, names, template);

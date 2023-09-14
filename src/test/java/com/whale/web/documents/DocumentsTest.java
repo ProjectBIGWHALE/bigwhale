@@ -207,6 +207,7 @@ public class DocumentsTest {
         worksheet.setWorksheet(file);
         Certificate certificate = new Certificate();
         certificate.setCertificateModelId(1L);
+		certificate.setEventName("ABC dos DEVS");
 		certificate.setCertificateTypeEnum(CertificateTypeEnum.COURCE);
 		certificate.setTextOfCertificate("abcd");
 		certificate.setEventLocale("São Paulo");
