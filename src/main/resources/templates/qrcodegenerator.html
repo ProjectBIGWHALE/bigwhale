@@ -28,9 +28,6 @@
 </head>
 
 <body>
-	<!-- Linha superior esquerdo -->
-	<div class="line line__left-top"></div>
-
 	<header class="qr-code__header">
 		<!-- BOTÃO HOME -->
 		<div class="button-home btn__home-help">
@@ -43,50 +40,70 @@
 		<h1 class="container__title" role="hea" aria-level="1">Cria QR Code</h1>
 		<form th:action="@{/documents/qrcodegenerator}" class="form" method="POST" enctype="multipart/form-data"
 			th:object="${form}" id="form">
-			<ol class="form-group">
+			<ol class="qr-code__list">
 				<li class="form-group__list">
 					<h3 class="list__title">Selecione o tipo</h3>
-					<ul class="list__items">
+					<ul class="form-group list__items" id="ul-types">
 						<li class="items__group">
-							<input type="checkbox" name="email" id="email">
+							<input type="checkbox" name="types" id="email">
 							<label for="email">Email</label>
 						</li>
 						<li class="items__group">
-							<input type="checkbox" name="whatsapp" id="whatsapp">
+							<input type="checkbox" name="types" id="whatsapp">
 							<label for="whatsapp">Whatsapp</label>
 						</li>
 						<li class="items__group">
-							<input type="checkbox" name="link-checked" id="link-checked">
+							<input type="checkbox" name="types" id="link-checked">
 							<label for="link-checked">Link</label>
 						</li>
 						<li class="items__group">
-							<input type="checkbox" name="pdf" id="pdf">
+							<input type="checkbox" name="types" id="pdf">
 							<label for="pdf">PDF</label>
 						</li>
 					</ul>
+					<div class="danger">
+						<small id="checkbox-error">
+							Por favor, selecione alguma das opções.
+						</small>
+					</div>
 				</li>
-				<li class="form-group__list list-url__content">
-					<label for="link" class="link__label">
-						<h3 class="list__title">Insira a url</h3>
-					</label>
-					<input type="text" class="link__field" name="link" th:field="*{link}" id="link"
-						pattern="https?://.+" placeholder="Insira a URL aqui">
-					<div class="msg-error">
-						<small th:errors="*{link}" class="text-danger">Insira a url</small>
+				<li class="form-group__list">
+					<h3 class="list__title">Insira a url</h3>
+					<div class="form-group ">
+						<label for="link" class="form-group__title">
+							URL: 
+						</label>
+						<input type="text" class="link__field" name="link" th:field="*{link}" id="link"
+							pattern="https?://.+" placeholder="https://mybigwhale.com">
+						<div class="msg-error">
+						</div>
+					</div>
+					<div class="danger">
+						<small id="link-error">
+							Por favor, informe uma url ou link.
+						</small>
 					</div>
 				</li>
 				<li class="form-group__list">
 					<div class="list-color__content">
 						<h3 class="list__title">Escolha a cor do QR Code:</h3>
-						<div class="content__img">
-							<label for="color-select">
-								<img src="/images/circulo-cromatico.png" alt="Círculo cromático"
-									class="chromatic-circle">
-							</label>
+						<div class="form-group content__img">
+							<label for="get-color" class="form-group__title">Cor: </label>
+							<input type="text" id="get-color" maxlength="22" name="get-color" class="field__input-color"
+							placeholder="Red, #FF0000, rg(255,0,0)" >
 							<div class="get-color__field">
-								<label for="get-color">Digite o nome ou o código da cor</label>
-								<input type="text" id="get-color" name="get-color" class="field__input-color" placeholder="Insira o nome ou código da cor">
+								<label for="color-select" class="chromatic-circle__label">
+									<img src="/images/circulo-cromatico.png" alt="Círculo cromático"
+									class="chromatic-circle">
+								</label>
 							</div>
+							<div class="msg-error">
+							</div>
+						</div>
+						<div class="danger">
+							<small id="color-error">
+								Por favor, informe uma cor ou escolha clicando na imagem.
+							</small>
 						</div>
 					</div>
 					<div class="color-select__content">
@@ -99,11 +116,11 @@
 					<div class="preview__text">
 						<h2>PRÉ VISUALIZAÇÃO DO QR CODE</h2>
 					</div>
-					<img src="/" alt="Qrcode gerado" class="preview__img" style="display: none;">
+					<div class="preview__bg"> </div>
 					<!-- imagem que será exibida no préview -->
 				</div>
 				<div class="btn-download__content">
-					<button class="btn btn-download disabledBtnDownload" type="submit">Download</button>
+					<button class="btn btn-download disabledBtnDownload" id="download" type="submit">Download</button>
 				</div>
 			</div>
 		</form>
@@ -117,8 +134,16 @@
 		</div>
 	</footer>
 
-	<!-- Linha inferior direito -->
-	<div class="line line__right-bottom"></div>
+	<!--Linhas superiores-->
+	<div class="linhas-esquerda">
+		<hr class="vertical-esq">
+		<hr class="horizontal-esq">
+	</div>
+	<!--Linhas inferiores-->
+	<div class="linhas-direita">
+		<hr class="vertical-dir">
+		<hr class="horizontal-dir">
+	</div>
 
 	<script src="/js/qrcodegenerator.js"></script>
 </body>
