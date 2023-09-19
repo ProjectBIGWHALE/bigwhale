@@ -14,10 +14,8 @@ public class Certificate {
     private String speakerRole;
     private String eventWorkLoad;
     private String eventDate;
-    private LocalDateTime dateOfEmission;
     private String eventLocale;
     private Long certificateModelId;
-    private String textOfCertificate;
 
     public CertificateTypeEnum getCertificateTypeEnum() {
         return certificateTypeEnum;
@@ -67,27 +65,12 @@ public class Certificate {
         this.eventDate = eventDate;
     }
 
-    public LocalDateTime getDateOfEmission() {
-        return dateOfEmission;
-    }
-
-    public void setDateOfEmission(LocalDateTime dateOfEmission) {
-        this.dateOfEmission = dateOfEmission;
-    }
-
     public String getEventLocale() {
         return eventLocale;
     }
 
     public void setEventLocale(String eventLocale) {
         this.eventLocale = eventLocale;
-    }
-    public String getTextOfCertificate() {
-        return textOfCertificate;
-    }
-
-    public void setTextOfCertificate(String textOfCertificate) {
-        this.textOfCertificate = textOfCertificate;
     }
 
     public Long getCertificateModelId() {

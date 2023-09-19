@@ -61,7 +61,7 @@
 					<div class="stage_2">
 						<h4>2.Preencha as informações do certificado:</h4>
 						<label class="row" data-tooltip="Importe uma planilha com os nomes (.xlsx)">Nome do(a) participante:
-							<input type="file"/>
+							<input type="file" th:field="*{worksheet.worksheet}"/>
 							<div class="instruction"></div>
 						</label>
 
@@ -111,6 +111,7 @@
 							Local de emissão do certificado:
 							<input type="text" 
 							id="local_date"
+						    th:field="*{certificate.eventLocale}"
 							/>
 						</label>
 

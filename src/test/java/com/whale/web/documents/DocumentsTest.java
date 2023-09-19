@@ -215,7 +215,7 @@ public class DocumentsTest {
 		certificate.setEventWorkLoad("20");
 		certificate.setSpeakerName("Ronnyscley");
 		certificate.setSpeakerRole("CTO");
-		certificate.setDateOfEmission(LocalDateTime.now());
+		certificate.setDateOfEmission("2023-09-12");
 
         certificateGeneratorForm.setCertificate(certificate);
         certificateGeneratorForm.setWorksheet(worksheet);
@@ -241,13 +241,11 @@ public class DocumentsTest {
         Certificate certificate = new Certificate();
 		certificate.setCertificateModelId(1L);
 		certificate.setCertificateTypeEnum(CertificateTypeEnum.COURCE);
-		certificate.setTextOfCertificate("abcd");
 		certificate.setEventLocale("São Paulo");
 		certificate.setEventDate("20/10/2023");
 		certificate.setEventWorkLoad("20");
 		certificate.setSpeakerName("Ronnyscley");
 		certificate.setSpeakerRole("CTO");
-		certificate.setDateOfEmission(LocalDateTime.now());
 
         certificateGeneratorForm.setCertificate(certificate);
         certificateGeneratorForm.setWorksheet(worksheet);
