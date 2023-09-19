@@ -60,15 +60,9 @@
 					</div>
 					<div class="stage_2">
 						<h4>2.Preencha as informações do certificado:</h4>
-<<<<<<< HEAD
 						<label class="row" data-tooltip="Importe uma planilha com os nomes (.xlsx)">Nome do(a) participante:
 							<input type="file"/>
 							<div class="instruction"></div>
-=======
-						<label class="row">
-							Lista de participantes (CSV):
-							<input type="file" th:field="*{worksheet.worksheet}" required/>
->>>>>>> 5820dbaa92e8d224a74e9d19d0f992bd2784c9af
 						</label>
 
 
@@ -80,14 +74,14 @@
 							/>
 						</label>
 						<label class="row">
-							Nome do(a) organizador(a) do evento:
+							Nome do(a) organizador(a):
 							<input type="text"
 						    th:field="*{certificate.speakerName}"
 							id="organizing_name"
 							/>
 						</label>
 						<label class="row">
-							Cargo do(a) organizador(a) do evento:
+							Cargo do(a) organizador(a):
 							<input type="text"
 						    th:field="*{certificate.speakerRole}"
 							id="organizing_position"
@@ -117,12 +111,7 @@
 							Local de emissão do certificado:
 							<input type="text" 
 							id="local_date"
-<<<<<<< HEAD
 							/>
-=======
-						    th:field="*{certificate.eventLocale}"
-							oninput="updateCertificateText()"/>
->>>>>>> 5820dbaa92e8d224a74e9d19d0f992bd2784c9af
 						</label>
 
 						<span th:errors="*{certificate.certificateModelId}" class="text-danger"></span>
