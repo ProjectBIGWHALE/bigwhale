@@ -209,13 +209,11 @@ public class DocumentsTest {
         certificate.setCertificateModelId(1L);
 		certificate.setEventName("ABC dos DEVS");
 		certificate.setCertificateTypeEnum(CertificateTypeEnum.COURCE);
-		certificate.setTextOfCertificate("abcd");
 		certificate.setEventLocale("São Paulo");
 		certificate.setEventDate("2023-09-12");
 		certificate.setEventWorkLoad("20");
 		certificate.setSpeakerName("Ronnyscley");
 		certificate.setSpeakerRole("CTO");
-		certificate.setDateOfEmission("2023-09-12");
 
         certificateGeneratorForm.setCertificate(certificate);
         certificateGeneratorForm.setWorksheet(worksheet);
