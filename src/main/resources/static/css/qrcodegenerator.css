@@ -144,7 +144,7 @@ input::placeholder{
 
 .preview__content {
     position: relative;
-    height: 500px;
+    height: 350px;
     width: 100%;
     border: 1px dashed #000;
     background-color: #f2f2f2;
