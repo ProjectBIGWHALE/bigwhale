@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.opencsv.CSVReader;
-import com.whale.web.documents.certificategenerator.model.Certificate;
 
 @Service
 public class ProcessWorksheetService {

@@ -1,7 +1,6 @@
 package com.whale.web.documents;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -16,7 +15,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -27,6 +25,8 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -100,15 +100,19 @@ public class DocumentsTest {
 	}
 
 
-	@Test
-	void shouldReturnTheHTMLCompactConverterForm() throws Exception {
-		
-		URI uri = new URI("/documents/compactconverter");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				status().is(200));
-		
-	}
-	
+	@ParameterizedTest
+    @CsvSource({
+        "/documents/compactconverter",
+        "/documents/textextract",
+        "/documents/filecompressor",
+        "/documents/qrcodegenerator",
+        "/documents/certificategenerator/",
+        "/documents/imageconverter"
+    })
+    void testWithDifferentURIs(String uri) throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(uri))
+               .andExpect(status().is(200));
+    }
 
 	
     @Test
@@ -128,13 +132,6 @@ public class DocumentsTest {
                 .andExpect(MockMvcResultMatchers.content().bytes(testFile.getBytes()));
     }
 
-    @Test
-    void textExtractshouldReturnTheHTMLForm() throws Exception {
-
-        URI uri = new URI("/documents/textextract");
-        mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-                status().is(200));
-    }
 
     @Test
     void textExtractedShouldReturnTheHTMLForm() throws Exception {
@@ -158,13 +155,7 @@ public class DocumentsTest {
         verify(textExtractService, times(1)).extractTextFromImage(any());
     }
 
-    @Test
-    void compressFilePageShouldReturnTheHTMLForm() throws Exception {
 
-        URI uri = new URI("/documents/filecompressor");
-        mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-                status().is(200));
-    }
 
     @Test
     void compressFileShouldReturnTheFileZip() throws Exception {
@@ -186,14 +177,7 @@ public class DocumentsTest {
         verify(compressorService, times(1)).compressFile(any());
     }
     
-    @Test
-	void shouldReturnTheHTMLCertificateGeneratorForm() throws Exception {
-		
-		URI uri = new URI("/documents/certificategenerator/");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				status().is(200));
-		
-	}
+
     
 	@Test
     void shouldReturnTheCertificatesStatusCode200() throws Exception {
@@ -255,14 +239,7 @@ public class DocumentsTest {
                 .andExpect(status().is(302));
     }
     
-    @Test
-	void shouldReturnTheQRCodeGeneratorHTMLForm() throws Exception {
-		
-		URI uri = new URI("/documents/qrcodegenerator");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				status().is(200));
-		
-	}
+
     
     @Test
     void shouldReturnAValidQRCodeLink() throws Exception {
@@ -386,12 +363,7 @@ public class DocumentsTest {
 				.andExpect(status().is(302));
 	}
 
-	@Test
-	void shouldReturnImageConverterHTML() throws Exception {
-		URI uri = new URI("/documents/imageconverter");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				status().is(200));
-	}
+
 
 
 	@Test

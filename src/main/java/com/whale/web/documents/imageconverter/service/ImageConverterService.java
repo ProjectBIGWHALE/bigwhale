@@ -1,9 +1,7 @@
 package com.whale.web.documents.imageconverter.service;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
