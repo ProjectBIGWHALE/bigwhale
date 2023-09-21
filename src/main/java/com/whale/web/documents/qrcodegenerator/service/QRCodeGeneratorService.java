@@ -50,5 +50,23 @@ public class QRCodeGeneratorService {
         }
 		
 	}
+
+
+    public byte[] generateWhatsAppLinkQRCode(String phoneNumber, String text) throws Exception {
+        if (phoneNumber == null || text == null) {
+            throw new IllegalArgumentException("Os argumentos não podem ser nulos.");
+        }
+        String whatsappLink = "https://wa.me/" + phoneNumber + "/?text=" + text.replace(" ", "+");
+        return generateQRCode(whatsappLink);
+    }
+
+    public byte[] generateEmailLinkQRCode(String email, String titleEmail, String textEmail) throws Exception {
+        if (email == null || titleEmail == null || textEmail == null) {
+            throw new IllegalArgumentException("Os argumentos não podem ser nulos.");
+        }
+        String emailLink = "mailto:" + email + "?subject=" + textEmail + "&body=" + titleEmail;
+        return generateQRCode(emailLink);
+    }
+    
 	
 }

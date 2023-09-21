@@ -265,41 +265,134 @@ public class DocumentsTest {
 	}
     
     @Test
-    void shouldReturnAValidQRCode() throws Exception {
+    void shouldReturnAValidQRCodeLink() throws Exception {
         URI uri = new URI("/documents/qrcodegenerator");
         
         QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
-        
-        String link = "https://google.com.br";
-        qrCodeGeneratorForm.setLink(link);
-        
-        mockMvc.perform(MockMvcRequestBuilders.post(uri)
-        		.param("link", qrCodeGeneratorForm.getLink()))
-        		.andExpect(status().is(200))
-		        .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment")))
-		        .andExpect(content().contentType(MediaType.IMAGE_PNG));
+        qrCodeGeneratorForm.setLink("https://google.com.br");
+		qrCodeGeneratorForm.setDataType("link");
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("link", qrCodeGeneratorForm.getLink())
+						.param("dataType", qrCodeGeneratorForm.getDataType()))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=\"QRCode.png\"")))
+				.andExpect(content().contentType(MediaType.IMAGE_PNG));
 	}
-    
+
 	@Test
-    void shouldReturnAPageRedirectionStatusCode302() throws Exception {
-        URI uri = new URI("/documents/qrcodegenerator");
-        
-        QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
-        
-        String link = "";
-        qrCodeGeneratorForm.setLink(link);
-        
-        mockMvc.perform(MockMvcRequestBuilders.post(uri)
-        		.param("link", qrCodeGeneratorForm.getLink()))
-        		.andExpect(status().is(302));
+	void nullLinkThatReturnStatus302_QRCodeLink() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setLink(null);
+		qrCodeGeneratorForm.setDataType("link");
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("link", qrCodeGeneratorForm.getLink())
+						.param("dataType", qrCodeGeneratorForm.getDataType()))
+				.andExpect(status().is(302));
 	}
-	
+
+	@Test
+	void shouldReturnAValidQRCodeEmail() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setDataType("email");
+		qrCodeGeneratorForm.setEmail("erasmo.ads.tech@gmail.com");
+		qrCodeGeneratorForm.setTitleEmail("Teste");
+		qrCodeGeneratorForm.setTextEmail("Este é um teste de geração QRCode para envio de email");
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("email", qrCodeGeneratorForm.getEmail())
+						.param("titleEmail", qrCodeGeneratorForm.getTitleEmail())
+						.param("textEmail", qrCodeGeneratorForm.getTextEmail()))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=\"QRCode.png\"")))
+				.andExpect(content().contentType(MediaType.IMAGE_PNG));
+	}
+
+
+	@Test
+	void nullEmailThatReturnStatus302_QRCodeEmail() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setDataType("email");
+		qrCodeGeneratorForm.setEmail(null);
+		qrCodeGeneratorForm.setTitleEmail(null);
+		qrCodeGeneratorForm.setTextEmail(null);
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("email", qrCodeGeneratorForm.getEmail())
+						.param("titleEmail", qrCodeGeneratorForm.getTitleEmail())
+						.param("textEmail", qrCodeGeneratorForm.getTextEmail()))
+				.andExpect(status().is(302));
+	}
+
+
+	@Test
+	void shouldReturnAValidQRCodeWhatsapp() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setDataType("whatsapp");
+		qrCodeGeneratorForm.setPhoneNumber("5527997512017");
+		qrCodeGeneratorForm.setText("Teste de QRCODE no envio de mensagem ao whatsapp");
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("phoneNumber", qrCodeGeneratorForm.getPhoneNumber())
+						.param("text", qrCodeGeneratorForm.getText()))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=\"QRCode.png\"")))
+				.andExpect(content().contentType(MediaType.IMAGE_PNG));
+	}
+
+
+	@Test
+	void nullWhatsappThatReturnStatus302_QRCodeWhatsapp() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setDataType("whatsapp");
+		qrCodeGeneratorForm.setPhoneNumber(null);
+		qrCodeGeneratorForm.setText(null);
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("phoneNumber", qrCodeGeneratorForm.getPhoneNumber())
+						.param("text", qrCodeGeneratorForm.getText()))
+				.andExpect(status().is(302));
+	}
+
+
+	@Test
+	void nullDataTypeThatReturnStatus302_QRCode() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setDataType(null);
+		qrCodeGeneratorForm.setPhoneNumber("5527997512017");
+		qrCodeGeneratorForm.setText("Teste de QRCODE no envio de mensagem ao whatsapp");
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("phoneNumber", qrCodeGeneratorForm.getPhoneNumber())
+						.param("text", qrCodeGeneratorForm.getText()))
+				.andExpect(status().is(302));
+	}
+
 	@Test
 	void shouldReturnImageConverterHTML() throws Exception {
 		URI uri = new URI("/documents/imageconverter");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
 				status().is(200));
 	}
+
 
 	@Test
 	void testToConvertAndDownloadImageSuccessfully() throws Exception {

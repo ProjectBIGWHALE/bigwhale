@@ -198,10 +198,21 @@ public class DocumentsController {
 	public String qrCodeGenerator(QRCodeGeneratorForm qrCodeGeneratorForm, HttpServletResponse response) throws IOException{
 		
 		try {
-			byte[] processedImage = qrCodeGeneratorService.generateQRCode(qrCodeGeneratorForm.getLink());
+			var processedImage = new byte[0];
+			switch (qrCodeGeneratorForm.getDataType()) {
+				case "link" -> processedImage = qrCodeGeneratorService
+						.generateQRCode(qrCodeGeneratorForm.getLink());
+				case "whatsapp" -> processedImage = qrCodeGeneratorService
+						.generateWhatsAppLinkQRCode(qrCodeGeneratorForm.getPhoneNumber(), qrCodeGeneratorForm.getText());
+				case "email" -> processedImage = qrCodeGeneratorService
+						.generateEmailLinkQRCode(qrCodeGeneratorForm.getEmail(), qrCodeGeneratorForm.getTextEmail(), qrCodeGeneratorForm.getTitleEmail());
+				default -> {
+					return "redirect:/documents/qrcodegenerator";
+				}
+			}
 
 	        response.setContentType("image/png");
-	        response.setHeader("Content-Disposition", "attachment; filename=\"ModifiedImage.png\"");
+	        response.setHeader("Content-Disposition", "attachment; filename=\"QRCode.png\"");
 	        response.setHeader("Cache-Control", "no-cache");
 
 	        try (OutputStream os = response.getOutputStream()) {
@@ -213,9 +224,9 @@ public class DocumentsController {
 		} catch(Exception e) {
 			return "redirect:/documents/qrcodegenerator";
 		}
-		
 		return null;
 	}
+
 	
 	@GetMapping("/certificategenerator")
 	public String certificateGenerator(Model model) {
