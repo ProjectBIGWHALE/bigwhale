@@ -253,7 +253,7 @@ public class DocumentsTest {
 						.param("link", qrCodeGeneratorForm.getLink())
 						.param("dataType", qrCodeGeneratorForm.getDataType()))
 				.andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=\"QRCode.png\"")))
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=QRCode.png")))
 				.andExpect(content().contentType(MediaType.IMAGE_PNG));
 	}
 
@@ -287,7 +287,7 @@ public class DocumentsTest {
 						.param("titleEmail", qrCodeGeneratorForm.getTitleEmail())
 						.param("textEmail", qrCodeGeneratorForm.getTextEmail()))
 				.andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=\"QRCode.png\"")))
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=QRCode.png")))
 				.andExpect(content().contentType(MediaType.IMAGE_PNG));
 	}
 
@@ -325,7 +325,7 @@ public class DocumentsTest {
 						.param("phoneNumber", qrCodeGeneratorForm.getPhoneNumber())
 						.param("text", qrCodeGeneratorForm.getText()))
 				.andExpect(status().isOk())
-				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=\"QRCode.png\"")))
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=QRCode.png")))
 				.andExpect(content().contentType(MediaType.IMAGE_PNG));
 	}
 
