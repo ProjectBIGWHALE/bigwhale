@@ -188,7 +188,7 @@ public class DocumentsController {
 	
 
 	@PostMapping("/qrcodegenerator")
-	public String qrCodeGenerator(QRCodeGeneratorForm qrCodeGeneratorForm, HttpServletResponse response) throws IOException{
+	public String qrCodeGenerator(@ModelAttribute("form") QRCodeGeneratorForm qrCodeGeneratorForm, HttpServletResponse response) throws IOException{
 		
 		try {
 			byte[] bytes;
@@ -205,7 +205,7 @@ public class DocumentsController {
 			}
 
 	        response.setContentType("image/png");
-	        response.setHeader("Content-Disposition", "attachment; filename=\"QRCode.png\"");
+	        response.setHeader("Content-Disposition", "attachment; filename=QRCode.png");
 	        response.setHeader("Cache-Control", "no-cache");
 
 	        OutputStream outputStream = response.getOutputStream();
