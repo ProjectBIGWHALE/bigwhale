@@ -336,13 +336,6 @@ input::placeholder{
     transition-duration: 0.2s;
 }
 
-.btn.disabledBtnDownload {
-    background-color: #327070;
-    color: #c0b9b9;
-    cursor: unset;
-}
-
-
 /*BOTÃO DE HOME E AJUDA*/
 .btn__home-help {
     background: #50c878;
@@ -443,14 +436,6 @@ input::placeholder{
     right: 38px;
 }
 
-.danger{
-    text-align: center;
-    color: #f00 !important;
-}
-
-.danger small{
-    display: none;
-}
 
 /* Responsividade | media querys */
 

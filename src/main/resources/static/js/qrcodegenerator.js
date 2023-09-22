@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const urlLink = document.querySelector("#link");
   const color = document.querySelector("#get-color");
   const colorSelect = document.querySelector("#color-select");
-  const btnSubmit = document.querySelector("#btnSubmit");
   const ulTypes = document.querySelector("#ul-types");
   const types = document.querySelectorAll("input[type='radio']");
   const formGroupLink = document.querySelector("#form-group-link");
@@ -12,55 +11,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   ulTypes.addEventListener("change", () => {
-    validationField(isChecked(types), "radio-required");
-    enabledBtnDownload();
+    isChecked(types)
   });
 
   color.addEventListener("change", () => {
     onChangeTextColor(color.value, color);
   });
-  color.addEventListener("blur", () => {
-    validationField(color.value.length, "color-required");
-    validationField(!validationColor(color.value, color), 'color-error');
-    enabledBtnDownload();
-  });
 
-  urlLink.addEventListener("blur", (e) => {
-    const urlValue = e.target.value;
-    validationField(urlValue.length > 0, "link-required");
-    enabledBtnDownload();
-  });
+  urlLink.addEventListener("blur", () => {
+    isChecked(types)
+});
 
   colorSelect.addEventListener("change", (e) => {
     const colorValue = e.target.value;
     color.value = colorValue;
     onChangeTextColor(colorValue, color);
-    validationField(colorValue.length > 0, "color-error");
-    enabledBtnDownload();
   });
-
-  //função para verficar se os inputs estão vazios
-  function isValid() {
-    return (
-      isChecked(types) && urlLink.value.length > 0 && color.value.length > 0
-    );
-  }
-
-  //função para habilitar o button download
-  function enabledBtnDownload() {
-    return isValid()
-      ? btnSubmit.classList.remove("disabledBtnDownload")
-      : btnSubmit.classList.add("disabledBtnDownload");
-  }
-
-  // btnDownload.addEventListener("click", (e) => {
-  //   if (!isValid()) {
-  //     e.preventDefault();
-  //     validationField(isChecked(types), "radio-required");
-  //     validationField(urlLink.value.length > 0, "link-required");
-  //     validationField(color.value.length > 0, "color-required");
-  //   }
-  // });
   
   //Função para adicionar cor ao texto de input Cor
   function onChangeTextColor(colorValue, inputText) {  
@@ -69,31 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
     (isWhite) ? inputText.style.backgroundColor = "#000000" : inputText.style.backgroundColor = "" ;
   }
 
-  //função para exibir a mensagem de error
-  function showMsgError(spanError) {
-    spanError.style.display = "block";
-  }
-  
-  //função para ocultar a mensagem de erro
-  function hideMsgError(spanError) {
-    spanError.style.display = "none";
-  }
-  
-  // função para validar o campo e exibir a mensagem se houver error
-  function validationField(validation, spanId) {
-    const error = document.getElementById(spanId);
-    return !validation ? showMsgError(error) : hideMsgError(error);
-  }
-  
-  //função para validar cor
-  function validationColor(colorValue, inputText){
-    inputText.style.color = colorValue;
-    if(inputText.style.color){
-      return !inputText.style.color;
-    }
-    else return true;
-  }
-  
   //função para verificar se algum chekebox foi marcado
   function isChecked(types) {
     const listTitle = document.querySelector("#list-title");
