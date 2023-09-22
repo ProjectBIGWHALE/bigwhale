@@ -67,11 +67,6 @@
 						</li>
 						<input type="text" th:field="*{dataType}" id="dataType" name="dataType" value="" class="radio">
 					</ul>
-					<div class="danger">
-						<small id="radio-required">
-							Por favor, selecione alguma das opções.
-						</small>
-					</div>
 				</li>
 
 				<!-- link, number and email input  -->
@@ -106,7 +101,7 @@
 					<div class="form-group wapp__field disable__input-choice" id="form-group-wapp">
 						<div class="form-group__input-number">
 							<div class="country-flag-code__container" id="flag-code">
-								<img src='' alt='' id="country-flag" class="country__flag">
+								<img src="https://flagsapi.com/BR/flat/64.png" alt='BR' id="country-flag" class="country__flag">
 
 								<!-- Aqui vai ser a implementação para gerar uma lista de flags e code mais para frente
 								<label for="select-flag-code">  
@@ -125,11 +120,6 @@
 							</textarea>
 						</div>
 					</div>
-					<div class="danger">
-						<small id="link-required">
-							Por favor, informe uma url ou link.
-						</small>
-					</div>
 				</li>
 
 				<!-- Choose color input-->
@@ -146,16 +136,6 @@
 										class="chromatic-circle" />
 								</label>
 							</div>
-							<div class="msg-error">
-							</div>
-						</div>
-						<div class="danger">
-							<small id="color-required">
-								Por favor, informe uma cor ou escolha clicando na imagem.
-							</small>
-							<small id="color-error">
-								Cor inválida
-							</small>
 						</div>
 					</div>
 					<div class="color-select__content">
