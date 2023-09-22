@@ -238,20 +238,22 @@ public class DocumentsTest {
                 .flashAttr("worksheetAndForm", certificateGeneratorForm))
                 .andExpect(status().is(302));
     }
-    
 
-    
-    @Test
-    void shouldReturnAValidQRCodeLink() throws Exception {
-        URI uri = new URI("/documents/qrcodegenerator");
-        
-        QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
-        qrCodeGeneratorForm.setLink("https://google.com.br");
+
+
+	@Test
+	void shouldReturnAValidQRCodeLink() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setLink("https://google.com.br");
 		qrCodeGeneratorForm.setDataType("link");
+		qrCodeGeneratorForm.setPixelColor("#0B0F0F");
 
 		mockMvc.perform(MockMvcRequestBuilders.post(uri)
 						.param("link", qrCodeGeneratorForm.getLink())
-						.param("dataType", qrCodeGeneratorForm.getDataType()))
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
 				.andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=QRCode.png")))
 				.andExpect(content().contentType(MediaType.IMAGE_PNG));
@@ -262,12 +264,14 @@ public class DocumentsTest {
 		URI uri = new URI("/documents/qrcodegenerator");
 
 		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
-		qrCodeGeneratorForm.setLink(null);
 		qrCodeGeneratorForm.setDataType("link");
+		qrCodeGeneratorForm.setLink(null);
+		qrCodeGeneratorForm.setPixelColor(null);
 
 		mockMvc.perform(MockMvcRequestBuilders.post(uri)
 						.param("link", qrCodeGeneratorForm.getLink())
-						.param("dataType", qrCodeGeneratorForm.getDataType()))
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
 				.andExpect(status().is(302));
 	}
 
@@ -279,13 +283,15 @@ public class DocumentsTest {
 		qrCodeGeneratorForm.setDataType("email");
 		qrCodeGeneratorForm.setEmail("erasmo.ads.tech@gmail.com");
 		qrCodeGeneratorForm.setTitleEmail("Teste");
-		qrCodeGeneratorForm.setTextEmail("Este é um teste de geração QRCode para envio de email");
+		qrCodeGeneratorForm.setTextEmail("Esse é email de teste");
+		qrCodeGeneratorForm.setPixelColor("#0B0F0F");
 
 		mockMvc.perform(MockMvcRequestBuilders.post(uri)
 						.param("dataType", qrCodeGeneratorForm.getDataType())
 						.param("email", qrCodeGeneratorForm.getEmail())
+						.param("textEmail", qrCodeGeneratorForm.getTextEmail())
 						.param("titleEmail", qrCodeGeneratorForm.getTitleEmail())
-						.param("textEmail", qrCodeGeneratorForm.getTextEmail()))
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
 				.andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=QRCode.png")))
 				.andExpect(content().contentType(MediaType.IMAGE_PNG));
@@ -301,12 +307,13 @@ public class DocumentsTest {
 		qrCodeGeneratorForm.setEmail(null);
 		qrCodeGeneratorForm.setTitleEmail(null);
 		qrCodeGeneratorForm.setTextEmail(null);
+		qrCodeGeneratorForm.setPixelColor(null);
 
 		mockMvc.perform(MockMvcRequestBuilders.post(uri)
 						.param("dataType", qrCodeGeneratorForm.getDataType())
 						.param("email", qrCodeGeneratorForm.getEmail())
 						.param("titleEmail", qrCodeGeneratorForm.getTitleEmail())
-						.param("textEmail", qrCodeGeneratorForm.getTextEmail()))
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
 				.andExpect(status().is(302));
 	}
 
@@ -319,11 +326,14 @@ public class DocumentsTest {
 		qrCodeGeneratorForm.setDataType("whatsapp");
 		qrCodeGeneratorForm.setPhoneNumber("5527997512017");
 		qrCodeGeneratorForm.setText("Teste de QRCODE no envio de mensagem ao whatsapp");
+		qrCodeGeneratorForm.setPixelColor("#0B0F0F");
+
 
 		mockMvc.perform(MockMvcRequestBuilders.post(uri)
 						.param("dataType", qrCodeGeneratorForm.getDataType())
 						.param("phoneNumber", qrCodeGeneratorForm.getPhoneNumber())
-						.param("text", qrCodeGeneratorForm.getText()))
+						.param("text", qrCodeGeneratorForm.getText())
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
 				.andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=QRCode.png")))
 				.andExpect(content().contentType(MediaType.IMAGE_PNG));
@@ -338,11 +348,14 @@ public class DocumentsTest {
 		qrCodeGeneratorForm.setDataType("whatsapp");
 		qrCodeGeneratorForm.setPhoneNumber(null);
 		qrCodeGeneratorForm.setText(null);
+		qrCodeGeneratorForm.setPixelColor(null);
+
 
 		mockMvc.perform(MockMvcRequestBuilders.post(uri)
 						.param("dataType", qrCodeGeneratorForm.getDataType())
 						.param("phoneNumber", qrCodeGeneratorForm.getPhoneNumber())
-						.param("text", qrCodeGeneratorForm.getText()))
+						.param("text", qrCodeGeneratorForm.getText())
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
 				.andExpect(status().is(302));
 	}
 
@@ -362,6 +375,8 @@ public class DocumentsTest {
 						.param("text", qrCodeGeneratorForm.getText()))
 				.andExpect(status().is(302));
 	}
+
+
 
 
 

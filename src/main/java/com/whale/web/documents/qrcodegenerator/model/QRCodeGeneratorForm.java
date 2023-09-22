@@ -6,19 +6,29 @@ import org.springframework.stereotype.Component;
 public class QRCodeGeneratorForm {
 	
 
-	String dataType;
+	private String dataType;
 
-	String link;
+	private String link;
 
-	String phoneNumber;
+	private String phoneNumber;
 
-	String text;
+	private String text;
 
-	String email;
+	private String email;
 
-	String titleEmail;
+	private String titleEmail;
 
-	String textEmail;
+	private String textEmail;
+
+	private String pixelColor;
+
+	public String getPixelColor() {
+		return pixelColor;
+	}
+
+	public void setPixelColor(String pixelColor) {
+		this.pixelColor = pixelColor;
+	}
 
 	public String getEmail() {
 		return email;

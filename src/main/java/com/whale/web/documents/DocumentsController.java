@@ -194,11 +194,11 @@ public class DocumentsController {
 			byte[] bytes;
 			switch (qrCodeGeneratorForm.getDataType()) {
 				case "link" -> bytes = qrCodeGeneratorService
-						.generateQRCode(qrCodeGeneratorForm.getLink());
+						.generateQRCode(qrCodeGeneratorForm.getLink(), qrCodeGeneratorForm.getPixelColor());
 				case "whatsapp" -> bytes = qrCodeGeneratorService
-						.generateWhatsAppLinkQRCode(qrCodeGeneratorForm.getPhoneNumber(), qrCodeGeneratorForm.getText());
+						.generateWhatsAppLinkQRCode(qrCodeGeneratorForm.getPhoneNumber(), qrCodeGeneratorForm.getText(), qrCodeGeneratorForm.getPixelColor());
 				case "email" -> bytes = qrCodeGeneratorService
-						.generateEmailLinkQRCode(qrCodeGeneratorForm.getEmail(), qrCodeGeneratorForm.getTextEmail(), qrCodeGeneratorForm.getTitleEmail());
+						.generateEmailLinkQRCode(qrCodeGeneratorForm.getEmail(), qrCodeGeneratorForm.getTextEmail(), qrCodeGeneratorForm.getTitleEmail(), qrCodeGeneratorForm.getPixelColor());
 				default -> {
 					return "redirect:/documents/qrcodegenerator";
 				}
