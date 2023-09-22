@@ -25,91 +25,43 @@ p {
     margin-top: 35px;
 }
 
-:is(.input-file, .password__container) {
-    margin: 12px 25vw;
-    padding: 8px 12px;
+.input-file {
+    margin: 0 31%;
+    padding: 3px;
+    border-radius: 4px;
+    text-align: left;
+    background: #f2f2f2;
+}
+
+.custom-file-label {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: #25BFBF;
+    font-family: 'Roboto Condensed', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.custom-file-label:hover {
+    background-color: #25BFBF;
+    color: #fff;
+}
+
+.input-password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 31%;
+    padding: 4px;
     border-radius: 4px;
     background: #f2f2f2;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    align-items: center;
 }
-
-.custom-label {
-    display: flex;
-    justify-content: flex-start ;
-    align-items: center;
-    font-family: 'Roboto Condensed', sans-serif;
-    color: #25BFBF;
-}
-
-.input-file__content{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 4px;
-    width: calc(100% - 72px);
-}
-
-.input-file__content:hover {
-    background-color: #25BFBF;
-    color: #fff;
-    transition: background-color 500ms,
-    color 200ms;
-}
-
-.custom-label > .file-name{
-    width: 100%;
-    color: #0008;
-    display: inline-block;
-}
-
-.form-control {
-    width: 65%;
-}
-
-.password__container{
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    justify-items: center;
-}
-
-.password__container input{
-    border: none;
-    outline: none;
-    position: relative;
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    background-color: transparent;
-    border-radius: 8px;
-    border: 1px solid #25BFBF;
-}
-
-.password__container input:is(:focus,:hover, :active){
-    background-color: #25BFBF;
-    color: #f2f2f2;
-    transition: 400ms ease-in-out;
-}
-.password__container input::placeholder{
-    font-size: 1.5rem;
-    position: absolute;
-    top: 30%;
-    color: #00000080;
-}
-
-.password__content{
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 0 10px;
-}
-
 
 #checkbox-password {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     margin-top: 5px;
 }
@@ -126,7 +78,6 @@ p {
     padding: 4px;
     border-radius: 100%;
     transition: 0.2s;
-    color: #25BFBF;
 }
 
 #checkbox-password .checkbox-icon:hover {
@@ -290,20 +241,20 @@ button:hover {
         font-size: 24px;
         margin: 18% 0 3% 0;
     }
-
+    
     p {
         padding: 3% 15%;
     }
-
+    
     .input-file,
-    .password__container {
+    .input-password {
         margin: 3% 15%;
     }
-
+    
     button {
         width: 40%;
     }
-
+    
 }
 
 @media (max-width: 480px) {
@@ -311,31 +262,18 @@ button:hover {
         font-size: 20px;
         margin: 30% 0 3% 0;
     }
-
+    
     p {
         padding: 3% 13%;
     }
-
+    
     .input-file,
-    .password__container {
+    .input-password {
         margin: 5% 16%;
     }
-
-    .input-file__content{
-        justify-content: center;
-        font-size: 2rem;
-    }
-
-    .input-file__content-choice{
-        display: none;
-    }
-
-    .password__container{
-        grid-template-columns: none;
-    }
-
+    
     button {
         width: 50%;
     }
-
+    
 }
