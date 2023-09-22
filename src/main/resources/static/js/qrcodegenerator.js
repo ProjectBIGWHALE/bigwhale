@@ -2,12 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const urlLink = document.querySelector("#link");
   const color = document.querySelector("#get-color");
   const colorSelect = document.querySelector("#color-select");
-  const btnDownload = document.querySelector("#download");
+  const btnSubmit = document.querySelector("#btnSubmit");
   const ulTypes = document.querySelector("#ul-types");
-  const types = document.querySelectorAll("input[name='types']");
+  const types = document.querySelectorAll("input[type='radio']");
   const formGroupLink = document.querySelector("#form-group-link");
   const formGroupEmail = document.querySelector("#form-group-email");
   const formGroupWapp = document.querySelector("#form-group-wapp");
+  const dataType = document.querySelector("#dataType");
+
 
   ulTypes.addEventListener("change", () => {
     validationField(isChecked(types), "radio-required");
@@ -47,8 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
   //função para habilitar o button download
   function enabledBtnDownload() {
     return isValid()
-      ? btnDownload.classList.remove("disabledBtnDownload")
-      : btnDownload.classList.add("disabledBtnDownload");
+      ? btnSubmit.classList.remove("disabledBtnDownload")
+      : btnSubmit.classList.add("disabledBtnDownload");
   }
 
   // btnDownload.addEventListener("click", (e) => {
@@ -94,34 +96,32 @@ document.addEventListener("DOMContentLoaded", () => {
   
   //função para verificar se algum chekebox foi marcado
   function isChecked(types) {
-    const getRadio = document.querySelector("#getRadio");
     const listTitle = document.querySelector("#list-title");
     for (const type of types) {
       if (type.checked) {
         switch(type.id){
           case "link-checked":
-            getRadio.value = type.value;
+            dataType.value = type.value;
             listTitle.innerText = 'Insira a url'
             enableInput(formGroupLink);
             disableInput(formGroupEmail);
             disableInput(formGroupWapp);
             break;
           case "email-checked":
-            getRadio.value = type.value;
+            dataType.value = type.value;
             listTitle.innerText = 'Enviar Email'
             enableInput(formGroupEmail);
             disableInput(formGroupLink);
             disableInput(formGroupWapp);
             break;
           case "wapp-cheked":
-            getRadio.value = type.value;           
+            dataType.value = type.value;           
             listTitle.innerText = 'WhatsApp'
             enableInput(formGroupWapp);
             disableInput(formGroupLink);
             disableInput(formGroupEmail);
             break;
         }
-
         return true;
       }
     }
