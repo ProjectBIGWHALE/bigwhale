@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const formGroupEmail = document.querySelector("#form-group-email");
   const formGroupWapp = document.querySelector("#form-group-wapp");
   const dataType = document.querySelector("#dataType");
-
-
+  const listTitle = document.querySelector("#list-title");
+  
   ulTypes.addEventListener("change", () => {
     isChecked(types)
   });
@@ -17,10 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
   color.addEventListener("change", () => {
     onChangeTextColor(color.value, color);
   });
-
-  urlLink.addEventListener("blur", () => {
-    isChecked(types)
-});
 
   colorSelect.addEventListener("change", (e) => {
     const colorValue = e.target.value;
@@ -37,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //função para verificar se algum chekebox foi marcado
   function isChecked(types) {
-    const listTitle = document.querySelector("#list-title");
     for (const type of types) {
       if (type.checked) {
         switch(type.id){
@@ -68,6 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     return false;
   }
+
+  isChecked(types);
 
   //função para esconder o tipo não selecionado
   function disableInput( inputId){
