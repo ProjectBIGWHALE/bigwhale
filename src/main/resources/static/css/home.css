@@ -40,7 +40,6 @@ body {
   background-color: #50c878;
 }
 
-
 header {
   text-align: center;
   margin-top: 3em;
@@ -137,7 +136,7 @@ header {
 }
 
 .setas:hover {
-  transform: scale(1.20);
+  transform: scale(1.2);
   /* Ao passar o mouse, o item aumentará em 20% */
 }
 
@@ -226,9 +225,7 @@ header {
   align-items: center;
   flex-direction: column;
   margin: 1.5em 1em;
-
 }
-
 
 .colaboradores img {
   width: 150px;
@@ -350,45 +347,34 @@ footer p {
     margin: 0 22px;
   }
 
-  #sobre p{
+  #sobre p {
     margin-bottom: 22px;
   }
-
-
-
 
   footer {
     padding: 56px 55px;
   }
 }
 
-
 @media screen and (max-width: 500px) {
-
   .nav {
-
     justify-content: center;
     margin-right: 0;
   }
 
   .nav li a {
-
     font-size: 13px;
-
   }
 
   .nav li a {
-
     padding: 9px 15px;
     font-size: 12px;
-
   }
 
   #logo {
     width: 87%;
     margin-top: 1em;
     margin-left: 0;
-
   }
 
   #descricao {
@@ -406,7 +392,6 @@ footer p {
   }
 
   .carrossel-item h4 {
-
     padding: 0 2px;
   }
 
@@ -417,7 +402,5 @@ footer p {
 
   .setas ion-icon {
     width: 3em;
-
   }
-
 }
