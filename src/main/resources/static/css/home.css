@@ -248,10 +248,9 @@ header {
   padding: 5px 10px;
   transform: translateX(-50%);
   border-radius: 5px;
- 
   top: 103%;
   left: 50%;
-  
+  white-space: nowrap;
 }
 
 .colaboradores img:hover + .nomeColoborador {
