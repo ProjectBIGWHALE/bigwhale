@@ -20,6 +20,7 @@ import com.whale.web.documents.certificategenerator.model.CertificateGeneratorFo
 import com.whale.web.documents.certificategenerator.service.CreateCertificateService;
 import com.whale.web.documents.certificategenerator.service.ProcessWorksheetService;
 import com.whale.web.documents.compactconverter.model.CompactConverterForm;
+import com.whale.web.documents.compactconverter.model.RequestCompactConverterForm;
 import com.whale.web.documents.compactconverter.service.CompactConverterService;
 import com.whale.web.documents.filecompressor.FileCompressorService;
 import com.whale.web.documents.imageconverter.model.ImageFormatsForm;
@@ -75,25 +76,27 @@ public class DocumentsController {
     }
 
     @PostMapping("/compactconverter")
-    public String compactConverter(CompactConverterForm form, HttpServletResponse response) throws IOException{
+    public String compactConverter(RequestCompactConverterForm form, HttpServletResponse response) throws IOException{
 
         try {
-            byte[] bytes = compactConverterService.converterFile(form);
+            List<byte[]> listaDeBytes = compactConverterService.converterFile(form);
             String format = form.getAction();
 
             response.setHeader("Content-Disposition", "attachment; filename=file" + format);
             response.setContentType("application/octet-stream");
-            response.setContentLength(bytes.length);
+            response.setContentLength(listaDeBytes.size());
             response.setHeader("Cache-Control", "no-cache");
 
             OutputStream outputStream = response.getOutputStream();
-            outputStream.write(bytes);
+			for (byte[] bytes : listaDeBytes){
+            	outputStream.write(bytes);
+			}
             outputStream.flush();
-     
-        } catch(Exception e) {
+			
+		} catch(Exception e) {
             return "redirect:/documents/compactconverter";
         }
-
+		
         return null;
     }
 
