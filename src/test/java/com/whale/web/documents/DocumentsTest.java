@@ -284,7 +284,7 @@ public class DocumentsTest {
 		qrCodeGeneratorForm.setEmail("erasmo.ads.tech@gmail.com");
 		qrCodeGeneratorForm.setTitleEmail("Teste");
 		qrCodeGeneratorForm.setTextEmail("Esse é email de teste");
-		qrCodeGeneratorForm.setPixelColor("#0B0F0F");
+		qrCodeGeneratorForm.setPixelColor("red");
 
 		mockMvc.perform(MockMvcRequestBuilders.post(uri)
 						.param("dataType", qrCodeGeneratorForm.getDataType())
@@ -326,7 +326,7 @@ public class DocumentsTest {
 		qrCodeGeneratorForm.setDataType("whatsapp");
 		qrCodeGeneratorForm.setPhoneNumber("5527997512017");
 		qrCodeGeneratorForm.setText("Teste de QRCODE no envio de mensagem ao whatsapp");
-		qrCodeGeneratorForm.setPixelColor("#0B0F0F");
+		qrCodeGeneratorForm.setPixelColor("rgb(255,0,0)");
 
 
 		mockMvc.perform(MockMvcRequestBuilders.post(uri)

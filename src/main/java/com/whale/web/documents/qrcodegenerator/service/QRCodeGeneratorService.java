@@ -30,7 +30,8 @@ public class QRCodeGeneratorService {
             BufferedImage qrCodeImage = new BufferedImage(350, 350, BufferedImage.TYPE_INT_RGB);
             qrCodeImage.createGraphics();
 
-            int pixelColorValue = Color.decode(pixelColor).getRGB();
+            int pixelColorValue = convertColor(pixelColor);
+
             for (int x = 0; x < 350; x++) {
                 for (int y = 0; y < 350; y++) {
                     qrCodeImage.setRGB(x, y, bitMatrix.get(x, y) ? pixelColorValue : 0xFFFFFFFF);
@@ -54,7 +55,7 @@ public class QRCodeGeneratorService {
 
 
     public byte[] generateWhatsAppLinkQRCode(String phoneNumber, String text, String pixelColor) throws Exception {
-        if (phoneNumber == null || text == null) {
+        if (phoneNumber == null || text == null || pixelColor == null) {
             throw new IllegalArgumentException("Os argumentos não podem ser nulos.");
         }
         String whatsappLink = "https://wa.me/" + phoneNumber + "/?text=" + text.replace(" ", "+");
@@ -62,12 +63,61 @@ public class QRCodeGeneratorService {
     }
 
     public byte[] generateEmailLinkQRCode(String email, String titleEmail, String textEmail, String pixelColor) throws Exception {
-        if (email == null || titleEmail == null || textEmail == null) {
+        if (email == null || titleEmail == null || textEmail == null || pixelColor == null) {
             throw new IllegalArgumentException("Os argumentos não podem ser nulos.");
         }
         String emailLink = "mailto:" + email + "?subject=" + textEmail + "&body=" + titleEmail;
         return generateQRCode(emailLink, pixelColor);
     }
-    
-	
+
+    public int convertColor(String colorString) throws Exception {
+        try {
+            Color color = Color.decode(colorString);
+            return color.getRGB();
+        } catch (NumberFormatException hexException) {
+            try {
+                Color colorByName = getColorByName(colorString);
+                if (colorByName != null) {
+                    return colorByName.getRGB();
+                }
+            } catch (Exception e) {
+                throw new Exception("Não foi possível converter para rgb");
+            }
+
+            try {
+                // Tenta analisar a cor no formato "rgb(r,g,b)"
+                if (colorString.startsWith("rgb(") && colorString.endsWith(")")) {
+                    String[] components = colorString.substring(4, colorString.length() - 1).split(",");
+                    if (components.length == 3) {
+                        int r = Integer.parseInt(components[0].trim());
+                        int g = Integer.parseInt(components[1].trim());
+                        int b = Integer.parseInt(components[2].trim());
+                        return new Color(r, g, b).getRGB();
+                    }
+                }
+            } catch (NumberFormatException rgbException) {
+                throw new Exception("Não foi possível converter oara rgb");
+            }
+        }
+        return Color.BLACK.getRGB();
+    }
+
+
+    public static Color getColorByName(String name) {
+        name = name.toLowerCase();
+        return switch (name) {
+            case "violet" -> Color.MAGENTA;
+            case "red" -> Color.RED;
+            case "blue" -> Color.BLUE;
+            case "green" -> Color.GREEN;
+            case "yellow" -> Color.YELLOW;
+            case "orange" -> Color.ORANGE;
+            case "pink" -> Color.PINK;
+            case "gray" -> Color.GRAY;
+            default -> null;
+        };
+    }
+
+
+
 }
