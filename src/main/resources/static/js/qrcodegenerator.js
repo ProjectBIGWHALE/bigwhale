@@ -95,13 +95,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const wapp = document.querySelector("#wapp");
-  if(!wapp.value) getCodeIso('+55');
 
+  wapp.addEventListener('click', e => e.target.value = '+55');
   //função para adicionar o código do país
   wapp.addEventListener('input', (e) => {
-    const value = e.target.value.replace(/^([^+])/, '+$1');
+    let value = e.target.value.replace(/^([^+])/, '+$1');
     getCodeIso(value);
   });
+
+
+  const btnSubmit = document.getElementById('btnSubmit');
+  //Função pare remover espaços, parêtese e hífens
+  btnSubmit.addEventListener('click', (e) =>{
+    e.preventDefault();
+    console.log(wapp.value);
+    console.log(color.style.color)
+    wapp.value = wapp.value.replace(/[()\s-]/g, '');
+
+    console.log(wapp.value);
+  })
   
   //função para selecionar a bandeira e seu código a partir da sigla do plaís
   async function getFlagByCodeIsoCode(isoCode, code){
