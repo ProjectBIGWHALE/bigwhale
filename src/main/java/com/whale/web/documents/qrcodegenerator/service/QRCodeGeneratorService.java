@@ -113,7 +113,11 @@ public class QRCodeGeneratorService {
             case "yellow" -> Color.YELLOW;
             case "orange" -> Color.ORANGE;
             case "pink" -> Color.PINK;
-            case "gray" -> Color.GRAY;
+            case "cyan" -> Color.CYAN;
+            case "black" -> Color.BLACK;
+            case "magenta" -> Color.MAGENTA;
+            case "dark_gray" -> Color.DARK_GRAY;
+            case "light_gray" -> Color.LIGHT_GRAY;
             default -> null;
         };
     }
