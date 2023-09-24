@@ -106,13 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btnSubmit = document.getElementById('btnSubmit');
   //Função pare remover espaços, parêtese e hífens
-  btnSubmit.addEventListener('click', (e) =>{
-    e.preventDefault();
-    console.log(wapp.value);
-    console.log(color.style.color)
+  btnSubmit.addEventListener('click', () =>{
     wapp.value = wapp.value.replace(/[()\s-]/g, '');
-
-    console.log(wapp.value);
   })
   
   //função para selecionar a bandeira e seu código a partir da sigla do plaís
