@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const urlLink = document.querySelector("#link");
   const color = document.querySelector("#get-color");
   const colorSelect = document.querySelector("#color-select");
   const ulTypes = document.querySelector("#ul-types");
@@ -14,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     isChecked(types)
   });
 
-  color.addEventListener("change", () => {
+  color.addEventListener("input", () => {
     onChangeTextColor(color.value, color);
   });
 

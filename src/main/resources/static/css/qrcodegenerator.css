@@ -18,7 +18,7 @@ ul {
     list-style: none;
 }
 
-input{
+input {
     outline: none;
     position: relative;
     background-color: transparent;
@@ -26,13 +26,13 @@ input{
     border: 1px solid #25BFBF;
 }
 
-:is(input,.text-email):is(:focus,:hover, :active){
+:is(input, .text-email):is(:focus, :hover, :active) {
     background-color: #25BFBF;
     color: #f2f2f2;
     transition: 400ms ease-in-out;
 }
 
-input::placeholder{
+input::placeholder {
     color: #00000080;
 }
 
@@ -52,7 +52,7 @@ input::placeholder{
     height: 100%;
     max-height: 98vh;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr;
     gap: 26px;
     justify-items: center;
 }
@@ -70,7 +70,8 @@ input::placeholder{
     width: 100%;
     margin: 22px 16px;
 }
-.form-group__list:first-child{
+
+.form-group__list:first-child {
     margin-top: 0;
 }
 
@@ -82,13 +83,15 @@ input::placeholder{
     margin-bottom: 16px;
 }
 
-.form-group__list .list__items{
+.form-group__list .list__items {
     justify-content: space-evenly;
     padding: 0;
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
 }
 
-
-.list__items .items__group{
+.list__items .items__group {
     margin: 0 12px;
 }
 
@@ -104,7 +107,7 @@ input::placeholder{
     position: relative;
 }
 
-.list__items .items__group .item-name:hover{
+.list__items .items__group .item-name:hover {
     color: #fff;
     background-color: #158E8E;
     transition: 400ms ease-in;
@@ -134,7 +137,7 @@ input::placeholder{
     border-radius: 4px;
 }
 
-.radio:hover{
+.radio:hover {
     transition: width 1000ms;
 }
 
@@ -146,34 +149,56 @@ input::placeholder{
     font-size: 1.1rem;
 }
 
+/* Container dos form groups */
+.form-group__container {
+    width: 100%;
+}
+
+/* campos de inputs */
 .form-group {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin: 8px 0;
     background-color: #FFF;
     padding: 12px 16px;
     border-radius: 4px;
     color: #25BFBF;
 }
 
- /* Input Email */
-.form-group-email{
+/* conteudos dos campos de inputs */
+.form-group__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+/* Input Email */
+.form-group-email {
     flex-direction: column;
     gap: 32px;
     width: 100%;
 }
 
-.text-email__container{
+.text-email__container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     gap: 6px;
 }
 
-:is(.text-email, .text-wapp){
-    width: 85%;
+.email-address-subject {
+    width: 100%;
+    gap: 6px;
+    display: flex;
+    flex-direction: column;
+}
+
+.email-address-subject:first-child {
+    margin-bottom: 10px;
+}
+
+:is(.text-email, .text-wapp) {
+    width: 100%;
     border-radius: 4px;
     border: 1px solid #25BFBF;
     outline: none;
@@ -181,40 +206,40 @@ input::placeholder{
     padding: 10px 12px;
 }
 
-.form-group__input-text{
-    display: flex;
-    flex-direction: column;
-    margin-top: 32px;
-    width: 100%;
-}
-
-.form-group__list .disable__input-choice{
+.form-group__list .disable__input-choice {
     display: none;
 }
 
-.form-group__list .enable__input-choice{
+.form-group__list .enable__input-choice {
     display: flex;
 }
 
-.form-group__title{
+.form-group__title {
     margin-right: 15px;
 }
 
 /* Whatsapp input field */
 
-.wapp__field{
+.wapp__field {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 32px;
 }
 
-.wapp__field .form-group__input-number{
+.wapp-number {
+    padding-left: 6px;
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.wapp__field .form-group__input-number {
     width: 100%;
     display: flex;
 }
 
-.country-flag-code__container{
+.country-flag-code__container {
     position: relative;
     display: flex;
     width: 48px;
@@ -227,35 +252,27 @@ input::placeholder{
     border-right: none;
 }
 
-.country__flag{
+.country__flag {
     position: absolute;
     max-width: 100%;
     width: 36px;
 }
 
-.wapp-number{
-    padding-left: 6px;
-    border-left: none;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.wapp__field .form-group__input-text{
+.wapp__field .form-group__input-text {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     gap: 6px;
 }
 
-.text-wapp{
+.text-wapp {
     width: 100%;
     height: 72px;
     padding: 10px 12px;
 }
 
-/* campo de previsualização */
-.content__img{
+.content__img {
     position: relative;
 }
 
@@ -265,17 +282,20 @@ input::placeholder{
     margin-right: 10px;
 }
 
-.chromatic-circle__label{
+.chromatic-circle__label {
     position: absolute;
     right: 53px;
     bottom: 8px;
-    width: 0; 
+    width: 0;
 }
 
 .color-select__content {
-    display: none;
+    visibility: hidden;
+    position: absolute;
+    top: 53px;
 }
 
+/* campo de previsualização */
 
 .qr-code__preview {
     width: 100%;
@@ -300,7 +320,7 @@ input::placeholder{
     padding: 22px;
 }
 
-.preview__bg{
+.preview__bg {
     width: 100%;
     height: 100%;
 }
@@ -441,11 +461,11 @@ input::placeholder{
 
 @media screen and (max-width: 480px) {
 
-    body{
+    body {
         padding: 5px;
     }
 
-    .form{
+    .form {
         gap: 0;
     }
 
@@ -456,33 +476,39 @@ input::placeholder{
         flex-direction: column;
     }
 
-    .items__group{
+    .items__group {
         text-align: center;
     }
 
-    
-    .list-color__content{
+
+    .list-color__content {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-    
+
     .form-group {
         flex-direction: column;
     }
 
-    .form-group.list__items{
+    .form-group.list__items {
         flex-direction: row;
         flex-wrap: wrap;
     }
-    
-    .qr-code__preview .preview__content{
+
+    .form .qr-code__list + .qr-code__preview{
+        gap: 6px;
+        flex-direction: column;
+        margin-top: 22px;
+    }
+
+    .qr-code__preview .preview__content {
         height: 60%;
     }
 }
 
 @media screen and (max-width: 816px) {
-    .container__title{
+    .container__title {
         margin-bottom: 0;
     }
 
@@ -491,16 +517,18 @@ input::placeholder{
         grid-template-rows: 1fr 2fr;
     }
 
-    .form-group__list{
+    .form-group__list {
         margin: 7px 0;
     }
 
     .form .qr-code__preview {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 32px;
         grid-row: 2;
         grid-column: 1;
-        margin-top: 8px;
         width: 90%;
-        height: 60%;
+        height: 50%;
     }
 
     .preview__content {
@@ -509,7 +537,7 @@ input::placeholder{
         margin: auto;
     }
 
-    .btn{
+    .btn {
         font-size: 1rem;
         width: 150px;
         height: 50px;

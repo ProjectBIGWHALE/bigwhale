@@ -49,8 +49,7 @@
 						<li class="items__group">
 							<label for="link-checked" class="item-name">
 								Link
-								<input type="radio" name="types" id="link-checked" class="radio" checked
-									value="link">
+								<input type="radio" name="types" id="link-checked" class="radio" checked value="link">
 							</label>
 						</li>
 						<li class="items__group">
@@ -62,7 +61,7 @@
 						<li class="items__group">
 							<label for="wapp-cheked" class="item-name">
 								Whatsapp
-								<input type="radio" name="types" id="wapp-cheked"  class="radio" value="whatsapp">
+								<input type="radio" name="types" id="wapp-cheked" class="radio" value="whatsapp">
 							</label>
 						</li>
 						<input type="text" th:field="*{dataType}" id="dataType" name="dataType" value="" class="radio">
@@ -73,51 +72,63 @@
 				<li class="form-group__list">
 					<h3 class="list__title" id="list-title"></h3>
 					<!-- qrCode para link -->
-					<div class="form-group" id="form-group-link">
-						<input type="text" class="link__field" name="link" th:field="*{link}" id="link"
-							placeholder="https://mybigwhale.com" />
+					<div class="form-group__container">
+						<div class="form-group form-group__content" id="form-group-link">
+							<label for="link">Url</label>
+							<input type="text" class="link__field" name="link" th:field="*{link}" id="link"
+								placeholder="https://mybigwhale.com" />
+						</div>
 					</div>
 					<!-- qrcode para email -->
-					<div class="form-group form-group-email disable__input-choice" id="form-group-email">
-						<div>
-							<div>
-								<label for="email">Destinatário</label>
-								<input type="email" class="link__field" name="email" th:field="*{email}" id="email"
-									placeholder="big-whale@email.com">
+					<div class="form-group__container">
+						<div class="form-group form-group-email disable__input-choice" id="form-group-email">
+							<div class="form-group__content">
+								<div class="email-address-subject">
+									<label for="email">Destinatário</label>
+									<input type="email" class="link__field" name="email" th:field="*{email}" id="email"
+										placeholder="big-whale@email.com">
+								</div>
+								<div class="email-address-subject">
+									<label for="title-email">Assunto</label>
+									<input type="text" class="link__field" name="title-email" th:field="*{titleEmail}"
+										id="title-email" placeholder="Assunto">
+								</div>
 							</div>
-							<div>
-								<label for="title-email">Assunto</label>
-								<input type="text" class="link__field" name="title-email" th:field="*{titleEmail}"
-									id="title-email" placeholder="Assunto">
+							<div class="text-email__container">
+								<label for="text-email">Mensagem do email</label>
+								<textarea name="text-email" id="text-email" placeholder="Digite sua mensagem aqui..."
+									th:field="*{textEmail}" class="text-email"></textarea>
 							</div>
-						</div>
-						<div class="text-email__container">
-							<label for="text-email">Mensagem do email</label>
-							<textarea name="text-email" id="text-email" placeholder="Digite sua mensagem aqui..."
-								th:field="*{textEmail}" class="text-email"></textarea>
 						</div>
 					</div>
 					<!-- qrCode para whatsapp -->
-					<div class="form-group wapp__field disable__input-choice" id="form-group-wapp">
-						<div class="form-group__input-number">
-							<div class="country-flag-code__container" id="flag-code">
-								<img src="https://flagsapi.com/BR/flat/64.png" alt='BR' id="country-flag" class="country__flag">
+					<div class="form-group__container">
+						<div class="form-group wapp__field disable__input-choice" id="form-group-wapp">
+							<div class="form-group__content">
+								<label for="wapp">Número</label>
+								<div class="form-group__input-number">
+									<div class="country-flag-code__container" id="flag-code">
+										<img src="https://flagsapi.com/BR/flat/64.png" alt='BR' id="country-flag"
+											class="country__flag">
 
-								<!-- Aqui vai ser a implementação para gerar uma lista de flags e code mais para frente
-								<label for="select-flag-code">  
-								</label>
-								 <ul name="select-flag-code" id="list-flag-code" class="select-flag-code disabled-select-flag-code">
-								</ul>
-								<input type="button" style="display: none;" id="select-flag-code"/> -->
+										<!-- Aqui vai ser a implementação para gerar uma lista de flags e code mais para frente
+										<label for="select-flag-code">  
+										</label>
+										<ul name="select-flag-code" id="list-flag-code" class="select-flag-code disabled-select-flag-code">
+										</ul>
+										<input type="button" style="display: none;" id="select-flag-code"/> -->
+									</div>
+									<input type="text" class="link__field wapp-number" name="wapp"
+										th:field="*{phoneNumber}" id="wapp" placeholder="+55 (55) 5555-5555"
+										maxlength="25">
+								</div>
 							</div>
-							<input type="text" class="link__field wapp-number" name="wapp" th:field="*{phoneNumber}"
-								id="wapp" placeholder="+55 (55) 5555-5555" maxlength="25">
-						</div>
-						<div class="form-group__input-text">
-							<label for="wapp-text">Mensagem</label>
-							<textarea name="wapp-texto" id="wapp-text" th:field="*{text}" placeholder="Alô, você!"
-								class="text-wapp">
+							<div class="form-group__input-text">
+								<label for="wapp-text">Mensagem</label>
+								<textarea name="wapp-texto" id="wapp-text" th:field="*{text}" placeholder="Alô, você!"
+									class="text-wapp">
 							</textarea>
+							</div>
 						</div>
 					</div>
 				</li>
@@ -129,17 +140,17 @@
 						<div class="form-group content__img">
 							<label for="get-color" class="form-group__title">Cor: </label>
 							<input type="text" id="get-color" maxlength="22" name="get-color" class="field__input-color"
-								placeholder="Red, #FF0000, rgb(255,0,0)" th:field="*{pixelColor}">
+								placeholder="#FF0000, rgb(255,0,0)" th:field="*{pixelColor}">
 							<div class="get-color__field">
 								<label for="color-select" class="chromatic-circle__label">
 									<img src="/images/circulo-cromatico.png" alt="Círculo cromático"
 										class="chromatic-circle" />
 								</label>
 							</div>
+							<div class="color-select__content">
+								<input type="color" name="color-select" id="color-select" />
+							</div>
 						</div>
-					</div>
-					<div class="color-select__content">
-						<input type="color" name="color-select" id="color-select" />
 					</div>
 				</li>
 			</ol>
