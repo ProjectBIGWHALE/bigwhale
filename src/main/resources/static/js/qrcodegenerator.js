@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const color = document.querySelector("#get-color");
-  const colorSelect = document.querySelector("#color-select");
+  //campo de rádios
   const ulTypes = document.querySelector("#ul-types");
   const types = document.querySelectorAll("input[type='radio']");
+  const dataType = document.querySelector("#dataType");
+
+  // campo de cores
+  const color = document.querySelector("#get-color");
+  const colorSelect = document.querySelector("#color-select");
+
+  // campo de inputs para exibição
   const formGroupLink = document.querySelector("#form-group-link");
   const formGroupEmail = document.querySelector("#form-group-email");
   const formGroupWapp = document.querySelector("#form-group-wapp");
-  const dataType = document.querySelector("#dataType");
   const listTitle = document.querySelector("#list-title");
   
   ulTypes.addEventListener("change", () => {
@@ -118,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
     countryFlag.title = `${isoCode}`
     wapp.value = code
   }
-
 
   // OBS: ainda falta implementra essa função para gerar a lista de flags
 

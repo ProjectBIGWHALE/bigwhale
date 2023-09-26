@@ -64,7 +64,7 @@
 								<input type="radio" name="types" id="wapp-cheked" class="radio" value="whatsapp">
 							</label>
 						</li>
-						<input type="text" th:field="*{dataType}" id="dataType" name="dataType" value="" class="radio">
+						<input type="text" th:field="*{dataType}" id="dataType" name="dataType" value="" style="display: none;">
 					</ul>
 				</li>
 
@@ -156,7 +156,7 @@
 			</ol>
 			<div class="qr-code__preview">
 				<div class="preview__content">
-					<img src="/images/QRCodePreviewExample.png" alt="qr-code gerado" class="preview__bg" />
+					<img src="/images/QRCodePreviewExample.png" alt="qr-code gerado" class="preview__bg" id="image-preview" />
 					<!-- imagem que será exibida no préview -->
 				</div>
 				<div class="btn-download__content">
