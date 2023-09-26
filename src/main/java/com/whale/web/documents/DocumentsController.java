@@ -20,6 +20,7 @@ import com.whale.web.documents.certificategenerator.model.CertificateGeneratorFo
 import com.whale.web.documents.certificategenerator.service.CreateCertificateService;
 import com.whale.web.documents.certificategenerator.service.ProcessWorksheetService;
 import com.whale.web.documents.compactconverter.model.CompactConverterForm;
+import com.whale.web.documents.compactconverter.model.RequestCompactConverterForm;
 import com.whale.web.documents.compactconverter.service.CompactConverterService;
 import com.whale.web.documents.filecompressor.FileCompressorService;
 import com.whale.web.documents.imageconverter.model.ImageFormatsForm;
@@ -75,27 +76,27 @@ public class DocumentsController {
     }
 
     @PostMapping("/compactconverter")
-    public String compactConverter(CompactConverterForm form, HttpServletResponse response) throws IOException{
+    public String compactConverter(RequestCompactConverterForm form, HttpServletResponse response) throws IOException{
 
         try {
-            byte[] file = compactConverterService.converterFile(form);
+            List<byte[]> listaDeBytes = compactConverterService.converterFile(form);
             String format = form.getAction();
 
             response.setHeader("Content-Disposition", "attachment; filename=file" + format);
             response.setContentType("application/octet-stream");
-            response.setContentLength(file.length);
+            response.setContentLength(listaDeBytes.size());
             response.setHeader("Cache-Control", "no-cache");
 
-            try (OutputStream outputStream = response.getOutputStream()) {
-                outputStream.write(file);
-                outputStream.flush();
-            }catch(Exception e) {
-                e.printStackTrace();
-            }
-        } catch(Exception e) {
+            OutputStream outputStream = response.getOutputStream();
+			for (byte[] bytes : listaDeBytes){
+            	outputStream.write(bytes);
+			}
+            outputStream.flush();
+			
+		} catch(Exception e) {
             return "redirect:/documents/compactconverter";
         }
-
+		
         return null;
     }
 
@@ -133,12 +134,10 @@ public class DocumentsController {
                 response.setContentType("application/octet-stream");
                 response.setHeader("Cache-Control", "no-cache");
 
-	            try (OutputStream os = response.getOutputStream()) {
-	                os.write(bytes);
-	                os.flush();
-                } catch(Exception e) {
-                	e.printStackTrace();
-                }
+	            OutputStream outputStream = response.getOutputStream();
+				outputStream.write(bytes);
+				outputStream.flush();
+				
             } catch (Exception e) {
             	return "redirect:/documents/filecompressor";
             }
@@ -162,7 +161,7 @@ public class DocumentsController {
 	@PostMapping("/imageconverter")
 	public String imageConverter(@ModelAttribute("form") ImageConversionForm imageConversionForm, HttpServletResponse response) {
 		try {
-			byte[] formattedImage = imageConverterService.convertImageFormat(imageConversionForm.getOutputFormat(), imageConversionForm.getImage());
+			byte[] bytes = imageConverterService.convertImageFormat(imageConversionForm.getOutputFormat(), imageConversionForm.getImage());
 
 			String originalFileNameWithoutExtension = StringUtils.stripFilenameExtension(Objects.requireNonNull(imageConversionForm.getImage().getOriginalFilename()));
 			String convertedFileName = originalFileNameWithoutExtension + "." + imageConversionForm.getOutputFormat().toLowerCase();
@@ -171,12 +170,9 @@ public class DocumentsController {
 			response.setHeader("Content-Disposition", "attachment; filename=" + convertedFileName);
 			response.setHeader("Cache-Control", "no-cache");
 
-			try (OutputStream os = response.getOutputStream()) {
-				os.write(formattedImage);
-				os.flush();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+			OutputStream outputStream = response.getOutputStream();
+            outputStream.write(bytes);
+            outputStream.flush();
 
 		} catch (Exception ex){
 			return "redirect:/documents/imageconverter";
@@ -195,27 +191,36 @@ public class DocumentsController {
 	
 
 	@PostMapping("/qrcodegenerator")
-	public String qrCodeGenerator(QRCodeGeneratorForm qrCodeGeneratorForm, HttpServletResponse response) throws IOException{
+	public String qrCodeGenerator(@ModelAttribute("form") QRCodeGeneratorForm qrCodeGeneratorForm, HttpServletResponse response) throws IOException{
 		
 		try {
-			byte[] processedImage = qrCodeGeneratorService.generateQRCode(qrCodeGeneratorForm.getLink());
+			byte[] bytes;
+			switch (qrCodeGeneratorForm.getDataType()) {
+				case "link" -> bytes = qrCodeGeneratorService
+						.generateQRCode(qrCodeGeneratorForm.getLink(), qrCodeGeneratorForm.getPixelColor());
+				case "whatsapp" -> bytes = qrCodeGeneratorService
+						.generateWhatsAppLinkQRCode(qrCodeGeneratorForm.getPhoneNumber(), qrCodeGeneratorForm.getText(), qrCodeGeneratorForm.getPixelColor());
+				case "email" -> bytes = qrCodeGeneratorService
+						.generateEmailLinkQRCode(qrCodeGeneratorForm.getEmail(), qrCodeGeneratorForm.getTextEmail(), qrCodeGeneratorForm.getTitleEmail(), qrCodeGeneratorForm.getPixelColor());
+				default -> {
+					return "redirect:/documents/qrcodegenerator";
+				}
+			}
 
 	        response.setContentType("image/png");
-	        response.setHeader("Content-Disposition", "attachment; filename=\"ModifiedImage.png\"");
+	        response.setHeader("Content-Disposition", "attachment; filename=QRCode.png");
 	        response.setHeader("Cache-Control", "no-cache");
 
-	        try (OutputStream os = response.getOutputStream()) {
-	            os.write(processedImage);
-	            os.flush();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+	        OutputStream outputStream = response.getOutputStream();
+            outputStream.write(bytes);
+            outputStream.flush();
+
 		} catch(Exception e) {
 			return "redirect:/documents/qrcodegenerator";
 		}
-		
 		return null;
 	}
+
 	
 	@GetMapping("/certificategenerator")
 	public String certificateGenerator(Model model) {
@@ -229,17 +234,14 @@ public class DocumentsController {
 	public String certificateGenerator(CertificateGeneratorForm certificateGeneratorForm, HttpServletResponse response) throws Exception {
 		try {
 		    List<String> names = processWorksheetService.savingNamesInAList(certificateGeneratorForm.getWorksheet().getWorksheet());
-		    byte[] zipFile = createCertificateService.createCertificates(certificateGeneratorForm.getCertificate(), names);
+		    byte[] bytes = createCertificateService.createCertificates(certificateGeneratorForm.getCertificate(), names);
 
-		        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-		        response.setHeader("Content-Disposition", "attachment; filename=\"certificates.zip\"");
+		    response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+		    response.setHeader("Content-Disposition", "attachment; filename=\"certificates.zip\"");
 	
-		        try (OutputStream outputStream = response.getOutputStream()) {
-			        outputStream.write(zipFile);
-			        outputStream.flush();
-			    }catch(Exception e) {
-					throw new RuntimeException("Error generating encrypted file", e);
-				}
+		    OutputStream outputStream = response.getOutputStream();
+            outputStream.write(bytes);
+            outputStream.flush();
 
 	    } catch (Exception e) {
 			return "redirect:/documents/certificategenerator";

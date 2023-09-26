@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -15,61 +17,72 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.whale.web.documents.compactconverter.model.CompactConverterForm;
+import com.whale.web.documents.compactconverter.model.RequestCompactConverterForm;
 
 @Service
 public class CompactConverterService {
 
 
-    public byte[] converterFile(CompactConverterForm compactConverterForm) throws IOException {
+    public List<byte[]> converterFile(RequestCompactConverterForm requestCompactConverterForm) throws IOException {
 
-        String action = compactConverterForm.getAction();
-        MultipartFile file = compactConverterForm.getFile();
+        String action = requestCompactConverterForm.getAction();
+        List<MultipartFile> files = requestCompactConverterForm.getFiles();
 
         return switch (action) {
-            case ".zip" -> convertToZip(file.getBytes());
-            case ".tar.gz" -> convertToTarGz(file.getBytes());
-            case ".7z" -> convertTo7z(file.getBytes());
-            case ".tar" -> convertToTar(file.getBytes());
-            default -> new byte[0];
+            case ".zip" -> convertToZip(files);
+            case ".tar.gz" -> convertToTarGz(files);
+            case ".7z" -> convertTo7z(files);
+            case ".tar" -> convertToTar(files);
+            default -> new ArrayList<>();
         };
 
     }
 
-    public byte[] convertToTarGz(byte[] zipBytes) throws IOException {
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(zipBytes);
-             ZipInputStream zis = new ZipInputStream(bais);
-             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-             TarArchiveOutputStream tarOut = new TarArchiveOutputStream(new GzipCompressorOutputStream(baos))) {
+    public List<byte[]> convertToTarGz(List<MultipartFile> files) throws IOException {
 
-            byte[] buffer = new byte[8192]; // Use um buffer razoável, 8 KB neste exemplo
-            int bytesRead;
+        List<byte[]> filesConverted = new ArrayList<>();
 
-            ZipEntry zipEntry;
-            while ((zipEntry = zis.getNextEntry()) != null) {
-                TarArchiveEntry tarEntry = new TarArchiveEntry(zipEntry.getName());
-                tarEntry.setSize(zipEntry.getSize()); // Defina o tamanho do arquivo no cabeçalho do TAR
-                tarOut.putArchiveEntry(tarEntry);
+        for (MultipartFile file : files) {
+            try (ByteArrayInputStream bais = new ByteArrayInputStream(file.getBytes());
+                ZipInputStream zis = new ZipInputStream(bais);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                TarArchiveOutputStream tarOut = new TarArchiveOutputStream(new GzipCompressorOutputStream(baos))) {
 
-                while ((bytesRead = zis.read(buffer)) != -1) {
-                    tarOut.write(buffer, 0, bytesRead);
+                byte[] buffer = new byte[8192]; // Use um buffer razoável, 8 KB neste exemplo
+                int bytesRead;
+
+                ZipEntry zipEntry;
+                while ((zipEntry = zis.getNextEntry()) != null) {
+                    TarArchiveEntry tarEntry = new TarArchiveEntry(zipEntry.getName());
+                    tarEntry.setSize(zipEntry.getSize()); // Defina o tamanho do arquivo no cabeçalho do TAR
+                    tarOut.putArchiveEntry(tarEntry);
+
+                    while ((bytesRead = zis.read(buffer)) != -1) {
+                        tarOut.write(buffer, 0, bytesRead);
+                    }
+
+                    tarOut.closeArchiveEntry();
+                    zis.closeEntry();
                 }
 
-                tarOut.closeArchiveEntry();
-                zis.closeEntry();
+                tarOut.finish();
+                tarOut.close(); // Feche o fluxo TarArchiveOutputStream adequadamente
+                filesConverted.add(baos.toByteArray());
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw e;
             }
-
-            tarOut.finish();
-            tarOut.close(); // Feche o fluxo TarArchiveOutputStream adequadamente
-            return baos.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
         }
+        return filesConverted;
     }
 
-    public byte[] convertToZip(byte[] zipBytes) throws IOException {
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(zipBytes);
+    public List<byte[]> convertToZip(List<MultipartFile> files) throws IOException {
+
+        List<byte[]> filesConverted = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+
+            try (ByteArrayInputStream bais = new ByteArrayInputStream(file.getBytes());
              ZipInputStream zis = new ZipInputStream(bais);
              ByteArrayOutputStream baos = new ByteArrayOutputStream();
              ZipOutputStream zipOut = new ZipOutputStream(baos)) {
@@ -89,60 +102,33 @@ public class CompactConverterService {
                 zis.closeEntry();
             }
 
-            return baos.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
-
-    public byte[] convertToTar(byte[] zipBytes) throws IOException {
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(zipBytes);
-             ZipInputStream zis = new ZipInputStream(bais);
-             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-             TarArchiveOutputStream tarOut = new TarArchiveOutputStream(baos)) {
-
-            byte[] buffer = new byte[8192]; // Use um buffer razoável, 8 KB neste exemplo
-            int bytesRead;
-
-            ZipEntry zipEntry;
-            while ((zipEntry = zis.getNextEntry()) != null) {
-                TarArchiveEntry tarEntry = new TarArchiveEntry(zipEntry.getName());
-                tarEntry.setSize(zipEntry.getSize()); // Defina o tamanho do arquivo no cabeçalho do TAR
-                tarOut.putArchiveEntry(tarEntry);
-
-                while ((bytesRead = zis.read(buffer)) != -1) {
-                    tarOut.write(buffer, 0, bytesRead);
-                }
-
-                tarOut.closeArchiveEntry();
-                zis.closeEntry();
+            filesConverted.add(baos.toByteArray());
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw e;
             }
-
-            tarOut.finish();
-            tarOut.close(); // Feche o fluxo TarArchiveOutputStream adequadamente
-            return baos.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
         }
+        return filesConverted;
     }
 
-    public byte[] convertTo7z(byte[] zipBytes) throws IOException {
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(zipBytes);
-             ZipInputStream zis = new ZipInputStream(bais);
-             ByteArrayOutputStream tarBaos = new ByteArrayOutputStream()) {
+    public List<byte[]> convertToTar(List<MultipartFile> files) throws IOException {
 
-            byte[] buffer = new byte[8192]; // Use a reasonable buffer size, 8 KB in this example
-            int bytesRead;
+        List<byte[]> filesConverted = new ArrayList<>();
 
-            try (TarArchiveOutputStream tarOut = new TarArchiveOutputStream(tarBaos);
-                 SevenZOutputFile sevenZOut = new SevenZOutputFile(new File("output.7z"))) {
+        for (MultipartFile file : files) {
+        
+            try (ByteArrayInputStream bais = new ByteArrayInputStream(file.getBytes());
+                ZipInputStream zis = new ZipInputStream(bais);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                TarArchiveOutputStream tarOut = new TarArchiveOutputStream(baos)) {
+
+                byte[] buffer = new byte[8192]; // Use um buffer razoável, 8 KB neste exemplo
+                int bytesRead;
 
                 ZipEntry zipEntry;
                 while ((zipEntry = zis.getNextEntry()) != null) {
                     TarArchiveEntry tarEntry = new TarArchiveEntry(zipEntry.getName());
-                    tarEntry.setSize(zipEntry.getSize()); // Set the file size in the TAR header
+                    tarEntry.setSize(zipEntry.getSize()); // Defina o tamanho do arquivo no cabeçalho do TAR
                     tarOut.putArchiveEntry(tarEntry);
 
                     while ((bytesRead = zis.read(buffer)) != -1) {
@@ -154,15 +140,61 @@ public class CompactConverterService {
                 }
 
                 tarOut.finish();
+                tarOut.close(); // Feche o fluxo TarArchiveOutputStream adequadamente
+                
+                filesConverted.add(baos.toByteArray());
             } catch (IOException e) {
                 e.printStackTrace();
                 throw e;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
         }
-        return zipBytes;
+
+        return filesConverted;
+    }
+
+    public List<byte[]> convertTo7z(List<MultipartFile> files) throws IOException {
+
+        List<byte[]> filesConverted = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            try (ByteArrayInputStream bais = new ByteArrayInputStream(file.getBytes());
+                ZipInputStream zis = new ZipInputStream(bais);
+                ByteArrayOutputStream tarBaos = new ByteArrayOutputStream()) {
+
+                byte[] buffer = new byte[8192]; // Use a reasonable buffer size, 8 KB in this example
+                int bytesRead;
+
+                try (TarArchiveOutputStream tarOut = new TarArchiveOutputStream(tarBaos);
+                    SevenZOutputFile sevenZOut = new SevenZOutputFile(new File("output.7z"))) {
+
+                    ZipEntry zipEntry;
+                    while ((zipEntry = zis.getNextEntry()) != null) {
+                        TarArchiveEntry tarEntry = new TarArchiveEntry(zipEntry.getName());
+                        tarEntry.setSize(zipEntry.getSize()); // Set the file size in the TAR header
+                        tarOut.putArchiveEntry(tarEntry);
+
+                        while ((bytesRead = zis.read(buffer)) != -1) {
+                            tarOut.write(buffer, 0, bytesRead);
+                        }
+
+                        tarOut.closeArchiveEntry();
+                        zis.closeEntry();
+                    }
+
+                    tarOut.finish();
+                    tarOut.close(); // Close the TarArchiveOutputStream properly
+                    filesConverted.add(tarBaos.toByteArray());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw e;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw e;
+            }
+        }
+        return filesConverted;
     }
 
 }

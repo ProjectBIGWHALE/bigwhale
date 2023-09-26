@@ -3,8 +3,6 @@ package com.whale.web.documents.certificategenerator.model;
 import com.whale.web.documents.certificategenerator.model.enums.CertificateTypeEnum;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
 @Component
 public class Certificate {
 	
