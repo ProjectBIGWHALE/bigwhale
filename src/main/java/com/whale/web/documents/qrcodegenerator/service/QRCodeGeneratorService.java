@@ -106,7 +106,6 @@ public class QRCodeGeneratorService {
     public static Color getColorByName(String name) {
         name = name.toLowerCase();
         return switch (name) {
-            case "violet" -> Color.MAGENTA;
             case "red" -> Color.RED;
             case "blue" -> Color.BLUE;
             case "green" -> Color.GREEN;
