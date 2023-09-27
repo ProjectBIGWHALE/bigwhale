@@ -27,17 +27,15 @@
 
 	<main>
 		<form th:action="@{/documents/compactconverter}" class="card-body d-flex justify-content-center" method="POST"
-			enctype="multipart/form-data" th:object="${form}">
+			enctype="multipart/form-data">
 
 			<div class="choose-file">
 
 				<p>Escolha um arquivo</p>
 
 				<div class="input-file">
-					<input type="file" th:field="*{file}" />
+					<input type="file" name="file" multiple/>
 				</div>
-
-				<span th:errors="*{file}" class="text-danger"></span>
 
 			</div>
 
@@ -50,14 +48,12 @@
 						<i class="bi bi-search"></i>
 					</label>
 
-					<select th:field="*{action}" class="form-select" id="inputGroupSelect01">
+					<select name="action" class="form-select" id="inputGroupSelect01">
 						<option class="options" value=".zip">.zip</option>
 						<option class="options" value=".tar.gz">.tar.gz</option>
 						<option class="options" value=".tar">.tar</option>
 						<option class="options" value=".7z">.7z</option>
 					</select>
-
-					<span th:errors="*{action}" class="text-danger"></span>
 
 				</div>
 			</div>

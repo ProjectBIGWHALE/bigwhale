@@ -17,16 +17,12 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.whale.web.documents.compactconverter.model.RequestCompactConverterForm;
 
 @Service
 public class CompactConverterService {
 
 
-    public List<byte[]> converterFile(RequestCompactConverterForm requestCompactConverterForm) throws IOException {
-
-        String action = requestCompactConverterForm.getAction();
-        List<MultipartFile> files = requestCompactConverterForm.getFiles();
+    public List<byte[]> converterFile(List<MultipartFile> files, String action) throws IOException {
 
         return switch (action) {
             case ".zip" -> convertToZip(files);

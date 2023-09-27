@@ -20,7 +20,6 @@ import com.whale.web.documents.certificategenerator.model.CertificateGeneratorFo
 import com.whale.web.documents.certificategenerator.service.CreateCertificateService;
 import com.whale.web.documents.certificategenerator.service.ProcessWorksheetService;
 import com.whale.web.documents.compactconverter.model.CompactConverterForm;
-import com.whale.web.documents.compactconverter.model.RequestCompactConverterForm;
 import com.whale.web.documents.compactconverter.service.CompactConverterService;
 import com.whale.web.documents.filecompressor.FileCompressorService;
 import com.whale.web.documents.imageconverter.model.ImageFormatsForm;
@@ -76,26 +75,26 @@ public class DocumentsController {
     }
 
     @PostMapping("/compactconverter")
-    public String compactConverter(RequestCompactConverterForm form, HttpServletResponse response) throws IOException{
-
+    public String compactConverter(@RequestParam("file") List<MultipartFile> files, @RequestParam("action") String action, HttpServletResponse response) {
         try {
-            List<byte[]> listaDeBytes = compactConverterService.converterFile(form);
-            String format = form.getAction();
+            List<byte[]> filesConverted = compactConverterService.converterFile(files, action);
 
-            response.setHeader("Content-Disposition", "attachment; filename=file" + format);
+            // Configura a resposta para indicar que você está enviando um arquivo ZIP
+            response.setHeader("Content-Disposition", "attachment; filename=arquivo." + action);
             response.setContentType("application/octet-stream");
-            response.setContentLength(listaDeBytes.size());
             response.setHeader("Cache-Control", "no-cache");
 
+            // Escreva os bytes no fluxo de saída
             OutputStream outputStream = response.getOutputStream();
-			for (byte[] bytes : listaDeBytes){
-            	outputStream.write(bytes);
-			}
+            for (byte[] fileBytes : filesConverted) {
+                outputStream.write(fileBytes);
+            }
+
             outputStream.flush();
-			
-		} catch(Exception e) {
-            return "redirect:/documents/compactconverter";
+        } catch (Exception e) {
+			return "redirect:/documents/compactconverter";
         }
+			
 		
         return null;
     }

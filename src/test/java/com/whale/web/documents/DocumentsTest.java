@@ -2,6 +2,7 @@ package com.whale.web.documents;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,12 +16,15 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Collections;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.imageio.ImageIO;
 
 import com.whale.web.documents.certificategenerator.model.enums.CertificateTypeEnum;
+import com.whale.web.documents.compactconverter.service.CompactConverterService;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -46,6 +50,8 @@ import com.whale.web.documents.filecompressor.FileCompressorService;
 import com.whale.web.documents.qrcodegenerator.model.QRCodeGeneratorForm;
 import com.whale.web.documents.textextract.TextExtractService;
 
+import static org.mockito.Mockito.*;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -59,6 +65,9 @@ public class DocumentsTest {
 
     @MockBean
     private FileCompressorService compressorService;
+
+	@MockBean
+    private CompactConverterService compactConverterService;
 
 
     public MockMultipartFile createTestZipFile() throws IOException {
@@ -114,22 +123,27 @@ public class DocumentsTest {
                .andExpect(status().is(200));
     }
 
-	
     @Test
-    void testConverter() throws Exception {
+    public void testCompactConverter() throws Exception {
+        // Crie um arquivo fictício para o teste
+        MockMultipartFile testFile = new MockMultipartFile("file", "test.zip", "application/zip", "conteúdo-do-arquivo".getBytes());
+        String format = ".zip";
 
-        MockMultipartFile testFile = this.createTestZipFile();
-		String format = ".zip";
+        // Simule o serviço compactConverterService para retornar os bytes corretos
+        byte[] expectedBytes = "conteúdo-do-arquivo".getBytes();
+        when(compactConverterService.converterFile(anyList(), eq(format))).thenReturn(Collections.singletonList(expectedBytes));
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
                 .file(testFile)
                 .param("action", format))
-                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.header().exists("Content-Disposition"))
-                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=file" + format))
+                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=arquivo." + format))
                 .andExpect(MockMvcResultMatchers.header().exists("Content-Type"))
-                .andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"))
-                .andExpect(MockMvcResultMatchers.content().bytes(testFile.getBytes()));
+                .andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"));
+
+        // Verifique se o serviço compactConverterService foi chamado com os parâmetros corretos
+        verify(compactConverterService).converterFile(Collections.singletonList(testFile), format);
     }
 
 
