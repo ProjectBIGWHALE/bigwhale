@@ -1,7 +1,6 @@
 package com.whale.web.design;
 
 import java.awt.Color;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Base64;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.whale.web.configurations.CustomMultipartFile;
 import com.whale.web.configurations.UploadImage;
 import com.whale.web.design.altercolor.model.AlterColorForm;
 import com.whale.web.design.altercolor.service.AlterColorService;

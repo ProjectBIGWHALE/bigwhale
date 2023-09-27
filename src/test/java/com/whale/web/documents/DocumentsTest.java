@@ -1,8 +1,8 @@
 package com.whale.web.documents;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,20 +15,22 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
+import java.util.Collections;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.imageio.ImageIO;
 
-import com.whale.web.documents.imageconverter.exception.InvalidUploadedFileException;
-import com.whale.web.documents.imageconverter.exception.UnableToConvertImageToOutputFormatException;
-import com.whale.web.documents.imageconverter.exception.UnexpectedFileFormatException;
+import com.whale.web.documents.certificategenerator.model.enums.CertificateTypeEnum;
+import com.whale.web.documents.compactconverter.service.CompactConverterService;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,14 +42,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.util.NestedServletException;
 
 import com.whale.web.documents.certificategenerator.model.Certificate;
 import com.whale.web.documents.certificategenerator.model.CertificateGeneratorForm;
 import com.whale.web.documents.certificategenerator.model.Worksheet;
-import com.whale.web.documents.filecompressor.service.FileCompressorService;
+import com.whale.web.documents.filecompressor.FileCompressorService;
 import com.whale.web.documents.qrcodegenerator.model.QRCodeGeneratorForm;
-import com.whale.web.documents.textextract.service.TextExtractService;
+import com.whale.web.documents.textextract.TextExtractService;
+
+import static org.mockito.Mockito.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
@@ -62,6 +65,9 @@ public class DocumentsTest {
 
     @MockBean
     private FileCompressorService compressorService;
+
+	@MockBean
+    private CompactConverterService compactConverterService;
 
 
     public MockMultipartFile createTestZipFile() throws IOException {
@@ -103,41 +109,43 @@ public class DocumentsTest {
 	}
 
 
-	@Test
-	void shouldReturnTheHTMLCompactConverterForm() throws Exception {
-		
-		URI uri = new URI("/documents/compactconverter");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				status().is(200));
-		
-	}
-	
+	@ParameterizedTest
+    @CsvSource({
+        "/documents/compactconverter",
+        "/documents/textextract",
+        "/documents/filecompressor",
+        "/documents/qrcodegenerator",
+        "/documents/certificategenerator/",
+        "/documents/imageconverter"
+    })
+    void testWithDifferentURIs(String uri) throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(uri))
+               .andExpect(status().is(200));
+    }
 
-	
     @Test
-    void testConverter() throws Exception {
+    public void testCompactConverter() throws Exception {
+        // Crie um arquivo fictício para o teste
+        MockMultipartFile testFile = new MockMultipartFile("file", "test.zip", "application/zip", "conteúdo-do-arquivo".getBytes());
+        String format = ".zip";
 
-        MockMultipartFile testFile = this.createTestZipFile();
-		String format = ".zip";
+        // Simule o serviço compactConverterService para retornar os bytes corretos
+        byte[] expectedBytes = "conteúdo-do-arquivo".getBytes();
+        when(compactConverterService.converterFile(anyList(), eq(format))).thenReturn(Collections.singletonList(expectedBytes));
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
                 .file(testFile)
                 .param("action", format))
-                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.header().exists("Content-Disposition"))
-                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=file" + format))
+                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=arquivo." + format))
                 .andExpect(MockMvcResultMatchers.header().exists("Content-Type"))
-                .andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"))
-                .andExpect(MockMvcResultMatchers.content().bytes(testFile.getBytes()));
+                .andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"));
+
+        // Verifique se o serviço compactConverterService foi chamado com os parâmetros corretos
+        verify(compactConverterService).converterFile(Collections.singletonList(testFile), format);
     }
 
-    @Test
-    void textExtractshouldReturnTheHTMLForm() throws Exception {
-
-        URI uri = new URI("/documents/textextract");
-        mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-                status().is(200));
-    }
 
     @Test
     void textExtractedShouldReturnTheHTMLForm() throws Exception {
@@ -161,13 +169,7 @@ public class DocumentsTest {
         verify(textExtractService, times(1)).extractTextFromImage(any());
     }
 
-    @Test
-    void compressFilePageShouldReturnTheHTMLForm() throws Exception {
 
-        URI uri = new URI("/documents/filecompressor");
-        mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-                status().is(200));
-    }
 
     @Test
     void compressFileShouldReturnTheFileZip() throws Exception {
@@ -189,45 +191,37 @@ public class DocumentsTest {
         verify(compressorService, times(1)).compressFile(any());
     }
     
-    @Test
-	void shouldReturnTheHTMLCertificateGeneratorForm() throws Exception {
-		
-		URI uri = new URI("/documents/certificategenerator/");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				status().is(200));
-		
-	}
+
     
 	@Test
     void shouldReturnTheCertificatesStatusCode200() throws Exception {
         CertificateGeneratorForm certificateGeneratorForm = new CertificateGeneratorForm();
-        Worksheet worksheet = new Worksheet();        
-        
+        Worksheet worksheet = new Worksheet();
+
         String csvContent = "col1,col2,col3\nvalue1,value2,value3";
-        
+
         MockMultipartFile file = new MockMultipartFile("file", "worksheet.csv", MediaType.TEXT_PLAIN_VALUE, csvContent.getBytes());
 
-		MockMultipartFile imageLayout = this.createTestImage("png");
-        
-
-        
         worksheet.setWorksheet(file);
         Certificate certificate = new Certificate();
-        certificate.setFontSize(20);
-        certificate.setX(200);
-        certificate.setY(200);
-        certificate.setImageLayout(imageLayout);
-        
+        certificate.setCertificateModelId(1L);
+		certificate.setEventName("ABC dos DEVS");
+		certificate.setCertificateTypeEnum(CertificateTypeEnum.COURCE);
+		certificate.setEventLocale("São Paulo");
+		certificate.setEventDate("2023-09-12");
+		certificate.setEventWorkLoad("20");
+		certificate.setSpeakerName("Ronnyscley");
+		certificate.setSpeakerRole("CTO");
+
         certificateGeneratorForm.setCertificate(certificate);
         certificateGeneratorForm.setWorksheet(worksheet);
-        
-        
+
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/certificategenerator")
         		.file(file)
                 .flashAttr("certificateGeneratorForm", certificateGeneratorForm))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment")))
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE));
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment")));
     }
     
     @Test
@@ -236,73 +230,170 @@ public class DocumentsTest {
         Worksheet worksheet = new Worksheet();
 
         String csvContent = "col1,col2,col3\nvalue1,value2,value3";
-        
+
         MockMultipartFile file = new MockMultipartFile("file", "worksheet.csv", MediaType.TEXT_PLAIN_VALUE, csvContent.getBytes());
 
-		MockMultipartFile imageLayout = this.createTestImage("png");
-        
         worksheet.setWorksheet(null);
         Certificate certificate = new Certificate();
-        certificate.setFontSize(20);
-        certificate.setX(200);
-        certificate.setY(200);
-        certificate.setImageLayout(imageLayout);
-        
+		certificate.setCertificateModelId(1L);
+		certificate.setCertificateTypeEnum(CertificateTypeEnum.COURCE);
+		certificate.setEventLocale("São Paulo");
+		certificate.setEventDate("20/10/2023");
+		certificate.setEventWorkLoad("20");
+		certificate.setSpeakerName("Ronnyscley");
+		certificate.setSpeakerRole("CTO");
+
         certificateGeneratorForm.setCertificate(certificate);
         certificateGeneratorForm.setWorksheet(worksheet);
-        
-        
+
+
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/certificategenerator")
         		.file(file)
                 .flashAttr("worksheetAndForm", certificateGeneratorForm))
                 .andExpect(status().is(302));
     }
-    
-    @Test
-	void shouldReturnTheQRCodeGeneratorHTMLForm() throws Exception {
-		
+
+
+
+	@Test
+	void shouldReturnAValidQRCodeLink() throws Exception {
 		URI uri = new URI("/documents/qrcodegenerator");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				status().is(200));
-		
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setLink("https://google.com.br");
+		qrCodeGeneratorForm.setDataType("link");
+		qrCodeGeneratorForm.setPixelColor("#0B0F0F");
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("link", qrCodeGeneratorForm.getLink())
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=QRCode.png")))
+				.andExpect(content().contentType(MediaType.IMAGE_PNG));
 	}
-    
-    @Test
-    void shouldReturnAValidQRCode() throws Exception {
-        URI uri = new URI("/documents/qrcodegenerator");
-        
-        QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
-        
-        String link = "https://google.com.br";
-        qrCodeGeneratorForm.setLink(link);
-        
-        mockMvc.perform(MockMvcRequestBuilders.post(uri)
-        		.param("link", qrCodeGeneratorForm.getLink()))
-        		.andExpect(status().is(200))
-		        .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment")))
-		        .andExpect(content().contentType(MediaType.IMAGE_PNG));
-	}
-    
+
 	@Test
-    void shouldReturnAPageRedirectionStatusCode302() throws Exception {
-        URI uri = new URI("/documents/qrcodegenerator");
-        
-        QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
-        
-        String link = "";
-        qrCodeGeneratorForm.setLink(link);
-        
-        mockMvc.perform(MockMvcRequestBuilders.post(uri)
-        		.param("link", qrCodeGeneratorForm.getLink()))
-        		.andExpect(status().is(302));
+	void nullLinkThatReturnStatus302_QRCodeLink() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setDataType("link");
+		qrCodeGeneratorForm.setLink(null);
+		qrCodeGeneratorForm.setPixelColor(null);
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("link", qrCodeGeneratorForm.getLink())
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
+				.andExpect(status().is(302));
 	}
-	
+
 	@Test
-	void shouldReturnImageConverterHTML() throws Exception {
-		URI uri = new URI("/documents/imageconverter");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				status().is(200));
+	void shouldReturnAValidQRCodeEmail() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setDataType("email");
+		qrCodeGeneratorForm.setEmail("erasmo.ads.tech@gmail.com");
+		qrCodeGeneratorForm.setTitleEmail("Teste");
+		qrCodeGeneratorForm.setTextEmail("Esse é email de teste");
+		qrCodeGeneratorForm.setPixelColor("red");
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("email", qrCodeGeneratorForm.getEmail())
+						.param("textEmail", qrCodeGeneratorForm.getTextEmail())
+						.param("titleEmail", qrCodeGeneratorForm.getTitleEmail())
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=QRCode.png")))
+				.andExpect(content().contentType(MediaType.IMAGE_PNG));
 	}
+
+
+	@Test
+	void nullEmailThatReturnStatus302_QRCodeEmail() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setDataType("email");
+		qrCodeGeneratorForm.setEmail(null);
+		qrCodeGeneratorForm.setTitleEmail(null);
+		qrCodeGeneratorForm.setTextEmail(null);
+		qrCodeGeneratorForm.setPixelColor(null);
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("email", qrCodeGeneratorForm.getEmail())
+						.param("titleEmail", qrCodeGeneratorForm.getTitleEmail())
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
+				.andExpect(status().is(302));
+	}
+
+
+	@Test
+	void shouldReturnAValidQRCodeWhatsapp() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setDataType("whatsapp");
+		qrCodeGeneratorForm.setPhoneNumber("5527997512017");
+		qrCodeGeneratorForm.setText("Teste de QRCODE no envio de mensagem ao whatsapp");
+		qrCodeGeneratorForm.setPixelColor("rgb(255,0,0)");
+
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("phoneNumber", qrCodeGeneratorForm.getPhoneNumber())
+						.param("text", qrCodeGeneratorForm.getText())
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=QRCode.png")))
+				.andExpect(content().contentType(MediaType.IMAGE_PNG));
+	}
+
+
+	@Test
+	void nullWhatsappThatReturnStatus302_QRCodeWhatsapp() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setDataType("whatsapp");
+		qrCodeGeneratorForm.setPhoneNumber(null);
+		qrCodeGeneratorForm.setText(null);
+		qrCodeGeneratorForm.setPixelColor(null);
+
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("phoneNumber", qrCodeGeneratorForm.getPhoneNumber())
+						.param("text", qrCodeGeneratorForm.getText())
+						.param("pixelColor", qrCodeGeneratorForm.getPixelColor()))
+				.andExpect(status().is(302));
+	}
+
+
+	@Test
+	void nullDataTypeThatReturnStatus302_QRCode() throws Exception {
+		URI uri = new URI("/documents/qrcodegenerator");
+
+		QRCodeGeneratorForm qrCodeGeneratorForm = new QRCodeGeneratorForm();
+		qrCodeGeneratorForm.setDataType(null);
+		qrCodeGeneratorForm.setPhoneNumber("5527997512017");
+		qrCodeGeneratorForm.setText("Teste de QRCODE no envio de mensagem ao whatsapp");
+
+		mockMvc.perform(MockMvcRequestBuilders.post(uri)
+						.param("dataType", qrCodeGeneratorForm.getDataType())
+						.param("phoneNumber", qrCodeGeneratorForm.getPhoneNumber())
+						.param("text", qrCodeGeneratorForm.getText()))
+				.andExpect(status().is(302));
+	}
+
+
+
+
+
 
 	@Test
 	void testToConvertAndDownloadImageSuccessfully() throws Exception {

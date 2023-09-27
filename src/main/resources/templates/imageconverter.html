@@ -1,163 +1,107 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My big Whale - Conversor de Imagens</title>
+    <link rel="stylesheet" type="text/css" href="/css/imageconverter.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 20px;
-            padding: 20px;
-        }
-
-        h2 {
-            text-align: center;
-        }
-
-        h3 {
-            text-align: center;
-        }
-
-        form {
-            max-width: 500px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        input[type="file"] {
-            display: block;
-            width: 95%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        select {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button,
-        a {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            height: 35px;
-            font-size: 15px;
-        }
-
-
-        button:hover,
-        a:hover {
-            background-color: #0056b3;
-        }
-    </style>
-
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BVGCNK1G97">
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
+
         gtag('config', 'G-BVGCNK1G97');
-    </script>
-
-    <script>
-        // Impõe limite de 50mB para upload com mensagem personalizada
-
-        document.addEventListener("DOMContentLoaded", function () {
-            // Obtém o elemento de input de arquivo com o ID "image"
-            const fileInput = document.getElementById("image");
-
-            // Adiciona um ouvinte de evento de mudança ao campo de arquivo
-            fileInput.addEventListener("change", function (event) {
-                const selectedFile = event.target.files[0]; // Obtém o arquivo selecionado
-
-                // Verifica se o arquivo selecionado excede o limite de 50MB (em bytes)
-                const maxSizeInBytes = 50 * 1024 * 1024; // 50MB em bytes
-                if (selectedFile.size > maxSizeInBytes) {
-                    alert("Aviso! O arquivo excede o tamanho máximo permitido de 50MB.");
-                    fileInput.value = ""; // Limpa o valor do input para evitar o envio do arquivo
-                }
-            });
-        });
-
-
-        // Alert para escolher enviar formulário somente se antes fazer upload da imagem
-
-        document.addEventListener("DOMContentLoaded", function () {
-            // Captura o botão de conversão
-            const convertButton = document.getElementById("convertButton");
-
-            // Adiciona um evento de clique ao botão de conversão
-            convertButton.addEventListener("click", function () {
-                // Captura o campo de upload de arquivo
-                const imageInput = document.getElementById("image");
-
-                // Verifica se o campo de upload de arquivo está vazio
-                if (imageInput.files.length === 0) {
-                    // Exibe o alerta se o campo estiver vazio
-                    alert("Você precisa escolher uma imagem antes.");
-                } else {
-                    // Se o campo de upload de arquivo não estiver vazio, envia o formulário
-                    const imageForm = document.getElementById("imageForm");
-                    imageForm.submit();
-                }
-            });
-        });
-
     </script>
 
 </head>
 
-
 <body>
-    <h2>Conversor online de imagens</h2>
-    <h3>Formatos suportados: (JPG, JPEG, BMP, GIF, TIFF, PNG e RAM)</h3>
-    <form th:action="@{/documents/imageconverter}" method="POST" enctype="multipart/form-data" th:object="${form}"
-        id="imageForm">
-        <div>
-            <label for="image">Escolha uma imagem:</label>
-            <!--Permite que o cliente selecione apenas arquivos de imagens ao fazer upload-->
-            <input type="file" th:field="*{image}" name="image" id="image" accept="image/*" required />
-            <span class="error-message" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
+
+    <header>
+
+        <h1>Conversor online de imagens</h1>
+        <h2>Formatos suportados: (JPG, JPEG, BMP, GIF)</h2>
+
+    </header>
+
+    <main>
+
+        <form th:action="@{/documents/imageconverter}" method="POST" enctype="multipart/form-data" th:object="${form}"
+            id="imageForm">
+
+            <div class="select-image">
+
+                <label for="image">Escolha uma imagem:</label>
+
+                <!--Permite que o cliente selecione apenas arquivos de imagens ao fazer upload-->
+                <input type="file" th:field="*{image}" name="image" id="image" accept=".bmp, .jpg, .jpeg, .gif"
+                    required />
+
+                <span class="error-message" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
+            </div>
+
+            <div class="format-image">
+                <p>Formato desejado:</p>
+
+                <select th:field="*{outputFormat}" class="form-control">
+                    <option th:each="format : ${list}" th:value="${format.name}" th:text="${format.name}"></option>
+                </select>
+
+                <span th:errors="*{outputFormat}" class="text-danger"></span>
+            </div>
+
+            <div>
+                <button type="button" id="convertButton">Download</button>
+            </div>
+        </form>
+
+    </main>
+
+    <!--LOADING-->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loadingio-spinner-dual-ball-dbuc2dc03wn">
+            <div class="ldio-bxdwskh2bb">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
-        <div>
-            <p><b>Formato de Saída</b></p>
-            <select th:field="*{outputFormat}" class="form-control">
-                <option th:each="format : ${list}" th:value="${format.name}" th:text="${format.name}"></option>
-            </select>
-            <span th:errors="*{outputFormat}" class="text-danger"></span>
-        </div>
-        <div>
-            <button type="button" id="convertButton">Converter e Baixar</button>
-            <a href="/">Voltar</a>
-        </div>
-    </form>
+    </div>
+
+
+    <!--BOTÕES HOME E AJUDA-->
+
+    <div id="button-home">
+        <a href="/#documentos">
+            <ion-icon name="return-down-back-outline"></ion-icon>
+        </a>
+    </div>
+
+    <div id="button-help">
+        <a href="/help">
+            <ion-icon name="help-outline"></ion-icon>
+        </a>
+    </div>
+
+    <!--Linhas superiores-->
+    <div class="linhas-esquerda">
+        <hr class="vertical-esq">
+        <hr class="horizontal-esq">
+    </div>
+    <!--Linhas inferiores-->
+    <div class="linhas-direita">
+        <hr class="vertical-dir">
+        <hr class="horizontal-dir">
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="/js/imageconverter.js"></script>
+
 </body>
 
 </html>

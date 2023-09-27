@@ -1,4 +1,4 @@
-package com.whale.web.documents.textextract.service;
+package com.whale.web.documents.textextract;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;

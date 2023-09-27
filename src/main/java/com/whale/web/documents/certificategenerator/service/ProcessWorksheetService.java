@@ -10,12 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.opencsv.CSVReader;
-import com.whale.web.documents.certificategenerator.model.Certificate;
 
 @Service
 public class ProcessWorksheetService {
 	
-	public List<String> savingNamesInAList(MultipartFile worksheet, Certificate certificate) throws Exception {
+	public List<String> savingNamesInAList(MultipartFile worksheet) throws Exception {
 
 		if (worksheet.isEmpty()) {
 			throw new IOException();
