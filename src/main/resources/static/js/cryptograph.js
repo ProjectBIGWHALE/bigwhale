@@ -17,19 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
     return (criptografarRadio.checked || descriptografarRadio.checked) &&
     arquivoElement.files.length > 0 && pwd.value.length > 0
   }
-
-  //função para habilitar o button download
-  function enabledBtnDownload() {
-    return (isValid()) 
-    ? btnDownload.classList.remove("disabledBtnDownload")
-    : btnDownload.classList.add("disabledBtnDownload")  ;
-      
-  }
   
   // ler os eventos de entrada do input password
   pwd.addEventListener('input', ()=>{
     validationField( pwd.value.length > 0, 'pwd-error');
-    enabledBtnDownload()
   })
 
   btnToggleIcon.addEventListener("click", () => {
@@ -40,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   criptografarRadio.addEventListener("change", function () {
-    enabledBtnDownload();
     if (this.checked) {
       h1Element.textContent = "Criptografando Arquivos";
       arquivoElement.textContent = "Escolha um arquivo compactado:";
@@ -50,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   descriptografarRadio.addEventListener("change", function () {
-    enabledBtnDownload();
     if (this.checked) {
       h1Element.textContent = "Descriptografando Arquivos";
       arquivoElement.textContent = "Escolha um arquivo criptografado:";
@@ -76,19 +65,18 @@ document.addEventListener("DOMContentLoaded", function () {
   arquivoElement.addEventListener("change", () => {
     const name = arquivoElement.files[0].name;
     validationField(arquivoElement.files.length, 'file-error');
-    enabledBtnDownload();
     return (fileName.innerText = `Arquivo: ${name}`);
   });
 });
 
 //função para exibir a mensagem de error
 function showMsgError( spanError ){
-  spanError.style.visibility = 'visible';
+  spanError.style.display = 'block';
 }
 
 //função para ocultar a mensagem de erro
 function hideMsgError( spanError){
-  spanError.style.visibility = 'hidden';
+  spanError.style.display = 'none';
 }
 
 // função para validar o campo e exibir a mensagem se houver error
