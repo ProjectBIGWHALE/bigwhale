@@ -8,6 +8,8 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -65,6 +67,8 @@ public class DocumentsController {
     
     @Autowired
     CreateCertificateService createCertificateService;
+
+	private static Logger logger = LoggerFactory.getLogger(DocumentsController.class);
 
     @GetMapping(value="/compactconverter")
     public String compactConverter(Model model) {
@@ -243,6 +247,7 @@ public class DocumentsController {
             outputStream.flush();
 
 	    } catch (Exception e) {
+			logger.info(e.toString());
 			return "redirect:/documents/certificategenerator";
 	    }
 
