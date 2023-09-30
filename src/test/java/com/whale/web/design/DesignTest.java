@@ -27,13 +27,13 @@ import com.whale.web.design.colorspalette.model.PaletteForm;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
 @SpringBootTest
-public class DesignTest {
+class DesignTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@Test
-	public void shouldReturnTheHTMLFormForChangeColorsApp() throws Exception {
+	void shouldReturnTheHTMLFormForChangeColorsApp() throws Exception {
 		
 		URI uri = new URI("/design/altercolor");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
@@ -42,7 +42,7 @@ public class DesignTest {
 	}
 	
 	@Test
-	public void shouldReturnTheHTMLFormForPaletteColorsApp() throws Exception {
+	void shouldReturnTheHTMLFormForPaletteColorsApp() throws Exception {
 		
 		URI uri = new URI("/design/colorspalette");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
@@ -51,31 +51,27 @@ public class DesignTest {
 	}
 	
     @Test
-    public void shouldReturnAValidPNGProcessedImage() throws Exception {
-        
-    	// Criar a imagem em formato BufferedImage
-    	BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+    void shouldReturnAValidPNGProcessedImage() throws Exception {        
+    	
+        BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
     	Graphics2D graphics = image.createGraphics();
     	graphics.setColor(Color.WHITE);
     	graphics.fillRect(0, 0, 100, 100);
     	graphics.dispose();
-
-    	// Converte a imagem em bytes
+    	
     	ByteArrayOutputStream baos = new ByteArrayOutputStream();
     	ImageIO.write(image, "png", baos);
     	byte[] imageBytes = baos.toByteArray();
-
-        // Cria o objeto MockMultipartFile com os dados da imagem
+        
         MockMultipartFile file = new MockMultipartFile(
                 "image",
                 "white_image.png",
                 MediaType.IMAGE_PNG_VALUE,
                 imageBytes
         );
-
-        // Define os parâmetros de formColors
+        
         AlterColorForm formColors = new AlterColorForm();
-        formColors.setColorForAlteration("#000000");
+        formColors.setColorForAlteration("#FF0000");
         formColors.setColorOfImage("#FFFFFF");
         formColors.setMargin(4);
         formColors.setImage(file);
@@ -85,26 +81,24 @@ public class DesignTest {
                 .param("colorForAlteration", formColors.getColorForAlteration())
                 .param("colorOfImage", formColors.getColorOfImage())
                 .param("margin", String.valueOf(formColors.getMargin())))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment")))
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.IMAGE_PNG));
+			.andExpect(MockMvcResultMatchers.status().isOk())
+                        .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment; filename=ModifiedImage.png")))
+			.andExpect(MockMvcResultMatchers.content().contentType(MediaType.IMAGE_PNG));
     }
+
     
     @Test
-    public void shouldReturnARedirectionStatusCode302() throws Exception {
+    void shouldReturnARedirectionStatusCode302() throws Exception {
     	
-    	byte[] imageBytes = null;
+    	byte[] imageBytes = null;  	
     	
-    	// Cria o objeto MockMultipartFile com os dados da imagem
         MockMultipartFile file = new MockMultipartFile(
                 "image",
                 "white_image.png",
                 MediaType.IMAGE_PNG_VALUE,
                 imageBytes
-        );
-    	
-    	
-        // Define os parâmetros de formColors
+        );    	    	
+       
         AlterColorForm formColors = new AlterColorForm();
         formColors.setColorForAlteration("#000000");
         formColors.setColorOfImage("#FFFFFF");
@@ -119,25 +113,23 @@ public class DesignTest {
                 .andExpect(MockMvcResultMatchers.status().is(302));
     	
     }
+
     
     @Test
-    public void shouldReturnAPaletteColorsPageView() throws Exception {
+    void shouldReturnAPaletteColorsPageView() throws Exception {
     	
     	PaletteForm formPalette = new PaletteForm();
-    	
-    	// Criar a imagem em formato BufferedImage
+    	    	
     	BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
     	Graphics2D graphics = image.createGraphics();
     	graphics.setColor(Color.WHITE);
     	graphics.fillRect(0, 0, 100, 100);
     	graphics.dispose();
-
-    	// Converte a imagem em bytes
+    	
     	ByteArrayOutputStream baos = new ByteArrayOutputStream();
     	ImageIO.write(image, "png", baos);
     	byte[] imageBytes = baos.toByteArray();
-
-        // Cria o objeto MockMultipartFile com os dados da imagem
+        
         MockMultipartFile file = new MockMultipartFile(
                 "image",
                 "white_image.png",

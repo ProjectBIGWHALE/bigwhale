@@ -60,7 +60,7 @@ public class DesignController {
 
 	        // Define o tipo de conteúdo e o tamanho da resposta
 	        response.setContentType("image/png");
-	        response.setHeader("Content-Disposition", "attachment; filename=\"ModifiedImage.png\"");
+	        response.setHeader("Content-Disposition", "attachment; filename=ModifiedImage.png");
 	        response.setHeader("Cache-Control", "no-cache");
 
 	        // Copia os bytes do arquivo para o OutputStream

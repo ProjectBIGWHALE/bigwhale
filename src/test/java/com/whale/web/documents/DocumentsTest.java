@@ -3,6 +3,7 @@ package com.whale.web.documents;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -55,7 +56,7 @@ import static org.mockito.Mockito.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
 @SpringBootTest
-public class DocumentsTest {
+class DocumentsTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -70,7 +71,7 @@ public class DocumentsTest {
     private CompactConverterService compactConverterService;
 
 
-    public MockMultipartFile createTestZipFile() throws IOException {
+    MockMultipartFile createTestZipFile() throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
              ZipOutputStream zipOut = new ZipOutputStream(baos)) {
 
@@ -88,7 +89,7 @@ public class DocumentsTest {
     }
 
 
-	public MockMultipartFile createTestImage(String inputFormat) throws IOException{
+	MockMultipartFile createTestImage(String inputFormat) throws IOException{
 		BufferedImage bufferedImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
     	Graphics2D graphics = bufferedImage.createGraphics();
     	graphics.setColor(Color.WHITE);
@@ -124,12 +125,12 @@ public class DocumentsTest {
     }
 
     @Test
-    public void testCompactConverter() throws Exception {
-        // Crie um arquivo fictício para o teste
+    void testCompactConverter() throws Exception {
+
         MockMultipartFile testFile = new MockMultipartFile("file", "test.zip", "application/zip", "conteúdo-do-arquivo".getBytes());
         String format = ".zip";
 
-        // Simule o serviço compactConverterService para retornar os bytes corretos
+
         byte[] expectedBytes = "conteúdo-do-arquivo".getBytes();
         when(compactConverterService.converterFile(anyList(), eq(format))).thenReturn(Collections.singletonList(expectedBytes));
 
@@ -142,7 +143,6 @@ public class DocumentsTest {
                 .andExpect(MockMvcResultMatchers.header().exists("Content-Type"))
                 .andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"));
 
-        // Verifique se o serviço compactConverterService foi chamado com os parâmetros corretos
         verify(compactConverterService).converterFile(Collections.singletonList(testFile), format);
     }
 
