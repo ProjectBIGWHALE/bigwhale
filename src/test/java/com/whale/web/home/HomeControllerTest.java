@@ -1,10 +1,9 @@
 package com.whale.web.home;
 
-import java.net.URI;
-
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,36 +14,21 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
 @SpringBootTest
-public class HomeControllerTest {
+class HomeControllerTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
-	
-	@Test
-	public void shouldReturnTheHTMLHome() throws Exception {
-		
-		URI uri = new URI("/");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				MockMvcResultMatchers.status().is(200));
-		
-	}
-	
-	@Test
-	public void shouldReturnTheHTMLHelp() throws Exception {
-		
-		URI uri = new URI("/help");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				MockMvcResultMatchers.status().is(200));
-		
-	}
-	
-	@Test
-	public void shouldReturnTheHTMLSupportUs() throws Exception {
-		
-		URI uri = new URI("/supportus");
-		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
-				MockMvcResultMatchers.status().is(200));
-		
-	}
+
+
+	@ParameterizedTest
+    @CsvSource({
+        "/",
+        "/help",
+        "/supportus"        
+    })
+    void testWithDifferentURIs(String uri) throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
+               MockMvcResultMatchers.status().is(200));
+    }
 	
 }
