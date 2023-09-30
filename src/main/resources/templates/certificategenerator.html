@@ -60,8 +60,8 @@
 					</div>
 					<div class="stage_2">
 						<h4>2.Preencha as informações do certificado:</h4>
-						<label class="row" data-tooltip="Importe uma planilha com os nomes (.xlsx)">Nome do(a) participante:
-							<input type="file" th:field="*{worksheet.worksheet}"/>
+						<label class="row" data-tooltip="Importe um arquivo CSV com os nomes">Nomes dos(as) participantes:
+							<input type="file" th:field="*{worksheet.worksheet}" accept=".csv"/>
 							<div class="instruction"></div>
 						</label>
 
