@@ -169,7 +169,6 @@ p {
     font-size: 22px;
     width: 200px;
     height: 63px;
-    margin-top: 20px;
 }
 
 .btn-download {
@@ -181,13 +180,6 @@ p {
 .btn-download:hover {
     background-color: #158E8E;
 }
-
-.btn.disabledBtnDownload{
-    background-color: #327070;
-    color: #c0b9b9;
-    cursor: unset;
-}
-
 
 /*LOADING*/
 
@@ -418,10 +410,11 @@ p {
 
 .danger{
     color: red;
+    font-size: .78rem;
 }
 
 .danger small{
-    visibility: hidden;
+    display: none;
 }
 
 @media (max-width: 816px) {
