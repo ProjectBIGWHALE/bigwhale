@@ -2,8 +2,6 @@ package com.whale.web.documents;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,7 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Collections;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -123,20 +121,44 @@ class DocumentsTest {
     }
 
     @Test
-    void testCompactConverter() throws Exception {
+    void testCompactConverterForOneArchive() throws Exception {
 
         MockMultipartFile testFile = new MockMultipartFile("file", "test.zip", "application/zip", "conteúdo-do-arquivo".getBytes());
-        String format = ".zip";    
+        String action = ".zip";    
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
                 .file(testFile)
-                .param("action", format))
+                .param("action", action))
                 .andExpect(MockMvcResultMatchers.status().isOk())                
-                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=arquivo" + format))               
+                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=compressedFiles" + action))               
                 .andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"));
-
         
     }
+
+
+	@Test
+	void testCompactConverterForTwoArchives() throws Exception {
+		// Crie dois arquivos MockMultipartFile para o teste.
+		byte[] file1Content = "Conteúdo do arquivo 1".getBytes(StandardCharsets.UTF_8);
+		byte[] file2Content = "Conteúdo do arquivo 2".getBytes(StandardCharsets.UTF_8);
+		String action = ".zip";
+		MockMultipartFile file1 = new MockMultipartFile("file", "file1.zip", "application/zip", file1Content);
+		MockMultipartFile file2 = new MockMultipartFile("file", "file2.zip", "application/zip", file2Content);
+
+		// Execute a solicitação multipart com os dois arquivos.
+		mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
+				.file(file1)
+				.file(file2)
+				.param("action", action))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=compressedFiles" + action))
+				.andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"))
+				.andReturn();
+
+		
+	}
+
+
 
 
     @Test
