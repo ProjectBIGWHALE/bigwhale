@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
-
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -65,7 +63,7 @@ public class CompactConverterService {
                 }
 
                 tarOut.finish();
-                tarOut.close(); // Feche o fluxo TarArchiveOutputStream adequadamente
+                
                 filesConverted.add(baos.toByteArray());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -141,7 +139,7 @@ public class CompactConverterService {
                 }
 
                 tarOut.finish();
-                tarOut.close(); // Feche o fluxo TarArchiveOutputStream adequadamente
+                
                 
                 filesConverted.add(baos.toByteArray());
             } catch (IOException e) {

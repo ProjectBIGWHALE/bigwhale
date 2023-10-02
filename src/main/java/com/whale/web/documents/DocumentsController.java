@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -83,18 +85,34 @@ public class DocumentsController {
         try {
             List<byte[]> filesConverted = compactConverterService.converterFile(files, action);
 
-            // Configura a resposta para indicar que você está enviando um arquivo ZIP
-            response.setHeader("Content-Disposition", "attachment; filename=arquivo." + action);
-            response.setContentType("application/octet-stream");
-            response.setHeader("Cache-Control", "no-cache");
+            if (filesConverted.size() == 1) {
+				
+				byte[] fileBytes = filesConverted.get(0);
+				response.setHeader("Content-Disposition", "attachment; filename=compressedFile" + action);
+				response.setContentType("application/octet-stream");
+				response.setHeader("Cache-Control", "no-cache");
+	
+				try (OutputStream outputStream = response.getOutputStream()) {
+					outputStream.write(fileBytes);
+					outputStream.flush();
+				}
+			} 
+			else {				
+				response.setHeader("Content-Disposition", "attachment; filename=compressedFiles" + action);
+				response.setContentType("application/octet-stream");
+				response.setHeader("Cache-Control", "no-cache");
 
-            // Escreva os bytes no fluxo de saída
-            OutputStream outputStream = response.getOutputStream();
-            for (byte[] fileBytes : filesConverted) {
-                outputStream.write(fileBytes);
+				try (ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream())) {
+                for (int i = 0; i < filesConverted.size(); i++) {
+                    byte[] fileBytes = filesConverted.get(i);
+                    ZipEntry zipEntry = new ZipEntry("file" + (i + 1) + action);
+                    zipOutputStream.putNextEntry(zipEntry);
+                    zipOutputStream.write(fileBytes);
+                    zipOutputStream.closeEntry();
+                }
             }
-
-            outputStream.flush();
+        }
+	
         } catch (Exception e) {
 			return "redirect:/documents/compactconverter";
         }

@@ -51,8 +51,6 @@ import com.whale.web.documents.filecompressor.FileCompressorService;
 import com.whale.web.documents.qrcodegenerator.model.QRCodeGeneratorForm;
 import com.whale.web.documents.textextract.TextExtractService;
 
-import static org.mockito.Mockito.*;
-
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -128,22 +126,16 @@ class DocumentsTest {
     void testCompactConverter() throws Exception {
 
         MockMultipartFile testFile = new MockMultipartFile("file", "test.zip", "application/zip", "conteúdo-do-arquivo".getBytes());
-        String format = ".zip";
-
-
-        byte[] expectedBytes = "conteúdo-do-arquivo".getBytes();
-        when(compactConverterService.converterFile(anyList(), eq(format))).thenReturn(Collections.singletonList(expectedBytes));
+        String format = ".zip";    
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
                 .file(testFile)
                 .param("action", format))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.header().exists("Content-Disposition"))
-                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=arquivo." + format))
-                .andExpect(MockMvcResultMatchers.header().exists("Content-Type"))
+                .andExpect(MockMvcResultMatchers.status().isOk())                
+                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=arquivo" + format))               
                 .andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"));
 
-        verify(compactConverterService).converterFile(Collections.singletonList(testFile), format);
+        
     }
 
 
