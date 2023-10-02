@@ -128,7 +128,19 @@ function btnClear() {
 
     dropper.value = '';
     alterColorInput.value = '';
+
 }
+
+    // Obtém o elemento do slider e o elemento do valor
+    var slider = document.getElementById("slider");
+    var sliderValue = document.getElementById("sliderValue");
+
+    // Atualiza o valor exibido conforme o usuário move o slider
+    slider.addEventListener("input", function() {
+        sliderValue.textContent = slider.value;
+    });
+
+
 
 // function downloadAlteredImage() {
 //     var alteredImage = document.querySelector('#altered-image img');

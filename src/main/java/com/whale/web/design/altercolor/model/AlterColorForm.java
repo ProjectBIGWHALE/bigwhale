@@ -9,7 +9,7 @@ public class AlterColorForm {
 	private MultipartFile image;
 	private String colorOfImage;
 	private String colorForAlteration;
-	private Integer margin;
+	private Double margin;
 	
 	
 	public MultipartFile getImage() {
@@ -30,11 +30,12 @@ public class AlterColorForm {
 	public void setColorForAlteration(String colorForAlteration) {
 		this.colorForAlteration = colorForAlteration;
 	}
-	public Integer getMargin() {
+
+	public Double getMargin() {
 		return margin;
 	}
-	public void setMargin(Integer margin) {
+
+	public void setMargin(Double margin) {
 		this.margin = margin;
 	}
-	
 }

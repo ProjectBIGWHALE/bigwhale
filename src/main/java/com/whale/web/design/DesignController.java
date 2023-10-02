@@ -55,6 +55,10 @@ public class DesignController {
 
 	@PostMapping("/altercolor")
 	public String alterColor(AlterColorForm form, HttpServletResponse response) throws IOException {
+
+		System.out.println(form.getColorForAlteration());
+		System.out.println(form.getMargin());
+		//form.setMargin(1);
 	    try {
 	        byte[] processedImage = alterColorService.alterColor(form.getImage(), form.getColorOfImage(), form.getColorForAlteration(), form.getMargin());
 
