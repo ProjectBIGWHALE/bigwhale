@@ -3,18 +3,25 @@ package com.whale.web.documents.compactconverter.service;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
+
+import com.whale.web.documents.DocumentsController;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
+import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class CompactConverterService {
 
-
+    private static final Logger logger = LoggerFactory.getLogger(CompactConverterService.class);
     public List<byte[]> converterFile(List<MultipartFile> files, String action) throws IOException {
 
         return switch (action) {
@@ -35,162 +42,179 @@ public class CompactConverterService {
 
     }
 
-    public List<byte[]> convertToTarGz(List<MultipartFile> files) throws IOException {
+    public List<byte[]> convertToZip(List<MultipartFile> files) {
+        List<byte[]> zipFiles = new ArrayList<>();
 
+        for (MultipartFile file : files) {
+            try {
+                if (!isValidZipFile(file)) {
+                    throw new IllegalArgumentException("The file is not a valid zip file.");
+                }
+
+                ByteArrayOutputStream zipOutputStream = new ByteArrayOutputStream();
+                ZipArchiveOutputStream zipArchiveOutputStream = new ZipArchiveOutputStream(zipOutputStream);
+                ZipArchiveInputStream zipArchiveInputStream = new ZipArchiveInputStream(file.getInputStream());
+
+                ZipArchiveEntry zipEntry;
+                while ((zipEntry = zipArchiveInputStream.getNextZipEntry()) != null) {
+
+                    ZipArchiveEntry newZipEntry = new ZipArchiveEntry(zipEntry.getName());
+                    zipArchiveOutputStream.putArchiveEntry(newZipEntry);
+                    IOUtils.copy(zipArchiveInputStream, zipArchiveOutputStream);
+                    zipArchiveOutputStream.closeArchiveEntry();
+                }
+
+                zipArchiveInputStream.close();
+                zipArchiveOutputStream.close();
+                zipFiles.add(zipOutputStream.toByteArray());
+
+            } catch (Exception e) {
+                logger.info("Error in convertToZip: " + e.toString());
+            }
+        }
+        return zipFiles;
+    }
+
+    public List<byte[]> convertToTar(List<MultipartFile> files) {
         List<byte[]> filesConverted = new ArrayList<>();
 
         for (MultipartFile file : files) {
-            try (ByteArrayInputStream bais = new ByteArrayInputStream(file.getBytes());
-                ZipInputStream zis = new ZipInputStream(bais);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                TarArchiveOutputStream tarOut = new TarArchiveOutputStream(new GzipCompressorOutputStream(baos))) {
-
-                byte[] buffer = new byte[8192]; // Use um buffer razoável, 8 KB neste exemplo
-                int bytesRead;
-
-                ZipEntry zipEntry;
-                while ((zipEntry = zis.getNextEntry()) != null) {
-                    TarArchiveEntry tarEntry = new TarArchiveEntry(zipEntry.getName());
-                    tarEntry.setSize(zipEntry.getSize()); // Defina o tamanho do arquivo no cabeçalho do TAR
-                    tarOut.putArchiveEntry(tarEntry);
-
-                    while ((bytesRead = zis.read(buffer)) != -1) {
-                        tarOut.write(buffer, 0, bytesRead);
-                    }
-
-                    tarOut.closeArchiveEntry();
-                    zis.closeEntry();
+            try {
+                if (!isValidZipFile(file)) {
+                    throw new IllegalArgumentException("The file is not a valid zip file.");
                 }
 
-                tarOut.finish();
-                
-                filesConverted.add(baos.toByteArray());
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw e;
+                try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                     TarArchiveOutputStream tarOutputStream = new TarArchiveOutputStream(outputStream);
+                     InputStream zipInputStream = file.getInputStream();
+                     ZipArchiveInputStream zipArchiveInputStream = new ZipArchiveInputStream(zipInputStream)) {
+
+                    ZipArchiveEntry zipEntry;
+                    while ((zipEntry = zipArchiveInputStream.getNextZipEntry()) != null) {
+                        TarArchiveEntry tarEntry = new TarArchiveEntry(zipEntry.getName());
+                        tarEntry.setSize(zipEntry.getSize());
+
+                        tarOutputStream.putArchiveEntry(tarEntry);
+                        IOUtils.copy(zipArchiveInputStream, tarOutputStream);
+                        tarOutputStream.closeArchiveEntry();
+                    }
+                    filesConverted.add(outputStream.toByteArray());
+                }
+
+            } catch (Exception e) {
+                logger.info("Error in convertToTar: " + e);
             }
         }
         return filesConverted;
     }
 
-    public List<byte[]> convertToZip(List<MultipartFile> files) throws IOException {
+
+    public List<byte[]> convertTo7z(List<MultipartFile> files) {
         List<byte[]> filesConverted = new ArrayList<>();
 
         for (MultipartFile file : files) {
+            try {
+                if (!isValidZipFile(file)) {
+                    throw new IllegalArgumentException("The file is not a valid zip file.");
+                }
+                File tempFile = File.createTempFile("temp", ".7z");
+                try (SevenZOutputFile sevenZOutputFile = new SevenZOutputFile(tempFile)) {
+                    try (InputStream zipInputStream = file.getInputStream();
+                         ZipArchiveInputStream zipArchiveInputStream = new ZipArchiveInputStream(zipInputStream)) {
 
-            if (Objects.requireNonNull(file.getOriginalFilename()).endsWith(".zip")) {
-                try (ByteArrayInputStream bais = new ByteArrayInputStream(file.getBytes());
-                     var zis = new ZipInputStream(bais);
-                     var baos = new ByteArrayOutputStream();
-                     var zipOut = new ZipArchiveOutputStream(baos)) {
+                        ZipArchiveEntry zipEntry;
+                        while ((zipEntry = zipArchiveInputStream.getNextZipEntry()) != null) {
+                            SevenZArchiveEntry sevenZEntry = sevenZOutputFile.createArchiveEntry(new File(zipEntry.getName()), zipEntry.getName());
+                            sevenZOutputFile.putArchiveEntry(sevenZEntry);
 
-                    byte[] buffer = new byte[8192];
-                    int bytesRead;
-
-                    ZipEntry zipEntry;
-                    while ((zipEntry = zis.getNextEntry()) != null) {
-                        var zipArchiveEntry = new ZipArchiveEntry(zipEntry.getName());
-                        zipArchiveEntry.setSize(zipEntry.getSize());
-                        zipOut.putArchiveEntry(zipArchiveEntry);
-
-                        while ((bytesRead = zis.read(buffer)) != -1) {
-                            zipOut.write(buffer, 0, bytesRead);
+                            byte[] buffer = new byte[8192];
+                            int bytesRead;
+                            while ((bytesRead = zipArchiveInputStream.read(buffer)) != -1) {
+                                sevenZOutputFile.write(buffer, 0, bytesRead);
+                            }
+                            sevenZOutputFile.closeArchiveEntry();
                         }
-                        zipOut.closeArchiveEntry();
                     }
-                    zipOut.finish();
-                    filesConverted.add(baos.toByteArray());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    throw e;
                 }
+
+                byte[] sevenZBytes = Files.readAllBytes(tempFile.toPath());
+                filesConverted.add(sevenZBytes);
+                tempFile.delete();
+            } catch (Exception e) {
+                logger.info("Error in convertTo7z: " + e.toString());
+            }
+        }
+
+        return filesConverted;
+    }
+
+
+
+    public List<byte[]> convertToTarGz(List<MultipartFile> files) {
+        List<byte[]> filesConverted = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            try {
+                if (!isValidZipFile(file)) {
+                    throw new IllegalArgumentException("The file is not a valid zip file.");
+                }
+
+                ByteArrayOutputStream tarGzOutputStream = new ByteArrayOutputStream();
+
+                try (TarArchiveOutputStream tarArchiveOutputStream = new TarArchiveOutputStream(tarGzOutputStream)) {
+                    InputStream zipInputStream = file.getInputStream();
+                    ZipArchiveInputStream zipArchiveInputStream = new ZipArchiveInputStream(zipInputStream);
+
+                    ZipArchiveEntry zipEntry;
+                    while ((zipEntry = zipArchiveInputStream.getNextZipEntry()) != null) {
+                        TarArchiveEntry tarEntry = new TarArchiveEntry(zipEntry.getName());
+                        tarEntry.setSize(zipEntry.getSize());
+                        tarArchiveOutputStream.putArchiveEntry(tarEntry);
+                        IOUtils.copy(zipArchiveInputStream, tarArchiveOutputStream);
+                        tarArchiveOutputStream.closeArchiveEntry();
+                    }
+                }
+
+                try (GzipCompressorOutputStream gzipOutputStream = new GzipCompressorOutputStream(tarGzOutputStream)) {
+                    gzipOutputStream.write(tarGzOutputStream.toByteArray());
+                }
+
+                filesConverted.add(tarGzOutputStream.toByteArray());
+            } catch (Exception e) {
+                logger.info("Error in convertToTarGz: " + e.toString());
             }
         }
         return filesConverted;
     }
 
 
-    public List<byte[]> convertToTar(List<MultipartFile> files) throws IOException {
-
-        List<byte[]> filesConverted = new ArrayList<>();
-
-        for (MultipartFile file : files) {
-        
-            try (ByteArrayInputStream bais = new ByteArrayInputStream(file.getBytes());
-                ZipInputStream zis = new ZipInputStream(bais);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                TarArchiveOutputStream tarOut = new TarArchiveOutputStream(baos)) {
-
-                byte[] buffer = new byte[8192]; // Use um buffer razoável, 8 KB neste exemplo
-                int bytesRead;
-
-                ZipEntry zipEntry;
-                while ((zipEntry = zis.getNextEntry()) != null) {
-                    TarArchiveEntry tarEntry = new TarArchiveEntry(zipEntry.getName());
-                    tarEntry.setSize(zipEntry.getSize()); // Defina o tamanho do arquivo no cabeçalho do TAR
-                    tarOut.putArchiveEntry(tarEntry);
-
-                    while ((bytesRead = zis.read(buffer)) != -1) {
-                        tarOut.write(buffer, 0, bytesRead);
-                    }
-
-                    tarOut.closeArchiveEntry();
-                    zis.closeEntry();
-                }
-
-                tarOut.finish();
-                
-                
-                filesConverted.add(baos.toByteArray());
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw e;
-            }
+    private boolean isValidZipFile(MultipartFile file) {
+        // Verifique o tipo MIME
+        if (!file.getContentType().equals("application/zip")) {
+            return false;
         }
-        return filesConverted;
-    }
 
-    public List<byte[]> convertTo7z(List<MultipartFile> files) throws IOException {
+        // Verifique a extensão do arquivo
+        String filename = file.getOriginalFilename();
+        if (filename == null || !filename.toLowerCase().endsWith(".zip")) {
+            return false;
+        }
 
-        List<byte[]> filesConverted = new ArrayList<>();
-
-        for (MultipartFile file : files) {
-        try (var bais = new ByteArrayInputStream(file.getBytes());
-             var zis = new ZipInputStream(bais)) {
-
-            File tempFile = File.createTempFile("output", ".7z");
-            try (var sevenZOut = new SevenZOutputFile(tempFile)) {
-
-                byte[] buffer = new byte[8192];
-                int bytesRead;
-
-                ZipEntry zipEntry;
-                while ((zipEntry = zis.getNextEntry()) != null) {
-                    SevenZArchiveEntry sevenZEntry = new SevenZArchiveEntry();
-                    sevenZEntry.setName(zipEntry.getName());
-                    sevenZEntry.setSize(zipEntry.getSize());
-                    sevenZOut.putArchiveEntry(sevenZEntry);
-
-                    while ((bytesRead = zis.read(buffer)) != -1) {
-                        sevenZOut.write(buffer, 0, bytesRead);
-                    }
-
-                    sevenZOut.closeArchiveEntry();
-                    zis.closeEntry();
-                }
+        // Verifique a assinatura mágica (primeiros 4 bytes)
+        try (InputStream inputStream = file.getInputStream()) {
+            byte[] header = new byte[4];
+            int bytesRead = inputStream.read(header, 0, 4);
+            if (bytesRead != 4 || !Arrays.equals(header, new byte[]{0x50, 0x4B, 0x03, 0x04})) {
+                return false;
             }
-            byte[] compressedData = new byte[(int) tempFile.length()];
-            try (FileInputStream fis = new FileInputStream(tempFile)) { fis.read(compressedData); }
-            filesConverted.add(compressedData);
-            Path tempFilePath = tempFile.toPath();
-            Files.delete(tempFilePath);
-
         } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
+            // Lidar com exceções de leitura aqui
+            return false;
         }
+
+        return true;
     }
-        return filesConverted;
-}
 
 }
+
+

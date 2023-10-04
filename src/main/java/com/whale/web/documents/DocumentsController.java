@@ -112,8 +112,8 @@ public class DocumentsController {
                 }
             }
         }
-	
-        } catch (Exception e) {
+		} catch (Exception e) {
+			logger.info("Error in compactConverter" + e.toString());
 			return "redirect:/documents/compactconverter";
         }
 			
@@ -126,6 +126,7 @@ public class DocumentsController {
     	try {
     		return "textextract";
     	} catch(Exception e) {
+			logger.info(e.toString());
     		return "redirect:/";
     	}
     }
@@ -137,6 +138,7 @@ public class DocumentsController {
     		model.addAttribute("extractedText", extractedText);
     		return "textextracted";
     	}catch(Exception e) {
+			logger.info(e.toString());
     		return "redirect:/";
     	}
     }
@@ -160,6 +162,7 @@ public class DocumentsController {
 				outputStream.flush();
 				
             } catch (Exception e) {
+				logger.info(e.toString());
             	return "redirect:/documents/filecompressor";
             }
 
@@ -195,7 +198,8 @@ public class DocumentsController {
             outputStream.write(bytes);
             outputStream.flush();
 
-		} catch (Exception ex){
+		} catch (Exception e){
+			logger.info(e.toString());
 			return "redirect:/documents/imageconverter";
 		}
 
@@ -237,6 +241,7 @@ public class DocumentsController {
             outputStream.flush();
 
 		} catch(Exception e) {
+			logger.info(e.toString());
 			return "redirect:/documents/qrcodegenerator";
 		}
 		return null;
