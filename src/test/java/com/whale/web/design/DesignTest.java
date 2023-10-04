@@ -73,7 +73,7 @@ class DesignTest {
         AlterColorForm formColors = new AlterColorForm();
         formColors.setColorForAlteration("#FF0000");
         formColors.setColorOfImage("#FFFFFF");
-        formColors.setMargin(4);
+        formColors.setMargin(4.0);
         formColors.setImage(file);
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/design/altercolor")
@@ -102,7 +102,7 @@ class DesignTest {
         AlterColorForm formColors = new AlterColorForm();
         formColors.setColorForAlteration("#000000");
         formColors.setColorOfImage("#FFFFFF");
-        formColors.setMargin(4);
+        formColors.setMargin(4.0);
         formColors.setImage(null);
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/design/altercolor")
