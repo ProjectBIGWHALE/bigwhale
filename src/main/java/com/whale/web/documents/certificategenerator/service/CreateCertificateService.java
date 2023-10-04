@@ -10,6 +10,7 @@ import java.util.zip.ZipOutputStream;
 import com.whale.web.documents.certificategenerator.model.enums.CertificateTypeEnum;
 import com.whale.web.documents.certificategenerator.utils.ValidateFiledsNullOfCertificatesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.whale.web.documents.certificategenerator.model.Certificate;
@@ -19,6 +20,9 @@ public class CreateCertificateService {
 
 	@Autowired
 	EditSVGFiles createCerificateService;
+
+	@Value("${certificate.path}")
+	private String certificatePath;
 	
 	public byte[] createCertificates(Certificate certificate, List<String> names) throws Exception {
 		certificate.setCertificateTypeEnum(CertificateTypeEnum.COURCE);
@@ -47,8 +51,8 @@ public class CreateCertificateService {
 
 	private String selectPatchCertificateModel(Long idModel){
 		return switch (idModel.intValue()) {
-			case 1 -> "../bigwhale/src/main/resources/static/certificatesmodels/certificate1.svg";
-			case 2 -> "../bigwhale/src/main/resources/static/certificatesmodels/certificate2.svg";
+			case 1 -> certificatePath+"certificate1.svg";
+			case 2 -> certificatePath+"certificate2.svg";
 			default -> throw new RuntimeException("Invalid Patch for model of certificate");
 		};
 	}
