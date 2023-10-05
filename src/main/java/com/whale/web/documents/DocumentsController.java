@@ -1,6 +1,7 @@
 package com.whale.web.documents;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -10,10 +11,13 @@ import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.whale.web.documents.imageconverter.exception.InvalidFileFormatException;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -83,7 +87,10 @@ public class DocumentsController {
     @PostMapping("/compactconverter")
     public String compactConverter(@RequestParam("file") List<MultipartFile> files, @RequestParam("action") String action, HttpServletResponse response) {
         try {
-            List<byte[]> filesConverted = compactConverterService.converterFile(files, action);
+			validadeInputFile(files);
+			validateAction(action);
+
+			List<byte[]> filesConverted = compactConverterService.converterFile(files, action);
 
             if (filesConverted.size() == 1) {
 				
@@ -116,10 +123,48 @@ public class DocumentsController {
 			logger.info("Error in compactConverter" + e.toString());
 			return "redirect:/documents/compactconverter";
         }
-			
-		
         return null;
     }
+
+	private void validateAction(String action) {
+		String[] allowedFormats = { ".zip", ".tar", ".tar.gz", ".7z" };
+		if (!Arrays.asList(allowedFormats).contains(action)) {
+			throw new InvalidFileFormatException("Unsupported file format. Please choose a ZIP, TAR, TAR.GZ or 7Z format.");
+		}
+	}
+
+	public void validadeInputFile(List<MultipartFile> files){
+		for (MultipartFile file: files) {
+			if (isValidZipFile(file)) {
+				throw new InvalidFileFormatException("The file is not a valid zip file.");
+			}
+		}
+	}
+
+	public boolean isValidZipFile(MultipartFile file) {
+
+		if (!Objects.equals(file.getContentType(), "application/zip")) {
+			return true;
+		}
+
+		String filename = file.getOriginalFilename();
+		if (filename == null || !filename.toLowerCase().endsWith(".zip")) {
+			return true;
+		}
+
+		try (InputStream inputStream = file.getInputStream()) {
+			byte[] header = new byte[4];
+			int bytesRead = inputStream.read(header, 0, 4);
+			if (bytesRead != 4 || !Arrays.equals(header, new byte[]{0x50, 0x4B, 0x03, 0x04})) {
+				return true;
+			}
+		} catch (IOException e) {
+			logger.info("Error in isValidZipFile: " + e.toString());
+			return true;
+		}
+
+		return false;
+	}
 
     @GetMapping("/textextract")
     public String textExtract(){
@@ -168,6 +213,8 @@ public class DocumentsController {
 
         return null;
     }
+
+
     
 	@GetMapping(value = "/imageconverter")
 	public String imageConverter(Model model) {

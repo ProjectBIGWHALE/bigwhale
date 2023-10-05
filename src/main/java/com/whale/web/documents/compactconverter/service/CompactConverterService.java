@@ -2,14 +2,8 @@ package com.whale.web.documents.compactconverter.service;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 
-import com.whale.web.documents.DocumentsController;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -19,9 +13,10 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.compress.utils.IOUtils;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +26,7 @@ public class CompactConverterService {
 
     private static final Logger logger = LoggerFactory.getLogger(CompactConverterService.class);
     public List<byte[]> converterFile(List<MultipartFile> files, String action) throws IOException {
+
 
         return switch (action) {
             case ".zip" -> convertToZip(files);
@@ -47,7 +43,7 @@ public class CompactConverterService {
 
         for (MultipartFile file : files) {
             try {
-                if (!isValidZipFile(file)) {
+                if (isValidZipFile(file)) {
                     throw new IllegalArgumentException("The file is not a valid zip file.");
                 }
 
@@ -80,7 +76,7 @@ public class CompactConverterService {
 
         for (MultipartFile file : files) {
             try {
-                if (!isValidZipFile(file)) {
+                if (isValidZipFile(file)) {
                     throw new IllegalArgumentException("The file is not a valid zip file.");
                 }
 
@@ -114,10 +110,11 @@ public class CompactConverterService {
 
         for (MultipartFile file : files) {
             try {
-                if (!isValidZipFile(file)) {
+                if (isValidZipFile(file)) {
                     throw new IllegalArgumentException("The file is not a valid zip file.");
                 }
                 File tempFile = File.createTempFile("temp", ".7z");
+                tempFile.deleteOnExit();
                 try (SevenZOutputFile sevenZOutputFile = new SevenZOutputFile(tempFile)) {
                     try (InputStream zipInputStream = file.getInputStream();
                          ZipArchiveInputStream zipArchiveInputStream = new ZipArchiveInputStream(zipInputStream)) {
@@ -155,7 +152,7 @@ public class CompactConverterService {
 
         for (MultipartFile file : files) {
             try {
-                if (!isValidZipFile(file)) {
+                if (isValidZipFile(file)) {
                     throw new IllegalArgumentException("The file is not a valid zip file.");
                 }
 
@@ -188,31 +185,29 @@ public class CompactConverterService {
     }
 
 
-    private boolean isValidZipFile(MultipartFile file) {
-        // Verifique o tipo MIME
-        if (!file.getContentType().equals("application/zip")) {
-            return false;
+    public boolean isValidZipFile(MultipartFile file) {
+
+        if (!Objects.equals(file.getContentType(), "application/zip")) {
+            return true;
         }
 
-        // Verifique a extensão do arquivo
         String filename = file.getOriginalFilename();
         if (filename == null || !filename.toLowerCase().endsWith(".zip")) {
-            return false;
+            return true;
         }
 
-        // Verifique a assinatura mágica (primeiros 4 bytes)
         try (InputStream inputStream = file.getInputStream()) {
             byte[] header = new byte[4];
             int bytesRead = inputStream.read(header, 0, 4);
             if (bytesRead != 4 || !Arrays.equals(header, new byte[]{0x50, 0x4B, 0x03, 0x04})) {
-                return false;
+                return true;
             }
         } catch (IOException e) {
-            // Lidar com exceções de leitura aqui
-            return false;
+            logger.info("Error in isValidZipFile: " + e.toString());
+            return true;
         }
 
-        return true;
+        return false;
     }
 
 }
