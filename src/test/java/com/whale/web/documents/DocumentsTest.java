@@ -14,9 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -25,9 +23,6 @@ import javax.imageio.ImageIO;
 import com.whale.web.documents.certificategenerator.model.enums.CertificateTypeEnum;
 import com.whale.web.documents.compactconverter.service.CompactConverterService;
 
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
-import org.apache.commons.compress.utils.IOUtils;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;

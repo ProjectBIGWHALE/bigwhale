@@ -12,12 +12,10 @@ import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import com.whale.web.documents.imageconverter.exception.InvalidFileFormatException;
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;

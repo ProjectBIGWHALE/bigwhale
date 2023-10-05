@@ -15,8 +15,6 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.compress.utils.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,8 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class CompactConverterService {
 
     private static final Logger logger = LoggerFactory.getLogger(CompactConverterService.class);
-    public List<byte[]> converterFile(List<MultipartFile> files, String action) throws IOException {
-
+    public List<byte[]> converterFile(List<MultipartFile> files, String action) {
 
         return switch (action) {
             case ".zip" -> convertToZip(files);
