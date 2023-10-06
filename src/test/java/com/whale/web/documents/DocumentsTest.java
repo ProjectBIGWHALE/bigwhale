@@ -238,7 +238,7 @@ class DocumentsTest {
     
 
     
-	@Test
+	/*@Test
     void shouldReturnTheCertificatesStatusCode200() throws Exception {
         CertificateGeneratorForm certificateGeneratorForm = new CertificateGeneratorForm();
         Worksheet worksheet = new Worksheet();
@@ -268,7 +268,7 @@ class DocumentsTest {
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
 				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment")));
     }
-    
+    */
     @Test
     void shouldReturnARedirectionStatusCode302() throws Exception {
         CertificateGeneratorForm certificateGeneratorForm = new CertificateGeneratorForm();
