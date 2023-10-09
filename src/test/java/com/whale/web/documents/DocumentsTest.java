@@ -79,7 +79,7 @@ class DocumentsTest {
             zipOut.closeEntry();
 
             ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-            return new MockMultipartFile("file", "test.zip", "application/zip", bais);
+            return new MockMultipartFile("file", "zip-test.zip", "application/zip", bais);
         }
     }
 
@@ -137,15 +137,19 @@ class DocumentsTest {
 
 		MockMultipartFile testFile = createTestZipFile();
 		// Test: .zip, .tar, .7z, .tar.gz
-		String action = ".tar";
+		String action = ".tar.gz";
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
                 .file(testFile)
                 .param("action", action))
-                .andExpect(MockMvcResultMatchers.status().isOk())                
-                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=compressedFiles" + action))               
-                .andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"));
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=zip-test" + action))
+				.andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"))
+				.andReturn();
 
+		MockHttpServletResponse response = mvcResult.getResponse();
+		assertEquals("application/octet-stream", response.getContentType());
+		assertEquals("attachment; filename=zip-test" + action, response.getHeader("Content-Disposition"));
     }
 
 	@Test
@@ -156,14 +160,18 @@ class DocumentsTest {
 		// Test: .zip, .tar, .7z, .tar.gz
 		String action = ".tar";
 
-		mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
+		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
 						.file(file1)
 						.file(file2)
 						.param("action", action))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=compressedFiles" + action))
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=zip-test" + action))
 				.andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"))
 				.andReturn();
+
+		MockHttpServletResponse response = mvcResult.getResponse();
+		assertEquals("application/octet-stream", response.getContentType());
+		assertEquals("attachment; filename=zip-test" + action, response.getHeader("Content-Disposition"));
 	}
 
 

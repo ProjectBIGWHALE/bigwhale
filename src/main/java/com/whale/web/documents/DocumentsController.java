@@ -1,7 +1,6 @@
 package com.whale.web.documents;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.whale.web.documents.imageconverter.exception.InvalidFileFormatException;
+import com.whale.web.configurations.validation.FileValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +71,9 @@ public class DocumentsController {
     @Autowired
     CreateCertificateService createCertificateService;
 
+	@Autowired
+	FileValidation fileValidation;
+
 	private static Logger logger = LoggerFactory.getLogger(DocumentsController.class);
 
     @GetMapping(value="/compactconverter")
@@ -85,15 +87,17 @@ public class DocumentsController {
     @PostMapping("/compactconverter")
     public String compactConverter(@RequestParam("file") List<MultipartFile> files, @RequestParam("action") String action, HttpServletResponse response) {
         try {
-			validadeInputFile(files);
-			validateAction(action);
+			fileValidation.validateInputFile(files);
+			fileValidation.validateAction(action);
 
 			List<byte[]> filesConverted = compactConverterService.converterFile(files, action);
+			String originalFileNameWithoutExtension = StringUtils.stripFilenameExtension(Objects.requireNonNull(files.get(0).getOriginalFilename()));
+			String convertedFileName = originalFileNameWithoutExtension +  action.toLowerCase();
 
             if (filesConverted.size() == 1) {
 				
 				byte[] fileBytes = filesConverted.get(0);
-				response.setHeader("Content-Disposition", "attachment; filename=compressedFile" + action);
+				response.setHeader("Content-Disposition", "attachment; filename=" + convertedFileName);
 				response.setContentType("application/octet-stream");
 				response.setHeader("Cache-Control", "no-cache");
 	
@@ -102,69 +106,29 @@ public class DocumentsController {
 					outputStream.flush();
 				}
 			} 
-			else {				
-				response.setHeader("Content-Disposition", "attachment; filename=compressedFiles" + action);
+			else {
+				response.setHeader("Content-Disposition", "attachment; filename=" + convertedFileName);
 				response.setContentType("application/octet-stream");
 				response.setHeader("Cache-Control", "no-cache");
 
 				try (ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream())) {
-                for (int i = 0; i < filesConverted.size(); i++) {
-                    byte[] fileBytes = filesConverted.get(i);
-                    ZipEntry zipEntry = new ZipEntry("file" + (i + 1) + action);
-                    zipOutputStream.putNextEntry(zipEntry);
-                    zipOutputStream.write(fileBytes);
-                    zipOutputStream.closeEntry();
-                }
-            }
-        }
+					for (int i = 0; i < filesConverted.size(); i++) {
+						byte[] fileBytes = filesConverted.get(i);
+						ZipEntry zipEntry = new ZipEntry("file" + (i + 1) + action);
+						zipOutputStream.putNextEntry(zipEntry);
+						zipOutputStream.write(fileBytes);
+						zipOutputStream.closeEntry();
+					}
+				}
+			}
 		} catch (Exception e) {
-			logger.info("Error in compactConverter" + e.toString());
+			logger.info(String.format("Error in compactConverter: %s", e));
 			return "redirect:/documents/compactconverter";
         }
         return null;
     }
 
-	private void validateAction(String action) {
-		String[] allowedFormats = { ".zip", ".tar", ".tar.gz", ".7z" };
-		if (!Arrays.asList(allowedFormats).contains(action)) {
-			throw new InvalidFileFormatException("Unsupported file format. Please choose a ZIP, TAR, TAR.GZ or 7Z format.");
-		}
-	}
-
-	public void validadeInputFile(List<MultipartFile> files){
-		for (MultipartFile file: files) {
-			if (isValidZipFile(file)) {
-				throw new InvalidFileFormatException("The file is not a valid zip file.");
-			}
-		}
-	}
-
-	public boolean isValidZipFile(MultipartFile file) {
-
-		if (!Objects.equals(file.getContentType(), "application/zip")) {
-			return true;
-		}
-
-		String filename = file.getOriginalFilename();
-		if (filename == null || !filename.toLowerCase().endsWith(".zip")) {
-			return true;
-		}
-
-		try (InputStream inputStream = file.getInputStream()) {
-			byte[] header = new byte[4];
-			int bytesRead = inputStream.read(header, 0, 4);
-			if (bytesRead != 4 || !Arrays.equals(header, new byte[]{0x50, 0x4B, 0x03, 0x04})) {
-				return true;
-			}
-		} catch (IOException e) {
-			logger.info("Error in isValidZipFile: " + e.toString());
-			return true;
-		}
-
-		return false;
-	}
-
-    @GetMapping("/textextract")
+	@GetMapping("/textextract")
     public String textExtract(){
     	try {
     		return "textextract";
@@ -244,7 +208,7 @@ public class DocumentsController {
             outputStream.flush();
 
 		} catch (Exception e){
-			logger.info(e.toString());
+			logger.info(String.format("Erro: %s: ", e));
 			return "redirect:/documents/imageconverter";
 		}
 
