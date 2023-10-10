@@ -180,10 +180,12 @@ public class DocumentsController {
     
 	@GetMapping(value = "/imageconverter")
 	public String imageConverter(Model model) {
-		List<ImageFormatsForm> list = Arrays.asList(	new ImageFormatsForm(1L, "bmp"),
-											new ImageFormatsForm(2L, "jpg"),
-											new ImageFormatsForm(3L, "jpeg"),
-											new ImageFormatsForm(4L, "gif"));
+		List<ImageFormatsForm> list = Arrays.asList(	new ImageFormatsForm(1L, "jpeg"),
+														new ImageFormatsForm(2L, "jpg"),
+														new ImageFormatsForm(3L, "bmp"),
+														new ImageFormatsForm(4L, "gif"),
+														new ImageFormatsForm(5L, "png"),
+														new ImageFormatsForm(6L, "tiff"));
 
 		model.addAttribute("list", list);
 		model.addAttribute("form", imageConversionForm);

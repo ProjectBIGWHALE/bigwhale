@@ -53,7 +53,7 @@ public class ImageConverterService {
 
     private void isValidOutputFormat(String outputFOrmat){
 
-        String[] allowedFormats = { "bmp", "jpg", "jpeg", "gif" };
+        String[] allowedFormats = { "bmp", "jpg", "jpeg", "gif", "png", "tiff" };
 
         if (!Arrays.asList(allowedFormats).contains(outputFOrmat)) {
             throw new InvalidFileFormatException("Unsupported file format. Please choose a BMP, JPG, JPEG or GIF file.");
