@@ -1,0 +1,57 @@
+.linhas-esquerda,
+.linhas-direita {
+    display: block;
+    position: absolute;
+    height: 100%;
+    z-index: -1;
+}
+
+.linhas-esquerda {
+    left: 0;
+    right: 50%;
+    top: 0;
+}
+
+.linhas-direita {
+    left: 50%;
+    right: 0;
+    bottom: 0;
+}
+
+.vertical-esq,
+.vertical-dir {
+    position: absolute;
+    border-left: 2px solid black;
+    height: 50%;
+}
+
+.vertical-esq {
+    margin-left: 38px;
+    top: 38px;
+}
+
+.vertical-dir {
+    margin-right: 38px;
+    bottom: 38px;
+    right: 0;
+}
+
+.horizontal-esq,
+.horizontal-dir {
+    position: absolute;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.horizontal-esq {
+    border-top: 2px dotted black;
+    top: 38px;
+    left: 38px;
+}
+
+.horizontal-dir {
+    border-bottom: 2px dotted black;
+    bottom: 38px;
+    right: 38px;
+}

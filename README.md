@@ -14,7 +14,8 @@
 - Prometheus
 - Grafana
 - Docker
-
+- Angular
+- Google Icons
 
 ## Deploy
 <a href="https://mybigwhale.com/"><img src="https://img.icons8.com/?size=512&id=13450&format=png" width="35" height="35"></a>

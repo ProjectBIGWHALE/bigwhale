@@ -1,0 +1,33 @@
+.menu-bar__container{
+  margin: 0;
+  padding: 0;
+}
+.menu-bar__nav {
+  display: flex;
+  justify-content: end;
+  margin-right: 10px;
+}
+
+.menu-bar__nav li {
+  list-style: none;
+}
+.menu-bar__nav li a {
+  text-decoration: none;
+  padding: 9px 28px;
+
+  background: #91f2a0;
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  transition: 0.2s;
+}
+#item-first{
+  border-radius: 0 0 0 15px;
+}
+#item-last{
+  border-radius: 0 0 15px 0;
+}
+.menu-bar__nav li a:hover {
+  background-color: #50c878;
+}

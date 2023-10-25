@@ -1,0 +1,61 @@
+<header>
+  <h1>Modificador de cores em imagem</h1>
+</header>
+
+<form th:action="@{/design/altercolor}" method="POST" enctype="multipart/form-data" th:object="${form}">
+  <div class="container">
+    <div class="row image_row">
+      <div class="col">
+        <div class="img_user">
+          <div id="preview" onclick="pickColor(event)">
+            <label class="picture" for="picture_input" tabindex="0"></label>
+          </div>
+          <input type="file" th:field="*{image}" accept="image/*" id="picture_input" onchange="previewImage(event)">
+          <span th:errors="*{image}" class="text-danger"></span>
+        </div>
+      </div>
+
+
+      <div class="col">
+        <div class="input_colors">
+          <div>
+            <!-- INPUT da cor a ser alterada   -->
+            <p>Cor selecionada da imagem atual</p>
+            <span class="material-symbols-outlined">colors</span>
+            <input th:field="*{colorOfImage}" type="text" id="dropper" />
+            <span th:errors="*{colorOfImage}" class="text-danger"></span>
+          </div>
+
+          <div>
+            <!-- Pincel pra escolher a nova cor  -->
+            <p>Nova cor para imagem atualizada</p>
+            <button class="icon-button" type="button" onclick="imageCircleColor()">
+              <span class="material-symbols-outlined">colorize</span>
+            </button>
+            <input th:field="*{colorForAlteration}" type="text" id="alter_color" />
+            <img src="/images/circulo-cromatico.png" class="img_cromatico" onclick="pickColorCircle()">
+            <span th:errors="*{colorForAlteration}" class="text-danger"></span>
+          </div>
+
+          <div>
+            <!-- Botão para apagar os input -->
+            <button class="icon-button" type="button" onclick="btnClear()">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col btn-download">
+        <!--BOTÃO DE DOWNLOAD-->
+        <button type="submit" id="download">Download</button>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
