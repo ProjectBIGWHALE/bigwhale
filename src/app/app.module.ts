@@ -1,39 +1,45 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//modulos de importações
+import { DocumentsModule } from './pages/documents/documents.module';
+import { DesignModule } from './pages/design/design.module';
+import { SecurityModule } from './pages/security/security.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DesignComponent } from './pages/design/design.component';
-import { DocumentosComponent } from './pages/documentos/documentos.component';
-import { SegurancaComponent } from './pages/seguranca/seguranca.component';
+import { MenuBarComponent } from './pages/home/menu-bar/menu-bar.component';
 import { UtilsComponent } from './components/utils/utils.component';
-import { ColorspaletteComponent } from './pages/design/colorspalette/colorspalette.component';
-import { AltercolorComponent } from './pages/design/altercolor/altercolor.component';
 import { ButtonsComponent } from './components/utils/buttons/buttons.component';
 import { LinesComponent } from './components/utils/lines/lines.component';
-import { MatIcon } from '@angular/material/icon';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+
+import { DesignComponent } from './pages/design/design.component';
+import { DocumentsComponent } from './pages/documents/documents.component';
+import { SecurityComponent } from './pages/security/security.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     MenuBarComponent,
-    DesignComponent,
-    DocumentosComponent,
-    SegurancaComponent,
     UtilsComponent,
-    ColorspaletteComponent,
-    AltercolorComponent,
     ButtonsComponent,
-    LinesComponent
+    LinesComponent,
+    NotFoundComponent,
+    DesignComponent,
+    DocumentsComponent,
+    SecurityComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    DocumentsModule,
+    DesignModule,
+    SecurityModule
   ],
   providers: [],
   bootstrap: [AppComponent]
