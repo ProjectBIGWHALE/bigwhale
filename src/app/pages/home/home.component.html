@@ -28,13 +28,17 @@
 </div>
 
 <div class="collaborator">
-    <app-collaborator></app-collaborator>
-    <app-collaborator></app-collaborator>
-    <app-collaborator></app-collaborator>
-    <app-collaborator></app-collaborator>
-    <app-collaborator></app-collaborator>
-    <app-collaborator></app-collaborator>
-    <app-collaborator></app-collaborator>
+
+    
+    <app-collaborator *ngFor="let colaborador of colaboradores"
+    [name]="colaborador.nomeColaborador"
+    [photo]="colaborador.imgSrc"
+    [altText]="colaborador.altText"
+    [linkLinkedin]="colaborador.link"
+    ></app-collaborator>
+
+
+ 
   
     
 </div>

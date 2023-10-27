@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-collaborator',
@@ -6,5 +8,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./collaborator.component.css']
 })
 export class CollaboratorComponent {
+
+ 
+  
+  @Input()
+  name: string =''
+  @Input()
+  photo:string=''
+  @Input()
+  linkLinkedin:string=''
+  @Input()
+  altText:string =''
+
+
+
+ 
 
 }
