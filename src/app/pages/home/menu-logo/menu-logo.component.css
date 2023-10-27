@@ -1,0 +1,14 @@
+.container__logo-menu{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.description{
+    font-size: 22px;
+    font-weight: 300;
+    padding: 10px 0 80px 0;
+
+}

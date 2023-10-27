@@ -5,7 +5,7 @@
 .menu-bar__nav {
   display: flex;
   justify-content: end;
-  margin-right: 10px;
+  margin-right: 5em;
 }
 
 .menu-bar__nav li {

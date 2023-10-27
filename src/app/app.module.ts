@@ -19,6 +19,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DesignComponent } from './pages/design/design.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { SecurityComponent } from './pages/security/security.component';
+import { MenuLogoComponent } from './pages/home/menu-logo/menu-logo.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SecurityComponent } from './pages/security/security.component';
     NotFoundComponent,
     DesignComponent,
     DocumentsComponent,
-    SecurityComponent
+    SecurityComponent,
+    MenuLogoComponent
   ],
   imports: [
     BrowserModule,
