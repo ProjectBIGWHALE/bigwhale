@@ -20,6 +20,7 @@ import { DesignComponent } from './pages/design/design.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { SecurityComponent } from './pages/security/security.component';
 import { MenuLogoComponent } from './pages/home/menu-logo/menu-logo.component';
+import { MenuCarrosselComponent } from './components/menu-carrossel/menu-carrossel.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { MenuLogoComponent } from './pages/home/menu-logo/menu-logo.component';
     DesignComponent,
     DocumentsComponent,
     SecurityComponent,
-    MenuLogoComponent
+    MenuLogoComponent,
+    MenuCarrosselComponent
   ],
   imports: [
     BrowserModule,
