@@ -21,6 +21,8 @@ import { DocumentsComponent } from './pages/documents/documents.component';
 import { SecurityComponent } from './pages/security/security.component';
 import { MenuLogoComponent } from './pages/home/menu-logo/menu-logo.component';
 import { MenuCarrosselComponent } from './components/menu-carrossel/menu-carrossel.component';
+import { MenuAboutComponent } from './pages/home/menu-about/menu-about.component';
+import { CollaboratorComponent } from './components/collaborator/collaborator.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { MenuCarrosselComponent } from './components/menu-carrossel/menu-carross
     DocumentsComponent,
     SecurityComponent,
     MenuLogoComponent,
-    MenuCarrosselComponent
+    MenuCarrosselComponent,
+    MenuAboutComponent,
+    CollaboratorComponent
   ],
   imports: [
     BrowserModule,

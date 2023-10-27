@@ -1,0 +1,44 @@
+.container__collaborator {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+    flex-wrap: wrap; /* quebra a linha de acordo com o tamanho da tela */
+    margin-bottom: 2em;
+  }
+  
+  .container__collaborator a {
+    display: flex;
+    text-decoration: none;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    margin: 1.5em 1em;
+  }
+  
+  .container__collaborator img {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    transition: 0.2s;
+  }
+  
+  .container__collaborator img:hover {
+    transform: scale(1.05);
+  }
+  .nomeColoborador {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    transform: translateX(-50%);
+    border-radius: 5px;
+    top: 103%;
+    left: 50%;
+    white-space: nowrap;
+  }
+  
+  .container__collaborator img:hover + .nomeColoborador {
+    display: block;
+  }
+  
