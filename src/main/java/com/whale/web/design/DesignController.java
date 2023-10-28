@@ -43,7 +43,6 @@ public class DesignController {
 	@Autowired
 	CreateColorsPaletteService createColorsPaletteService;
 	
-	// ALTER COLOR
 	
 	@GetMapping(value="/altercolor")
 	public String alterColor(Model model) {
@@ -56,18 +55,13 @@ public class DesignController {
 	@PostMapping("/altercolor")
 	public String alterColor(AlterColorForm form, HttpServletResponse response) throws IOException {
 
-		System.out.println(form.getColorForAlteration());
-		System.out.println(form.getMargin());
-		//form.setMargin(1);
 	    try {
 	        byte[] processedImage = alterColorService.alterColor(form.getImage(), form.getColorOfImage(), form.getColorForAlteration(), form.getMargin());
-
-	        // Define o tipo de conteúdo e o tamanho da resposta
+	       
 	        response.setContentType("image/png");
 	        response.setHeader("Content-Disposition", "attachment; filename=ModifiedImage.png");
 	        response.setHeader("Cache-Control", "no-cache");
-
-	        // Copia os bytes do arquivo para o OutputStream
+	
 	        try (OutputStream os = response.getOutputStream()) {
 	            os.write(processedImage);
 	            os.flush();
@@ -77,9 +71,8 @@ public class DesignController {
 	    }
 	    
 	    return null;
-	}
-	
-	// PALETTE COLOR
+	}	
+
 	
 	@GetMapping(value="/colorspalette")
 	public String colorsPalette(Model model) {
@@ -89,6 +82,7 @@ public class DesignController {
 		
 	}
 	
+	
 	@PostMapping("/colorspalette")
 	public String colorsPalette(PaletteForm paletteForm, Model model) throws Exception {
 		
@@ -97,9 +91,8 @@ public class DesignController {
 		MultipartFile upload = uploadImage.uploadImage(paletteForm.getImage());
 
 		try {
-			List<Color> listOfColors = createColorsPaletteService.createColorPalette(upload);
+			List<Color> listOfColors = createColorsPaletteService.createColorPalette(upload);	        
 	        
-	        //Using the ViewForm
 	        viewForm.setListOfColors(listOfColors);
 	        viewForm.setImageBase64(Base64.getEncoder().encodeToString(paletteForm.getImage().getBytes()));
 	        
