@@ -64,12 +64,27 @@
 							<span th:errors="*{colorForAlteration}" class="text-danger"></span>
 						</div>
 
+						<!--Margem  -->
+						<div >
+
+							<p>Espaço de Tolerância (OBS: Diminua, se necessário)</p>
+							<div id="margin-container">
+								<input th:field="*{margin}" type="range" id="slider" min="1" max="10" >
+								<p><span id="sliderValue">6</span> %</p>
+
+							</div>
+
+						</div>
+
 						<div>
 							<!-- Botão para apagar os input -->
 							<button class="icon-button" type="button" onclick="btnClear()">
 								<ion-icon name="trash-bin-outline" class="icones"></ion-icon>
 							</button>
 						</div>
+
+
+
 					</div>
 				</div>
 			</div>

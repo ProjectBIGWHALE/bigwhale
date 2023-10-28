@@ -5,9 +5,14 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.whale.web.configurations.validation.FileValidation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -66,6 +71,11 @@ public class DocumentsController {
     @Autowired
     CreateCertificateService createCertificateService;
 
+	@Autowired
+	FileValidation fileValidation;
+
+	private static Logger logger = LoggerFactory.getLogger(DocumentsController.class);
+
     @GetMapping(value="/compactconverter")
     public String compactConverter(Model model) {
 
@@ -77,33 +87,53 @@ public class DocumentsController {
     @PostMapping("/compactconverter")
     public String compactConverter(@RequestParam("file") List<MultipartFile> files, @RequestParam("action") String action, HttpServletResponse response) {
         try {
-            List<byte[]> filesConverted = compactConverterService.converterFile(files, action);
+			fileValidation.validateInputFile(files);
+			fileValidation.validateAction(action);
 
-            // Configura a resposta para indicar que você está enviando um arquivo ZIP
-            response.setHeader("Content-Disposition", "attachment; filename=arquivo." + action);
-            response.setContentType("application/octet-stream");
-            response.setHeader("Cache-Control", "no-cache");
+			List<byte[]> filesConverted = compactConverterService.converterFile(files, action);
+			String originalFileNameWithoutExtension = StringUtils.stripFilenameExtension(Objects.requireNonNull(files.get(0).getOriginalFilename()));
+			String convertedFileName = originalFileNameWithoutExtension +  action.toLowerCase();
 
-            // Escreva os bytes no fluxo de saída
-            OutputStream outputStream = response.getOutputStream();
-            for (byte[] fileBytes : filesConverted) {
-                outputStream.write(fileBytes);
-            }
+            if (filesConverted.size() == 1) {
+				
+				byte[] fileBytes = filesConverted.get(0);
+				response.setHeader("Content-Disposition", "attachment; filename=" + convertedFileName);
+				response.setContentType("application/octet-stream");
+				response.setHeader("Cache-Control", "no-cache");
+	
+				try (OutputStream outputStream = response.getOutputStream()) {
+					outputStream.write(fileBytes);
+					outputStream.flush();
+				}
+			} 
+			else {
+				response.setHeader("Content-Disposition", "attachment; filename=" + convertedFileName);
+				response.setContentType("application/octet-stream");
+				response.setHeader("Cache-Control", "no-cache");
 
-            outputStream.flush();
-        } catch (Exception e) {
+				try (ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream())) {
+					for (int i = 0; i < filesConverted.size(); i++) {
+						byte[] fileBytes = filesConverted.get(i);
+						ZipEntry zipEntry = new ZipEntry("file" + (i + 1) + action);
+						zipOutputStream.putNextEntry(zipEntry);
+						zipOutputStream.write(fileBytes);
+						zipOutputStream.closeEntry();
+					}
+				}
+			}
+		} catch (Exception e) {
+			logger.info(String.format("Error in compactConverter: %s", e));
 			return "redirect:/documents/compactconverter";
         }
-			
-		
         return null;
     }
 
-    @GetMapping("/textextract")
+	@GetMapping("/textextract")
     public String textExtract(){
     	try {
     		return "textextract";
     	} catch(Exception e) {
+			logger.info(e.toString());
     		return "redirect:/";
     	}
     }
@@ -115,6 +145,7 @@ public class DocumentsController {
     		model.addAttribute("extractedText", extractedText);
     		return "textextracted";
     	}catch(Exception e) {
+			logger.info(e.toString());
     		return "redirect:/";
     	}
     }
@@ -138,18 +169,23 @@ public class DocumentsController {
 				outputStream.flush();
 				
             } catch (Exception e) {
+				logger.info(e.toString());
             	return "redirect:/documents/filecompressor";
             }
 
         return null;
     }
+
+
     
 	@GetMapping(value = "/imageconverter")
 	public String imageConverter(Model model) {
-		List<ImageFormatsForm> list = Arrays.asList(	new ImageFormatsForm(1L, "bmp"),
-											new ImageFormatsForm(2L, "jpg"),
-											new ImageFormatsForm(3L, "jpeg"),
-											new ImageFormatsForm(4L, "gif"));
+		List<ImageFormatsForm> list = Arrays.asList(	new ImageFormatsForm(1L, "jpeg"),
+														new ImageFormatsForm(2L, "jpg"),
+														new ImageFormatsForm(3L, "bmp"),
+														new ImageFormatsForm(4L, "gif"),
+														new ImageFormatsForm(5L, "png"),
+														new ImageFormatsForm(6L, "tiff"));
 
 		model.addAttribute("list", list);
 		model.addAttribute("form", imageConversionForm);
@@ -173,7 +209,8 @@ public class DocumentsController {
             outputStream.write(bytes);
             outputStream.flush();
 
-		} catch (Exception ex){
+		} catch (Exception e){
+			logger.info(String.format("Erro: %s: ", e));
 			return "redirect:/documents/imageconverter";
 		}
 
@@ -215,6 +252,7 @@ public class DocumentsController {
             outputStream.flush();
 
 		} catch(Exception e) {
+			logger.info(e.toString());
 			return "redirect:/documents/qrcodegenerator";
 		}
 		return null;
@@ -243,6 +281,7 @@ public class DocumentsController {
             outputStream.flush();
 
 	    } catch (Exception e) {
+			logger.info(e.toString());
 			return "redirect:/documents/certificategenerator";
 	    }
 

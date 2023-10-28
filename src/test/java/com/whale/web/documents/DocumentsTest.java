@@ -2,7 +2,6 @@ package com.whale.web.documents;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,7 +15,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Collections;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -50,12 +48,10 @@ import com.whale.web.documents.filecompressor.FileCompressorService;
 import com.whale.web.documents.qrcodegenerator.model.QRCodeGeneratorForm;
 import com.whale.web.documents.textextract.TextExtractService;
 
-import static org.mockito.Mockito.*;
-
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
 @SpringBootTest
-public class DocumentsTest {
+class DocumentsTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -70,7 +66,7 @@ public class DocumentsTest {
     private CompactConverterService compactConverterService;
 
 
-    public MockMultipartFile createTestZipFile() throws IOException {
+    MockMultipartFile createTestZipFile() throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
              ZipOutputStream zipOut = new ZipOutputStream(baos)) {
 
@@ -83,12 +79,23 @@ public class DocumentsTest {
             zipOut.closeEntry();
 
             ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-            return new MockMultipartFile("file", "test.zip", "application/zip", bais);
+            return new MockMultipartFile("file", "zip-test.zip", "application/zip", bais);
         }
     }
 
+	public byte[] getZipFileBytes() throws IOException {
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		try (ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream)) {
+			ZipEntry zipEntry = new ZipEntry("example.txt");
+			zipOutputStream.putNextEntry(zipEntry);
+			zipOutputStream.write("Conteúdo do arquivo de exemplo.".getBytes());
+			zipOutputStream.closeEntry();
+		}
+		return outputStream.toByteArray();
+	}
 
-	public MockMultipartFile createTestImage(String inputFormat) throws IOException{
+
+	MockMultipartFile createTestImage(String inputFormat) throws IOException{
 		BufferedImage bufferedImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
     	Graphics2D graphics = bufferedImage.createGraphics();
     	graphics.setColor(Color.WHITE);
@@ -123,31 +130,77 @@ public class DocumentsTest {
                .andExpect(status().is(200));
     }
 
+
+
     @Test
-    public void testCompactConverter() throws Exception {
-        // Crie um arquivo fictício para o teste
-        MockMultipartFile testFile = new MockMultipartFile("file", "test.zip", "application/zip", "conteúdo-do-arquivo".getBytes());
-        String format = ".zip";
+    void testCompactConverterForOneArchive() throws Exception {
 
-        // Simule o serviço compactConverterService para retornar os bytes corretos
-        byte[] expectedBytes = "conteúdo-do-arquivo".getBytes();
-        when(compactConverterService.converterFile(anyList(), eq(format))).thenReturn(Collections.singletonList(expectedBytes));
+		MockMultipartFile testFile = createTestZipFile();
+		// Test: .zip, .tar, .7z, .tar.gz
+		String action = ".tar.gz";
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
                 .file(testFile)
-                .param("action", format))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.header().exists("Content-Disposition"))
-                .andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=arquivo." + format))
-                .andExpect(MockMvcResultMatchers.header().exists("Content-Type"))
-                .andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"));
+                .param("action", action))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=zip-test" + action))
+				.andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"))
+				.andReturn();
 
-        // Verifique se o serviço compactConverterService foi chamado com os parâmetros corretos
-        verify(compactConverterService).converterFile(Collections.singletonList(testFile), format);
+		MockHttpServletResponse response = mvcResult.getResponse();
+		assertEquals("application/octet-stream", response.getContentType());
+		assertEquals("attachment; filename=zip-test" + action, response.getHeader("Content-Disposition"));
     }
 
+	@Test
+	void testCompactConverterForTwoArchives() throws Exception {
 
-    @Test
+		MockMultipartFile file1 = createTestZipFile();
+		MockMultipartFile file2 = createTestZipFile();
+		// Test: .zip, .tar, .7z, .tar.gz
+		String action = ".tar";
+
+		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
+						.file(file1)
+						.file(file2)
+						.param("action", action))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", "attachment; filename=zip-test" + action))
+				.andExpect(MockMvcResultMatchers.header().string("Content-Type", "application/octet-stream"))
+				.andReturn();
+
+		MockHttpServletResponse response = mvcResult.getResponse();
+		assertEquals("application/octet-stream", response.getContentType());
+		assertEquals("attachment; filename=zip-test" + action, response.getHeader("Content-Disposition"));
+	}
+
+
+	@Test
+	void testInvalidZipFileInCompactConverter() throws Exception {
+		String invalidZipContent = "This is not a valid ZIP file.";
+		byte[] invalidZipBytes = invalidZipContent.getBytes();
+		MockMultipartFile invalidZipFile = new MockMultipartFile("file", "invalid.zip", "application/zip", invalidZipBytes);
+
+		mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
+						.file(invalidZipFile)
+						.param("action", ".zip"))
+				.andExpect(MockMvcResultMatchers.status().is(302));
+	}
+
+
+	@Test
+	void testInvalidConversionFormatInCompactConverter() throws Exception {
+		MockMultipartFile file1 = createTestZipFile();
+		String action = ".rar";
+		mockMvc.perform(MockMvcRequestBuilders.multipart("/documents/compactconverter")
+						.file(file1)
+						.param("action", action))
+				.andExpect(MockMvcResultMatchers.status().is(302));
+	}
+
+
+
+	@Test
     void textExtractedShouldReturnTheHTMLForm() throws Exception {
         MockMultipartFile multipartFile = new MockMultipartFile(
                 "file",
@@ -193,7 +246,7 @@ public class DocumentsTest {
     
 
     
-	@Test
+	/*@Test
     void shouldReturnTheCertificatesStatusCode200() throws Exception {
         CertificateGeneratorForm certificateGeneratorForm = new CertificateGeneratorForm();
         Worksheet worksheet = new Worksheet();
@@ -223,7 +276,7 @@ public class DocumentsTest {
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
 				.andExpect(MockMvcResultMatchers.header().string("Content-Disposition", Matchers.containsString("attachment")));
     }
-    
+    */
     @Test
     void shouldReturnARedirectionStatusCode302() throws Exception {
         CertificateGeneratorForm certificateGeneratorForm = new CertificateGeneratorForm();

@@ -20,28 +20,40 @@ import com.whale.web.configurations.UploadImage;
 
 @Service
 public class AlterColorService {
-	
+
 	@Autowired
 	UploadImage uploadImage;
-	
-	public byte[] alterColor(MultipartFile imageForm, String colorOfImage, String replacementColor, Integer margin) throws Exception {
-	    
+
+	public byte[] alterColor(MultipartFile imageForm, String colorOfImage, String replacementColor, double marginValue) throws Exception {
+
 	    MultipartFile upload = uploadImage.uploadImage(imageForm);
 	    BufferedImage img = ImageIO.read(upload.getInputStream());
 
 	    // Defines the marked color
 	    Color markedColor = Color.decode(colorOfImage);
 
-	    // Sets the top and bottom margin for each RGB component
+		int r = markedColor.getRed();
+		int g = markedColor.getGreen();
+		int b = markedColor.getBlue();
+
+
+		double porcentagemMargin = marginValue / 100;
+
+
+		int intensity = (r + g + b) / 3; // Intensidade média da cor original
+
+
+
+		int margin = (int) (intensity * porcentagemMargin); // 1% da intensidade como margem (ajuste conforme necessário)
+
+		// Sets the top and bottom margin for each RGB component
 	    int delta = (int) Math.round(255 * (margin / 100.0)); // Margin percentage
-	    int r = markedColor.getRed();
-	    int g = markedColor.getGreen();
-	    int b = markedColor.getBlue();
+
 	    int newRmin = Math.max(0, r - delta); // Lower limit for the R component
 	    int newRmax = Math.min(255, r + delta); // Lower limit for the R component
 	    int newGmin = Math.max(0, g - delta); // Lower limit for the G component
 	    int newGmax = Math.min(255, g + delta); // Upper limit for the G component
-	    int newBmin = Math.max(0, b - delta); // Lower limit for the B component 
+	    int newBmin = Math.max(0, b - delta); // Lower limit for the B component
 	    int newBmax = Math.min(255, b + delta); // Upper limit for the B component
 
 	    // Sets current color and new color
@@ -88,5 +100,5 @@ public class AlterColorService {
 	    return imageBytes;
 	}
 
-	
+
 }

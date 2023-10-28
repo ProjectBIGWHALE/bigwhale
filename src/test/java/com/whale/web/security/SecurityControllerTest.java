@@ -23,7 +23,7 @@ import com.whale.web.security.cryptograph.service.EncryptService;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
 @SpringBootTest
-public class SecurityControllerTest {
+class SecurityControllerTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -35,7 +35,7 @@ public class SecurityControllerTest {
 	EncryptService encryptService;
 	
 	@Test
-	public void shouldReturnTheHTMLForm() throws Exception {
+	void shouldReturnTheHTMLForm() throws Exception {
 		
 		URI uri = new URI("/security/cryptograph");
 		mockMvc.perform(MockMvcRequestBuilders.get(uri)).andExpect(
@@ -43,12 +43,12 @@ public class SecurityControllerTest {
 		
 	}
 	
-    public SecurityControllerTest() {
+    SecurityControllerTest() {
         this.mockMvc = MockMvcBuilders.standaloneSetup(new SecurityController()).build();
     }
 
     @Test
-    public void shouldReturnEncryptedFile() throws Exception {
+    void shouldReturnEncryptedFile() throws Exception {
         URI uri = new URI("/security/cryptograph");
 
         MockMultipartFile file = new MockMultipartFile("file", "test.txt",
@@ -73,7 +73,7 @@ public class SecurityControllerTest {
     }
     
     @Test
-    public void shouldReturnDecryptedFile() throws Exception {
+    void shouldReturnDecryptedFile() throws Exception {
         URI uri = new URI("/security/cryptograph");
 
         // Criação do arquivo simulado
@@ -106,7 +106,7 @@ public class SecurityControllerTest {
     }
 
     @Test
-    public void shouldReturnRedirectStatusPage302() throws Exception {
+    void shouldReturnRedirectStatusPage302() throws Exception {
         URI uri = new URI("/security/cryptograph");
 
         // Criação do arquivo simulado

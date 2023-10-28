@@ -186,6 +186,14 @@ header h1 {
     height: 55px;
 }
 
+#margin-container{
+    display: flex;
+    flex-direction: row;
+}
+#margin-container p{
+    margin-left: 8px;
+}
+
 #button-help ion-icon {
     padding: 7px;
     color: #0d0d0d;
