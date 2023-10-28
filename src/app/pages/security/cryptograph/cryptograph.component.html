@@ -1,1 +1,97 @@
-<p>cryptograph works!</p>
+<header>
+  <h1>Criptografar ou Descriptografar</h1>
+</header>
+
+<form id="form" th:action="@{/security/cryptograph}" method="POST" enctype="multipart/form-data" th:object="${form}">
+
+  <p>
+    Aumente a segurança de seus arquivos e utilize uma chave de
+    criptografia forte para proteger
+    o seu documento ou se você quiser descriptografar o
+    documento,
+    utilize a chave correta que foi gerada no nosso site para
+    acessar o seu conteúdo
+    original com maior segurança.
+  </p>
+
+  <div class="form-group">
+    <div class="input-file">
+      <label for="arquivo" class="custom-label">
+        <div class="input-file__content">
+          <span class="cloud-upload-outline">upload</span>
+          <!-- <ion-icon class="icon__content"
+                          name="cloud-upload-outline"></ion-icon> -->
+          <span class="input-file__content-choice">
+            Escolher arquivo</span>
+        </div>
+        <span id="file-name" class="file-name"></span>
+      </label>
+      <input id="arquivo" class="form-control" name="arquivo" type="file" th:field="*{file}" multiple
+        style="display: none;">
+    </div>
+    <div class="danger">
+      <small id="file-error">
+        É obrigátorio selecionar um arquivo
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="password__container">
+      <label for="pwd" class="custom-label">Insira a senha:
+      </label>
+      <div class="password__content">
+        <input th:field="*{key}" type="password" id="pwd" class="form-control" placeholder="***************"
+          maxlength="64">
+
+        <div id="checkbox-password">
+          <input type="checkbox" id="chk" class="password-checkbox">
+          <label for="chk" class="checkbox-label">
+            <button type="button" class="btn-check" id="btn-toggle-icon">
+              <span class="checkbox-icon show-password">show-password</span>
+              <span class="checkbox-icon hide-password disabledCheckboxIcon">disabledCheckboxIcon</span>
+              <!-- <ion-icon name="eye-outline"
+                                  class="checkbox-icon show-password"></ion-icon>
+                              <ion-icon name="eye-off-outline"
+                                  class="checkbox-icon hide-password disabledCheckboxIcon"></ion-icon>-->
+            </button>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="danger">
+      <small id="pwd-error">
+        Senha obrigatória
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="input-choice">
+      <label class="choice">
+        <input type="radio" th:field="*{action}" value="true" id="criptografar"> Criptografar
+      </label>
+      <label class="choice">
+        <input type="radio" th:field="*{action}" value="false" id="descriptografar"> Descriptografar
+      </label>
+    </div>
+    <div class="danger">
+      <small id="radio-error">Selecione uma das opções</small>
+    </div>
+  </div>
+
+  <!--BOTÃO DE DOWNLOAD-->
+  <button type="submit" id="download" class="btn btn-download disabledBtnDownload">Download</button>
+
+</form>
+
+<!--LOADING-->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loadingio-spinner-dual-ball-dbuc2dc03wn">
+    <div class="ldio-bxdwskh2bb">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</div>
