@@ -31,6 +31,7 @@ E-mail: contact@mybigwhale.com
 <a href="https://github.com/LeoSilva011"> Leonardo </a> <br>
 <a href="https://github.com/LarissaLunguinho"> Larissa </a> <br>
 <a href="https://github.com/Daniellyfreitasc"> Danielly </a> <br>
+<a href="https://github.com/Kleby" >Kleby</a> <br>
 
 - Back-End: <br>
 <a href="https://github.com/erasmobezerra"> Erasmo </a> <br>
