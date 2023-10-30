@@ -1,3 +1,16 @@
+
+/* Variáveis das cores principais */
+:root {
+    --primary-color: #50c878;
+    --secondary-color: #c9f2e3;
+}
+/* Como usar as variávais css: propriedade: var(nome-variável);
+   exemplos:
+     - em background -> background-color: var(--primary-color);
+     - em color -> color: var(--secondary-color);
+*/
+
+
 * {
     margin: 0;
     padding: 0;
@@ -6,5 +19,22 @@
 
     font-family: "Roboto Condensed", sans-serif;
     color: #0d0d0d;
+}
+
+body{
     background: #d3d3d3;
+
+}
+
+#button-help, #button-home{
+    position: absolute;
+    right: 47px;
+}
+
+#button-help {
+    top: 47px;
+}
+
+#button-home {
+    bottom: 47px;
 }
