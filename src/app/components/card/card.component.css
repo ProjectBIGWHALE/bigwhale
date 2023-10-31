@@ -1,0 +1,38 @@
+.container__card{
+    text-align: center;
+    width: 20em;
+    height: 25em;
+    margin: 0 1em;
+    border-radius: 8px;
+    background: #c9f2e3;
+    box-shadow: 8px 8px 4px 0px #3f514a;
+    transition: 0.3s;
+  }
+  
+  .container__card a {
+    text-decoration: none;
+    color: #000;
+    padding: 9px;
+  }
+  
+  .container__card img {
+    padding: 20px;
+    width: 150px;
+    height: 150px;
+  }
+  
+  .container__card h4 {
+    font-size: 20px;
+    padding: 0 22px;
+  }
+  
+  .container__card p {
+    padding: 9px;
+    font-size: 20px;
+  }
+  
+  .container__card:hover {
+    transform: scale(1.05);
+    /* Ao passar o mouse, o item aumentará em 5% */
+  }
+  

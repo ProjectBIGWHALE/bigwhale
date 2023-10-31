@@ -1,16 +1,25 @@
 <section class="container__carrossel" >
     <h2>{{ title }}</h2>
-    <div class="container">
+    <div class="container__cards">
 
    
-
-        <div class="carrossel">
-            <!--a card-designer classe para marcar a div no javascript-->
-         
-            
-
+        <div class="setas">
+            <button onclick=""><</button>
+        </div>
+       
+        <div class="cards">
+            <app-card
+            img="https://cdn-icons-png.flaticon.com/512/69/69544.png"
+            title="Mudar cor de Imagem"
+            description="Você pode facilmente retirar o plano de fundo indesejado e obter imagens com transparência."
+            ></app-card>
         </div>
 
+        
+        <div class="setas">
+            <button onclick="" class="inverter">></button>
+        </div>
+            
     </div>
 
 </section>

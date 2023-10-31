@@ -23,6 +23,7 @@ import { MenuLogoComponent } from './pages/home/menu-logo/menu-logo.component';
 import { MenuCarrosselComponent } from './components/menu-carrossel/menu-carrossel.component';
 import { MenuAboutComponent } from './pages/home/menu-about/menu-about.component';
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CollaboratorComponent } from './components/collaborator/collaborator.co
     MenuLogoComponent,
     MenuCarrosselComponent,
     MenuAboutComponent,
-    CollaboratorComponent
+    CollaboratorComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

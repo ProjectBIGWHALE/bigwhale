@@ -16,7 +16,7 @@
 }
 
  
-.container {
+.container__cards {
     display: flex;
     background: rgba(13, 13, 13, 0.2);
     align-items: center;
@@ -27,10 +27,42 @@
   
 .carrossel {
     display: flex;
-    border-radius: 4px;
-    align-items: center;
+    
+    
 }
+
+.setas button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .setas button{
+    font-size: 100px;
+    /* width: 5em;
+    height: 3em; */
+    color: #0d0d0d;
+  }
+  
+ 
+  
+  .setas:hover {
+    transform: scale(1.2);
+    /* Ao passar o mouse, o item aumentará em 20% */
+  }
   
 
   
 
+  [class^="number-slide"],
+  [class*=" number-slide"] {
+    background: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    color: #fff;
+    font-weight: 500;
+    height: 300px;
+    max-height: 100vh;
+  }
