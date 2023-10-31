@@ -1,12 +1,14 @@
 	<!-- BOTÕES HOME E AJUDA -->
-	<div id="button-home">
-		<a href="/#design">
-			<span class="material-symbols-outlined">undo</span>
-    </a>
-	</div>
-
-	<div id="button-help">
-		<a href="/help">
-			<span class="material-symbols-outlined">question_mark</span>
+	<div [id]="idName" class="button__container">
+		<a class="link__router">
+			<span class="material-symbols-outlined">{{iconName}}</span>
 		</a>
 	</div>
+
+	<!-- Para usar esse components basta adicionar ele em
+		outro componente passando o id e nome do icone.
+		exemplo: 
+			    <app-buttons [iconName]="'question_mark'" [idName]="'button-help'" />
+				
+			    <app-buttons [iconName]="'undo'" [idName]="'button-home'" />
+	-->

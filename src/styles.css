@@ -1,19 +1,17 @@
-
-
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
 
-   
+    font-family: "Roboto Condensed", sans-serif;
+    color: #0d0d0d;
 }
 
 body{
-
-    font-family: "Roboto Condensed", sans-serif;
-    color: #0d0d0d;
     background: #d3d3d3;
+}
 
+#button-home {
+    bottom: 47px;
 }
