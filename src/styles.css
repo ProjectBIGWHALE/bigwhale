@@ -1,17 +1,48 @@
+
+/* Variáveis das cores principais */
+:root {
+    --primary-color: #50c878;
+    --secondary-color: #c9f2e3;
+}
+/* Como usar as variávais css: propriedade: var(nome-variável);
+   exemplos:
+     - em background -> background-color: var(--primary-color);
+     - em color -> color: var(--secondary-color);
+*/
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
-
     font-family: "Roboto Condensed", sans-serif;
-    color: #0d0d0d;
 }
 
 body{
     background: #d3d3d3;
+    color: #0d0d0d;
+    font-size: 16px;
 }
 
-#button-home {
+#button-help, #button-home{
+    position: absolute;
+    right: 47px;
+}
+#button-help {
     bottom: 47px;
+}
+#button-home {
+    top: 47px;
+}
+
+
+input[type="text"], input[type="email"]{
+    outline: none;
+    border: 1px solid #25BFBF;
+    background-color: #FFF;
+    width: 100%;
+    height: 2rem;
+    padding: .5rem .75rem;
+    border-radius: 4px;
+    font-size: 1.1rem;
 }

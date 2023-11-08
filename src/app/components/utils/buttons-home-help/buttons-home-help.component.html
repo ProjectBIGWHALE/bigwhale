@@ -1,6 +1,6 @@
 	<!-- BOTÕES HOME E AJUDA -->
 	<div [id]="idName" class="button__container">
-		<a class="link__router">
+		<a class="link__router" [routerLink]="routerName">
 			<span class="material-symbols-outlined">{{iconName}}</span>
 		</a>
 	</div>
@@ -8,7 +8,7 @@
 	<!-- Para usar esse components basta adicionar ele em
 		outro componente passando o id e nome do icone.
 		exemplo: 
-			    <app-buttons [iconName]="'question_mark'" [idName]="'button-help'" />
+			    <app-buttons-home-help [iconName]="'question_mark'" [idName]="'button-help'" [routerName]="/help" />
 				
-			    <app-buttons [iconName]="'undo'" [idName]="'button-home'" />
+			    <app-buttons-home-help [iconName]="'undo'" [idName]="'button-home'" [routerName]="/home" />
 	-->
