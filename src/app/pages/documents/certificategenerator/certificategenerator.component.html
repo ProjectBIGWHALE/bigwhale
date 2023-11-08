@@ -1,1 +1,119 @@
-<p>certificategenerator works!</p>
+<div class="certificate__container">
+    <div class="certificate__content">
+        <h1 class="content__title">
+            Gerador de certificados
+        </h1>
+        <p class="content__description">
+            Você pode criar certificados personalizados de forma rápida e fácil de para reconhecimento e autenticação.
+        </p>
+    </div>
+    <form>
+        <div>
+            <div>
+                <h3>1. Selecione o tipo de certificado:</h3>
+                <ul>
+                    <li>
+                        <input type="radio" name="type" id="participation">
+                        <label for="participation">Participação</label>
+                    </li>
+                    <li>
+                        <input type="radio" name="type" id="speaker">
+                        <label for="speaker">Palestrante</label>
+                    </li>
+                    <li>
+                        <input type="radio" name="type" id="course">
+                        <label for="course">Curso</label>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3>
+                    2.Preencha as informações do certificado
+                </h3>
+                <div>
+                    <label for="worksheet">
+                        Nomes dos(as) participantes:
+                    </label>
+                    <input type="file" name="worksheet" id="worksheet" accept=".csv" />
+                </div>
+                <div>
+                    <label for="eventName">
+                        Nome do evento/curso:
+                    </label>
+                    <input type="text" id="eventName" placeholder="Primeiros socorros">
+                </div>
+                <div>
+                    <label for="speakerName">
+                        Nome do(a) organizador(a):
+                    </label>
+                    <input type="text" id="speakerName" placeholder="José Maria">
+                </div>
+
+                <div>
+                    <label for="speakerRole">
+                        Cargo do(a) organizador(a):
+                    </label>
+                    <input type="text" id="speakerRole" placeholder="Diretor">
+                </div>
+                <div>
+                    <label for="eventWorkLoad">
+                        Carga horária:
+                    </label>
+                    <input type="text" id="eventWorkLoad" placeholder="120 horas">
+                </div>
+                <div>
+                    <label for="eventDate">
+                        Data do evento/curso:
+                    </label>
+                    <input type="date"  id="eventDate" placeholder="22-03-2022">
+                </div>
+                <div>
+                    <label for="dateIssue">
+                        Data de emissão do certificado:
+                    </label>
+                    <input type="date"  id="dateIssue" placeholder="28-06-2022">
+                </div>
+                <div>
+                    <label for="eventLocale">
+                        Local de emissão do certificado:
+                    </label>
+                    <input type="text" id="eventLocale" placeholder="São Paulo - SP">
+                </div>
+            </div>
+
+            <div class="certificate-model__container">
+                <h3>
+                    Escolha o modelo do certificado:
+                </h3>
+                <ul>
+                    <li>
+                        <label for="firstModel">Certificado 1</label>
+                        <input type="radio" id="firstModel" name="model">
+                    </li>
+                    <li>
+                        <label for="secondModel">Certificado 2</label>
+                        <input type="radio" id="secondModel" name="model">
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3>Previsualização do Certificado</h3>
+                <div class="certificate-preview__container">
+                    <p>
+                        Certificamos que <span>[Nome do Participante]</span> participou do evento <span>[Nome do Evento]</span>, realizado no dia
+                        <span>[Data do Evento]</span>, com uma carga horária total de <span>[Carga Horária]</span> horas.
+                        Este certificado é concedido como reconhecimento pela dedicação e comprometimento de <span>[Nome do Participante]</span>
+                        em aprimorar suas habilidades e conhecimentos na área abordada pelo evento.
+                        Local/Data: <span>[Local de Emissão do Certificado]</span>, <span>[Data de Emissão do Certificado]</span>.
+                        Assinatura: <span>[Nome do Organizador]</span>
+                        Cargo: <span>[Cargo do Organizador]</span>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <app-button-download />
+    </form>
+    <app-buttons-homer-help [iconName]="'question_mark'" [idName]="'button-help'" [routerName]="'/help'"/>
+    <app-buttons-homer-help [iconName]="'undo'" [idName]="'button-home'" [routerName]="'/home'"/>
+</div>
