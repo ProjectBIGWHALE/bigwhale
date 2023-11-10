@@ -18,7 +18,7 @@
 
 ## Deploy
 <a href="https://mybigwhale.com/"><img src="https://img.icons8.com/?size=512&id=13450&format=png" width="35" height="35"></a>
-- Version: 2.0.3
+- Version: 2.0.6
 - MIT Licence
 
 ## Contact
