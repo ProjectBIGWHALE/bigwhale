@@ -7,17 +7,16 @@
 </div>
 
 <div class="menu-carrossel">
+
+    
     <app-menu-carrossel id="design"
-    title="Design"
+    *ngFor="let card of menus.funcoes"
+    title={{card.title}}
+    [cards]= card.cards
+
     ></app-menu-carrossel>
 
-    <app-menu-carrossel id="#seguranca"
-    title="Segurança"
-    ></app-menu-carrossel>
-
-    <app-menu-carrossel id="#documentos"
-    title="Documentos"
-    ></app-menu-carrossel>
+    
 
 </div>
 
