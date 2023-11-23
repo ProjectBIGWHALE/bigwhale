@@ -78,7 +78,7 @@ E-mail: contact@mybigwhale.com
 
 ## License
 
-Distributed under the MIT License. See <a href="https://github.com/ProjectBIGWHALE/bigwhale/LICENSE">`LICENSE`</a> for more information.
+Distributed under the MIT License. See <a href="https://github.com/ProjectBIGWHALE/bigwhale/blob/develop/LICENSE">`LICENSE`</a> for more information.
 
 
 <br><br>
