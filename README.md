@@ -9,7 +9,8 @@ Products:
 - Whale Design
 - Whale Documents
 - Whale Security
-#
+
+<br>
 
 ## Built With
 Here are the main technologies by type used in the project:
@@ -32,7 +33,9 @@ Here are the main technologies by type used in the project:
 - ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
   ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
-#
+
+<br>
+
 ## Production deployment
 
 - Web Hosting: cPanel
@@ -40,7 +43,8 @@ Here are the main technologies by type used in the project:
 - Access my big whale website <a href="https://mybigwhale.com/">here</a>
 
 
-#
+<br>
+
 ## Getting Started
 Here is the step-by-step guide for you to enjoy and test the My Big Whale project locally!
 
@@ -65,16 +69,19 @@ java -jar target/whale.jar
 # Now, just access the URI http://localhost:8080/ and enjoy!
 ```
 
-#
+<br>
+
 ## Contact
 E-mail: contact@mybigwhale.com
 
-#
+<br>
+
 ## License
 
 Distributed under the MIT License. See <a href="https://github.com/ProjectBIGWHALE/bigwhale/LICENSE">`LICENSE`</a> for more information.
 
 
+<br><br>
 ## Collaborators
 <a href="https://github.com/bioramonmoratori"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/d4afb72c-ec3a-4672-b376-c4d33a4aa11c" width="100" height="100"></a>
 <a href="https://github.com/amandapvln"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/4de40297-eb96-45ed-b4c4-7b1fb8cbb65a" width="100" height="100"></a>
