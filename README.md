@@ -71,81 +71,39 @@ java -jar target/whale.jar
   - Swagger
 
 #
-## Contributing
+## instructions for contributions
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Fork the repository;
+Clone locally: 
+```
+git clone https://github.com/your_user_name/bigwhale.git
+```
+Add upstream remote to keep your local repository up to date: 
+```
+git remote add upstream https://github.com/elidianaandrade/dio-lab-open-source.git;
+```
+Use the command 
+```
+git pull upstream main
+```
+to download and merge changes to your local repository based on the branch main from this original repository you forked it from, or git fetch upstream main to download without merging. See more at: Getting Started with Git and GitHub.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+Create a new branch and name it as feat/community/yourusername: git checkout -b feat/community/yourusername;
+Example: git checkout -b feat/community/elidianaandrade
 
-1. **Fork do Repositório:**
-   - Vá para a página do projeto no GitHub.
-   - Clique no botão "Fork" no canto superior direito da página. Isso cria uma cópia do repositório no seu perfil.
+Inside the folder community, create a file in Markdown (extension .md) and name it the same as your GitHub username;
+Example: elidianaandrade.md
 
-2. **Clone do Repositório Forked:**
-   - Abra o terminal no seu computador.
+Develop your profile. For this you can see examples in the folder community and add some of the utilities present in the folder utils;
+Note: Use the other examples as inspiration, not copy.
 
-   ```bash
-   git clone https://github.com/seu-username/bigwhale.git
-   ```
+Add your changes to the "staging area" with the command git add community/yourusername.md;
+Create a commit and add the message indicating the addition of your profile git commit -m"feat: add yourusername profile";
+Push changes to your remote repository git push origin feat/community/yourusername;
+Create a Pull Request.
 
-   Substitua `seu-username` pelo seu nome de usuário GitHub.
-
-3. **Adicionar Upstream (Opcional):**
-   - Navegue até o diretório clonado.
-
-   ```bash
-   cd bigwhale
-   ```
-
-   - Adicione o repositório original como upstream.
-
-   ```bash
-   git remote add upstream https://github.com/seu-username/bigwhale.git
-   ```
-
-   Substitua `username` pelo nome do usuário do proprietário original do repositório e `original-repo` pelo nome do repositório original.
-
-4. **Crie uma Nova Branch:**
-   - Crie uma nova branch para trabalhar.
-
-   ```bash
-   git checkout -b nome-da-sua-branch
-   ```
-
-   Substitua `nome-da-sua-branch` por um nome descritivo para a sua alteração.
-
-5. **Faça Suas Alterações:**
-   - Faça as alterações necessárias no código usando sua IDE ou editor de texto preferido.
-
-6. **Commit e Push:**
-   - Adicione as alterações ao staging.
-
-   ```bash
-   git add .
-   ```
-
-   - Faça um commit das suas alterações.
-
-   ```bash
-   git commit -m "Descrição do seu commit"
-   ```
-
-   - Envie as alterações para o seu repositório no GitHub.
-
-   ```bash
-   git push origin nome-da-sua-branch
-   ```
-
-7. **Crie um Pull Request (PR):**
-   - Vá para a página do seu repositório no GitHub.
-   - Clique no botão "Compare & pull request" ao lado da sua nova branch.
-   - Preencha as informações do PR e clique em "Create pull request".
-
-Agora, você fez um fork, clonou o projeto, fez suas alterações em uma nova branch, e criou um Pull Request para contribuir com o projeto original. Certifique-se de seguir as diretrizes de contribuição do projeto, se houver.
 
 #
-
 ## Contact
 E-mail: contact@mybigwhale.com
 
