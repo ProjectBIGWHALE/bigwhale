@@ -66,7 +66,6 @@ mvn clean package
 # Run the project
 java -jar target/whale.jar
 
-# Now, just access the URI http://localhost:8080/ and enjoy!
 ```
 
 <br>
