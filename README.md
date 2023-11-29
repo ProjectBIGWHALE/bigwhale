@@ -76,7 +76,6 @@ E-mail: contact@mybigwhale.com
 Distribuído sob a licença MIT. Clique em <a href="https://github.com/ProjectBIGWHALE/bigwhale/blob/develop/LICENSE">` MIT LICENSE`</a> para maiores informações.
 
 
-
 ## Colaboradores: 
 <a href="https://github.com/bioramonmoratori"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/d4afb72c-ec3a-4672-b376-c4d33a4aa11c" width="100" height="100"></a>
 <a href="https://github.com/amandapvln"><img src="https://github.com/ProjectBIGWHALE/bigwhale/assets/90486302/4de40297-eb96-45ed-b4c4-7b1fb8cbb65a" width="100" height="100"></a>
